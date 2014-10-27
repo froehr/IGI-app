@@ -1,4 +1,4 @@
 IGI-app
 =======
 
-Interacting with Geographic Information App Group Repo
+Interacting with Geographic Information App-Group Repo
