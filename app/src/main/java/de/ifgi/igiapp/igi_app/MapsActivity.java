@@ -2,6 +2,8 @@ package de.ifgi.igiapp.igi_app;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -20,7 +22,34 @@ public class MapsActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onResume() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.maps, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //Switch statement handles the clicks on the buttons of the action bar
+        switch (id) {
+            case R.id.action_locate:
+                System.out.println("Location button pressed");
+                return true;
+            case R.id.action_settings:
+                System.out.println("Settings button pressed");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume(){
         super.onResume();
         setUpMapIfNeeded();
     }
