@@ -2,7 +2,10 @@ package de.ifgi.igiapp.igi_app;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,7 +23,36 @@ public class MapsActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onResume() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.maps, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //Switch statement handles the clicks on the buttons of the action bar
+        switch (id) {
+            case R.id.action_locate:
+                System.out.println("Location button pressed");
+                panRight();
+                return true;
+            case R.id.action_settings:
+                System.out.println("Settings button pressed");
+                panLeft();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume(){
         super.onResume();
         setUpMapIfNeeded();
     }
@@ -62,4 +94,30 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
+
+    public void zoomIn(){
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+    }
+
+    public void zoomOut(){
+        mMap.animateCamera(CameraUpdateFactory.zoomOut());
+    }
+
+    public void panUp(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+    }
+
+    public void panDown(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+    }
+
+    public void panRight(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(400, 0));
+    }
+
+    public void panLeft(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
+    }
+
 }
+
