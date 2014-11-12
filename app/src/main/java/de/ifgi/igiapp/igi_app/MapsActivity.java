@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,9 +40,11 @@ public class MapsActivity extends FragmentActivity {
         switch (id) {
             case R.id.action_locate:
                 System.out.println("Location button pressed");
+                panRight();
                 return true;
             case R.id.action_settings:
                 System.out.println("Settings button pressed");
+                panLeft();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -91,4 +94,30 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
+
+    public void zoomIn(){
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+    }
+
+    public void zoomOut(){
+        mMap.animateCamera(CameraUpdateFactory.zoomOut());
+    }
+
+    public void panUp(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+    }
+
+    public void panDown(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+    }
+
+    public void panRight(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(400, 0));
+    }
+
+    public void panLeft(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
+    }
+
 }
+
