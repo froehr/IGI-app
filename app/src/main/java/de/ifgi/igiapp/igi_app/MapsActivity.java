@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements MapInterface{
+public class MapsActivity extends FragmentActivity implements MapInterface {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ImageButton btnSpeak;
@@ -162,11 +162,11 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     }
 
     public void panUp(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
     }
 
     public void panDown(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
     }
 
     public void panRight(){
