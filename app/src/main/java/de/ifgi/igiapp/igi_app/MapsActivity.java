@@ -1,16 +1,24 @@
 package de.ifgi.igiapp.igi_app;
 
+
+import android.location.Location;
+import android.location.LocationProvider;
+import android.provider.SyncStateContract;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -22,6 +30,9 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements MapInterface{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     SpeechInputHandler speechInputHandler;
@@ -31,6 +42,21 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        mMap.setMyLocationEnabled(true);
+
+        //Navigation Drawer
+        mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        // Speech recognition
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
         speechInputHandler = new SpeechInputHandler(this);
 
@@ -96,13 +122,13 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
 
         //Switch statement handles the clicks on the buttons of the action bar
         switch (id) {
-            case R.id.action_locate:
+            /*case R.id.action_locate:
                 System.out.println("Location button pressed");
-                panRight();
-                return true;
+                //locate();
+                return true;*/
             case R.id.action_settings:
                 System.out.println("Settings button pressed");
-                panLeft();
+                panUp();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -150,8 +176,22 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        MarkerOptions options = new MarkerOptions().position(new LatLng(51, 7)).title("Testmarker");
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.addMarker(options);
     }
+/*
+    private void locate() {
+        Location location = mMap.getMyLocation();
+
+        if (location != null) {
+            LatLng myLocation = new LatLng(location.getLatitude(),
+                    location.getLongitude());
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myLocation, 5);
+            mMap.animateCamera(yourLocation);
+        }
+    }
+*/
 
     public void zoomIn(){
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
@@ -162,11 +202,11 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     }
 
     public void panUp(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
     }
 
     public void panDown(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
     }
 
     public void panRight(){
@@ -176,6 +216,8 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     public void panLeft(){
         mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
     }
+
+
 
 }
 
