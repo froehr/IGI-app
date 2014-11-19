@@ -1,10 +1,16 @@
 package de.ifgi.igiapp.igi_app;
 
+import android.location.Location;
+import android.location.LocationProvider;
+import android.provider.SyncStateContract;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -15,11 +21,15 @@ public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        mMap.setMyLocationEnabled(true);
+
     }
 
     @Override
@@ -38,10 +48,10 @@ public class MapsActivity extends FragmentActivity {
 
         //Switch statement handles the clicks on the buttons of the action bar
         switch (id) {
-            case R.id.action_locate:
+            /*case R.id.action_locate:
                 System.out.println("Location button pressed");
-                panRight();
-                return true;
+                //locate();
+                return true;*/
             case R.id.action_settings:
                 System.out.println("Settings button pressed");
                 panLeft();
@@ -92,8 +102,22 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        MarkerOptions options = new MarkerOptions().position(new LatLng(51, 7)).title("Testmarker");
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.addMarker(options);
     }
+/*
+    private void locate() {
+        Location location = mMap.getMyLocation();
+
+        if (location != null) {
+            LatLng myLocation = new LatLng(location.getLatitude(),
+                    location.getLongitude());
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myLocation, 5);
+            mMap.animateCamera(yourLocation);
+        }
+    }
+*/
 
     public void zoomIn(){
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
@@ -118,6 +142,8 @@ public class MapsActivity extends FragmentActivity {
     public void panLeft(){
         mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
     }
+
+
 
 }
 
