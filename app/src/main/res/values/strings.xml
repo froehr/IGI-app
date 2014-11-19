@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">IGI-App</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">Locallama</string>
+    <string name="title_activity_maps">Locallama</string>
     <string name="action_locate">Locate me</string>
     <string name="action_settings">Settings</string>
 </resources>
