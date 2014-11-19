@@ -1,8 +1,12 @@
 package de.ifgi.igiapp.igi_app;
 
+
 import android.location.Location;
 import android.location.LocationProvider;
 import android.provider.SyncStateContract;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,8 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,13 +25,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity {
+import java.util.ArrayList;
+
+public class MapsActivity extends FragmentActivity implements MapInterface{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-
+    private ImageButton btnSpeak;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    SpeechInputHandler speechInputHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,55 @@ public class MapsActivity extends FragmentActivity {
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+
+        // Speech recognition
+        btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        speechInputHandler = new SpeechInputHandler(this);
+
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    speechInputHandler.handleSpeech(result);
+                }
+                break;
+            }
+
+        }
     }
 
     @Override
@@ -70,7 +128,7 @@ public class MapsActivity extends FragmentActivity {
                 return true;*/
             case R.id.action_settings:
                 System.out.println("Settings button pressed");
-                panLeft();
+                panUp();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -144,11 +202,11 @@ public class MapsActivity extends FragmentActivity {
     }
 
     public void panUp(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
     }
 
     public void panDown(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
     }
 
     public void panRight(){
