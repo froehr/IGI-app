@@ -31,6 +31,8 @@ public class MapsActivity extends FragmentActivity implements MapInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        mMap.getUiSettings().setZoomControlsEnabled(false);
+
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
         speechInputHandler = new SpeechInputHandler(this);
 
