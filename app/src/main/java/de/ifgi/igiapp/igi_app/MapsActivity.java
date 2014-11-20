@@ -181,8 +181,8 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        MarkerOptions options = new MarkerOptions().position(new LatLng(51, 7)).title("Testmarker");
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        MarkerOptions options = new MarkerOptions().position(new LatLng(51.963572, 7.613196)).title("Castle");
+        mMap.addMarker(new MarkerOptions().position(new LatLng(51.962585, 7.628442)).title("Lamberti"));
         mMap.addMarker(options);
     }
 /*
