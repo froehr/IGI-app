@@ -19,6 +19,14 @@ public class SpeechInputHandler {
         String command = results.get(0);
         Log.i(TAG, results.get(0));
 
+        // I think this won't work with our current approach?
+        // Maybe we need to think of something else
+        if(command.contains("zoom") && command.contains("to")){
+            String location = command.substring(command.lastIndexOf(" "));
+            map.searchLocation(location);
+            return;
+        }
+
         Toast toast = Toast.makeText((FragmentActivity) map, results.get(0), Toast.LENGTH_LONG);
         toast.show();
 

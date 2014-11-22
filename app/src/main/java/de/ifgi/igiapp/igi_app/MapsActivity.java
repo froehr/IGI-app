@@ -2,6 +2,8 @@ package de.ifgi.igiapp.igi_app;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -17,14 +19,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements MapInterface {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    private final int maxResults = 5;
     SpeechInputHandler speechInputHandler;
+    Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements MapInterface {
         mMap.getUiSettings().setZoomControlsEnabled(false);
 
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        geocoder = new Geocoder(this, Locale.ENGLISH);
         speechInputHandler = new SpeechInputHandler(this);
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +185,32 @@ public class MapsActivity extends FragmentActivity implements MapInterface {
 
     public void panLeft(){
         mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
+    }
+
+    public void searchLocation(String location) {
+        try {
+            // request place
+            List<Address> locationList = geocoder.getFromLocationName(location, maxResults);
+            // access first result
+            if(!locationList.isEmpty()){
+                Address address = locationList.get(0);
+
+                double lat = address.getLatitude();
+                double lng = address.getLongitude();
+
+                LatLng latLng = new LatLng(lat, lng);
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "could not finde any results: " + location,
+                        Toast.LENGTH_SHORT).show();;
+            }
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(),
+                    "network unavailable or any other I/O problem occurs: " + location,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
