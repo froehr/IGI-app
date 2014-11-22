@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapActivity" >
+    tools:context=".MapActivity"
+    android:background="@null"
+    android:clickable="true">
 
     <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
@@ -18,5 +20,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:src="@drawable/ico_mic" />
+        android:src="@drawable/ico_mic"
+        android:layout_gravity="right|top"/>
+
+    <ToggleButton
+        android:id="@+id/btnMotion1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textOn=""
+        android:textOff=""
+        android:button="@drawable/toggle_selector"
+        android:layout_gravity="left|top"/>
+
 </FrameLayout>
