@@ -16,4 +16,6 @@ public interface MapInterface {
     public void panRight();
 
     public void panLeft();
+
+    public void searchLocation(String location);
 }
