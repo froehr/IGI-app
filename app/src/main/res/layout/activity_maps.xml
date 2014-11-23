@@ -42,6 +42,19 @@ android:layout_height="match_parent">
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp" />
+
+        <ToggleButton
+        	android:id="@+id/btnMotion1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:background="@null"
+        	android:textOn=""
+        	android:textOff=""
+        	android:button="@drawable/toggle_selector"
+        	android:layout_gravity="bottom|left"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"/>
+        
     </FrameLayout>
 <!-- The navigation drawer -->
 <ListView android:id="@+id/left_drawer"
