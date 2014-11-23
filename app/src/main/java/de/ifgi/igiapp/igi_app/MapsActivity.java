@@ -1,40 +1,82 @@
 package de.ifgi.igiapp.igi_app;
 
+
+import android.location.Location;
+import android.location.LocationProvider;
+import android.provider.SyncStateContract;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
 
 public class MapsActivity extends FragmentActivity implements MapInterface{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    private final int maxResults = 5;
     SpeechInputHandler speechInputHandler;
+    Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        mMap.setMyLocationEnabled(true);
+        mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
+
+        //Navigation Drawer
+        mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        // Speech recognition
+
+        mMap.getUiSettings().setZoomControlsEnabled(false);
+
+
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        geocoder = new Geocoder(this, Locale.ENGLISH);
         speechInputHandler = new SpeechInputHandler(this);
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +87,8 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
             }
         });
     }
+
+
 
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -99,13 +143,13 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
 
         //Switch statement handles the clicks on the buttons of the action bar
         switch (id) {
-            case R.id.action_locate:
+            /*case R.id.action_locate:
                 System.out.println("Location button pressed");
-                panRight();
-                return true;
+                //locate();
+                return true;*/
             case R.id.action_settings:
                 System.out.println("Settings button pressed");
-                panLeft();
+                panUp();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -153,8 +197,22 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        MarkerOptions options = new MarkerOptions().position(new LatLng(51.963572, 7.613196)).title("Castle");
+        mMap.addMarker(new MarkerOptions().position(new LatLng(51.962585, 7.628442)).title("Lamberti"));
+        mMap.addMarker(options);
     }
+/*
+    private void locate() {
+        Location location = mMap.getMyLocation();
+
+        if (location != null) {
+            LatLng myLocation = new LatLng(location.getLatitude(),
+                    location.getLongitude());
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myLocation, 5);
+            mMap.animateCamera(yourLocation);
+        }
+    }
+*/
 
     public void onGestureButtonClick(View view) {
         Intent intent = new Intent(this, GestureService.class);
@@ -176,11 +234,11 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     }
 
     public void panUp(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
     }
 
     public void panDown(){
-        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
     }
 
     public void panRight(){
@@ -190,6 +248,34 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     public void panLeft(){
         mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
     }
+
+
+    public void searchLocation(String location) {
+        try {
+            // request place
+            List<Address> locationList = geocoder.getFromLocationName(location, maxResults);
+            // access first result
+            if(!locationList.isEmpty()){
+                Address address = locationList.get(0);
+
+                double lat = address.getLatitude();
+                double lng = address.getLongitude();
+
+                LatLng latLng = new LatLng(lat, lng);
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "could not finde any results: " + location,
+                        Toast.LENGTH_SHORT).show();;
+            }
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(),
+                    "network unavailable or any other I/O problem occurs: " + location,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }
 
