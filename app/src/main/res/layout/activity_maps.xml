@@ -51,7 +51,9 @@ android:layout_height="match_parent">
         	android:textOn=""
         	android:textOff=""
         	android:button="@drawable/toggle_selector"
-        	android:layout_gravity="left|top"/>
+        	android:layout_gravity="bottom|left"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"/>
         
     </FrameLayout>
 <!-- The navigation drawer -->
