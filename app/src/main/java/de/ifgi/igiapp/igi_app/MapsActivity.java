@@ -3,6 +3,7 @@ package de.ifgi.igiapp.igi_app;
 
 import android.content.res.Configuration;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -28,6 +29,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import de.ifgi.igiapp.igi_app.Gestures.GestureService;
+
+//public class MapsActivity extends FragmentActivity implements MapInterface{
 
 public class MapsActivity extends ActionBarActivity implements MapInterface {
 
@@ -256,6 +260,17 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         }
     }
 */
+
+    public void onGestureButtonClick(View view) {
+        Intent intent = new Intent(this, GestureService.class);
+        startService(intent);
+
+        Context context = getApplicationContext();
+        CharSequence text = "GestureService started!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast.makeText(context, text, duration).show();
+    }
 
     public void zoomIn(){
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
