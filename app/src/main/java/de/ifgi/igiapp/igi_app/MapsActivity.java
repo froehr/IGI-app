@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -263,13 +265,17 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
     public void onGestureButtonClick(View view) {
         Intent intent = new Intent(this, GestureService.class);
-        startService(intent);
 
-        Context context = getApplicationContext();
-        CharSequence text = "GestureService started!";
-        int duration = Toast.LENGTH_SHORT;
+        ToggleButton button = (ToggleButton) view;
 
-        Toast.makeText(context, text, duration).show();
+        if (button.isChecked()) {
+            startService(intent);
+
+        } else {
+            stopService(intent);
+        }
+
+
     }
 
     public void zoomIn(){
