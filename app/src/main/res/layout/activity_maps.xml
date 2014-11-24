@@ -32,26 +32,28 @@ android:layout_height="match_parent">
             android:scrollbars="vertical"
             class="com.google.android.gms.maps.SupportMapFragment"/>
 
-
         <ImageButton
             android:id="@+id/btnSpeak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/ico_mic"
+            android:layout_width="@dimen/mic_button_size"
+            android:layout_height="@dimen/mic_button_size"
+            android:background="@drawable/mic"
+            android:src="@drawable/ic_mic_none_white"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="30dp"
-            android:layout_marginRight="30dp" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:tint="@android:color/white"
+            android:elevation="@dimen/elevation_floating_button"/>
+
     </FrameLayout>
 <!-- The navigation drawer -->
 <ListView android:id="@+id/left_drawer"
-    android:layout_width="240dp"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
-    android:background="#ddcccccc"/>
+    android:background="#fff"/>
 
 </android.support.v4.widget.DrawerLayout>
 

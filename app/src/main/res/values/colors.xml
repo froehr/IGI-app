@@ -5,5 +5,6 @@
     <color name="material_blue_grey_700">#455A64</color>
     <color name="material_blue_grey_100">#CFD8DC</color>
     <color name="material_orange_A200">#FFAB40</color>
-
+    <color name="material_orange_A100">#FFD180</color>
+    <color name="drawer_text_color">#ffffff</color>
 </resources>
