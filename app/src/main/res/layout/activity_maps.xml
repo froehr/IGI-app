@@ -41,7 +41,6 @@ android:layout_height="match_parent">
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp" />
-
         <ToggleButton
         	android:id="@+id/btnMotion1"
         	android:layout_width="wrap_content"
@@ -50,9 +49,10 @@ android:layout_height="match_parent">
         	android:textOn=""
         	android:textOff=""
         	android:button="@drawable/toggle_selector"
-        	android:layout_gravity="bottom|left"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
+        	android:layout_gravity="bottom|start"
+            android:layout_marginBottom="25dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
             android:tint="@android:color/white"
             android:elevation="@dimen/elevation_floating_button"/>
     </FrameLayout>
