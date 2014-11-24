@@ -44,17 +44,16 @@ android:layout_height="match_parent">
 
         <ToggleButton
         	android:id="@+id/btnMotion1"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:background="@null"
+        	android:layout_width="@dimen/mic_button_size"
+        	android:layout_height="@dimen/mic_button_size"
+        	android:background="@drawable/toggle_selector"
         	android:textOn=""
         	android:textOff=""
-        	android:button="@drawable/toggle_selector"
+            android:text=""
+        	android:button="@drawable/ico_mtn1"
         	android:layout_gravity="bottom|left"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:tint="@android:color/white"
-            android:elevation="@dimen/elevation_floating_button"/>
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"/>
     </FrameLayout>
 <!-- The navigation drawer -->
 <ListView android:id="@+id/left_drawer"
