@@ -42,6 +42,17 @@ android:layout_height="match_parent">
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp" />
 
+        <ImageButton
+            android:id="@+id/btnMtn"
+            android:layout_width="@dimen/mic_button_size"
+            android:layout_height="@dimen/mic_button_size"
+            android:background="@drawable/mic"
+            android:src="@drawable/ico_mtn1"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp" />
+
+        <!--
         <ToggleButton
         	android:id="@+id/btnMotion1"
         	android:layout_width="@dimen/mic_button_size"
@@ -54,6 +65,7 @@ android:layout_height="match_parent">
         	android:layout_gravity="bottom|left"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="30dp"/>
+            -->
     </FrameLayout>
 <!-- The navigation drawer -->
 <ListView android:id="@+id/left_drawer"
