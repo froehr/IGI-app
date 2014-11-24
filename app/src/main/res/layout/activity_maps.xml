@@ -36,7 +36,7 @@ android:layout_height="match_parent">
             android:id="@+id/btnSpeak"
             android:layout_width="@dimen/mic_button_size"
             android:layout_height="@dimen/mic_button_size"
-            android:background="@drawable/mic"
+            android:background="@drawable/btn"
             android:src="@drawable/ic_mic_none_white"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="30dp"
@@ -47,7 +47,7 @@ android:layout_height="match_parent">
             android:id="@+id/btnMtn"
             android:layout_width="@dimen/mic_button_size"
             android:layout_height="@dimen/mic_button_size"
-            android:background="@drawable/mic"
+            android:background="@drawable/btn"
             android:src="@drawable/ico_mtn1"
             android:layout_gravity="bottom|left"
             android:layout_marginBottom="30dp"
@@ -55,16 +55,18 @@ android:layout_height="match_parent">
 -->
 
         <ToggleButton
-        	android:id="@+id/btnMotion1"
+        	android:id="@+id/btnMtn1"
         	android:layout_width="@dimen/mic_button_size"
         	android:layout_height="@dimen/mic_button_size"
-        	android:background="@drawable/toggle_selector"
-            android:text=""
-        	android:button="@drawable/ico_mtn1"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:drawableTop="@drawable/ico_mtn"
+            android:background="@drawable/toggle_selector"
         	android:layout_gravity="bottom|left"
+            android:paddingTop="15dp"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="30dp"
-            android:onClick="onGestureButtonClick"/>
+            android:onClick="onGestureButtonClick" />
 
     </FrameLayout>
 <!-- The navigation drawer -->
