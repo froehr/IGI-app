@@ -1,47 +1,46 @@
 package de.ifgi.igiapp.igi_app;
 
 
-import android.location.Location;
-import android.location.LocationProvider;
-import android.provider.SyncStateContract;
+import android.content.res.Configuration;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.speech.RecognizerIntent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
 
-public class MapsActivity extends FragmentActivity implements MapInterface{
+//public class MapsActivity extends FragmentActivity implements MapInterface{
+
+public class MapsActivity extends ActionBarActivity implements MapInterface {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
     private ListView mDrawerList;
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -57,21 +56,54 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
 
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
+        mTitle = mDrawerTitle = getTitle();
 
         //Navigation Drawer
         mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
+
+        drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_map_grey, "Map");
+        drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_stories_grey, "Stories");
+        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_explore_grey, "Tour");
+
+        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_list_item, drawerItem);
+        mDrawerList.setAdapter(adapter);
+
         // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mPlanetTitles));
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+        //       R.layout.drawer_list_item, mPlanetTitles));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
         // Speech recognition
-
         mMap.getUiSettings().setZoomControlsEnabled(false);
 
 
@@ -128,6 +160,14 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.maps, menu);
@@ -135,25 +175,30 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
 
-        //Switch statement handles the clicks on the buttons of the action bar
-        switch (id) {
-            /*case R.id.action_locate:
-                System.out.println("Location button pressed");
-                //locate();
-                return true;*/
-            case R.id.action_settings:
-                System.out.println("Settings button pressed");
-                panUp();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -200,6 +245,8 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
         MarkerOptions options = new MarkerOptions().position(new LatLng(51.963572, 7.613196)).title("Castle");
         mMap.addMarker(new MarkerOptions().position(new LatLng(51.962585, 7.628442)).title("Lamberti"));
         mMap.addMarker(options);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.962585, 7.628442), 12));
+
     }
 /*
     private void locate() {
@@ -266,8 +313,8 @@ public class MapsActivity extends FragmentActivity implements MapInterface{
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
             } else {
                 Toast.makeText(getApplicationContext(),
-                        "could not finde any results: " + location,
-                        Toast.LENGTH_SHORT).show();;
+                        "could not find any results: " + location,
+                        Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(),
