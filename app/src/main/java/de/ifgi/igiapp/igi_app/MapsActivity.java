@@ -1,23 +1,21 @@
 package de.ifgi.igiapp.igi_app;
 
 
-import android.content.res.Configuration;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
-import android.speech.RecognizerIntent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -31,7 +29,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
+import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 
 //public class MapsActivity extends FragmentActivity implements MapInterface{
 
@@ -59,6 +59,11 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
         mTitle = mDrawerTitle = getTitle();
+
+        DatabaseHandler databaseHandler = new DatabaseHandler();
+        databaseHandler.getAllPois();
+        databaseHandler.getAllStories();
+        databaseHandler.getAllTags();
 
         //Navigation Drawer
         mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
