@@ -25,5 +25,14 @@
         android:textSize="40dp"
         android:textColor="#222"
         android:layout_centerHorizontal="true" />
+    <TextView
+        android:id="@+id/display_narrative_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="bottom|left"
+        android:textSize="18dp"
+        android:textColor="#222"
+        android:layout_centerHorizontal="true" />
 
 </LinearLayout>

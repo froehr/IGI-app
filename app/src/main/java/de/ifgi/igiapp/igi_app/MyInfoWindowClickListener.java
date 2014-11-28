@@ -20,7 +20,9 @@ public class MyInfoWindowClickListener implements GoogleMap.OnInfoWindowClickLis
     public void onInfoWindowClick(Marker marker){
         Intent intent = new Intent(this.activity, DisplayNarrativeActivity.class);
         String title = marker.getTitle();
+        String description = marker.getSnippet();
         intent.putExtra("title", title);
+        intent.putExtra("description", description);
         this.activity.startActivity(intent);
     }
 }

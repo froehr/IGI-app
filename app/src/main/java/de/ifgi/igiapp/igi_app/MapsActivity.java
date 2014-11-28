@@ -379,7 +379,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
             y = coordinates.getDouble(1);
             name = object.getString("name");
             description = object.getString("description");
-            options = new MarkerOptions().position(new LatLng(x, y)).title(name);
+            options = new MarkerOptions().position(new LatLng(x, y)).title(name).snippet(description);
             mMap.addMarker(options);
             }catch(JSONException e){
             System.out.println("Exception thrown: " + e);

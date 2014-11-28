@@ -18,7 +18,8 @@ public class DisplayNarrativeActivity extends Activity {
         setContentView(R.layout.activity_display_narrative);
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
-        render(title);
+        String description = intent.getStringExtra("description");
+        render(title, description);
 
     }
 
@@ -42,13 +43,17 @@ public class DisplayNarrativeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void render(String title){
+    protected void render(String title, String description){
 
 
         // Create the text view
         //TextView textView = new TextView(this);
-        TextView textView = (TextView) findViewById(R.id.display_narrative_title);
-        textView.setText(title);
+        TextView textTitle = (TextView) findViewById(R.id.display_narrative_title);
+        textTitle.setText(title);
+
+        //Create text view for description
+        TextView textDescription = (TextView) findViewById(R.id.display_narrative_description);
+        textDescription.setText(description);
 
         //Create the image view
         ImageView image = ((ImageView) findViewById(R.id.display_narrative_image));
