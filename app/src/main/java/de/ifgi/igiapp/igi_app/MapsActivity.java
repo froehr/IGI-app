@@ -27,6 +27,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,7 @@ import de.ifgi.igiapp.igi_app.Gestures.GestureService;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private static GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -49,6 +53,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     private final int maxResults = 5;
     SpeechInputHandler speechInputHandler;
     Geocoder geocoder;
+    //public JSONArray narratives;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
+        mMap.setOnInfoWindowClickListener(new MyInfoWindowClickListener(this));
         mTitle = mDrawerTitle = getTitle();
 
         //Navigation Drawer
@@ -82,6 +88,8 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
+
+
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -120,6 +128,13 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
                 promptSpeechInput();
             }
         });
+
+        try {
+            loadData();
+            } catch (Exception e){
+            System.out.println("+++ Failure +++" + e);
+        }
+
     }
 
 
@@ -329,6 +344,46 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         }
     }
 
+    public void loadData() throws JSONException {
+        // call AsyncTask to perform network operation on separate thread
+        String url = "https://api.mongolab.com/api/1/databases/igi-tool-db/collections/pois?apiKey=2Q1SmomE3Hihh_MqC4nshAwWRowZSeiT";
 
+        HttpAsyncTask AsyncTask = new HttpAsyncTask();
+        AsyncTask.execute(url);
+        //String data = AsyncTask.getData();
+        //System.out.println("+++ AsyncTask.getData():String data ---> " + data);
+
+    }
+
+    public static void drawMarkers(JSONArray json){
+        try {
+            for (int i = 0; i <= json.length(); i++){
+                JSONObject object = json.getJSONObject(i);
+                draw(object);
+            }
+        } catch (JSONException e){
+            System.out.println(e);
+        }
+    }
+
+    public static void draw(JSONObject object){
+        JSONArray coordinates;
+        double x;
+        double y;
+        String name;
+        String description;
+        MarkerOptions options;
+        try {
+            coordinates = object.getJSONObject("location").getJSONArray("coordinates");
+            x = coordinates.getDouble(0);
+            y = coordinates.getDouble(1);
+            name = object.getString("name");
+            description = object.getString("description");
+            options = new MarkerOptions().position(new LatLng(x, y)).title(name);
+            mMap.addMarker(options);
+            }catch(JSONException e){
+            System.out.println("Exception thrown: " + e);
+        }
+    }
 }
 
