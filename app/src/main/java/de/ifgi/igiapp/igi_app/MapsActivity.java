@@ -32,6 +32,10 @@ import java.util.Locale;
 
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
 import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
+import de.ifgi.igiapp.igi_app.MongoDB.Poi;
+import de.ifgi.igiapp.igi_app.MongoDB.Story;
+import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
+import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 
 //public class MapsActivity extends FragmentActivity implements MapInterface{
 
@@ -60,7 +64,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
         mTitle = mDrawerTitle = getTitle();
 
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = new DatabaseHandler(this);
         databaseHandler.getAllPois();
         databaseHandler.getAllStories();
         databaseHandler.getAllTags();
@@ -334,6 +338,20 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         }
     }
 
+    public void setStories(Story[] stories){
+        // do something with incoming stories
+    }
 
+    public void setStoryElements(StoryElement[] storyElements){
+        // do somesting with incoming storyElements
+    }
+
+    public void setPois(Poi[] pois){
+        // do something with incoming pois
+    }
+
+    public void setTags(Tag[] tags){
+        // do something with incoming tags
+    }
 }
 

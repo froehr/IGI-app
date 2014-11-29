@@ -3,31 +3,49 @@ package de.ifgi.igiapp.igi_app.MongoDB;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import de.ifgi.igiapp.igi_app.MapsActivity;
+
 /**
  * Created by René on 28.11.2014.
  */
 public class DatabaseHandler {
+
+    MapsActivity map;
 
     static String baseUrl = "https://api.mongolab.com/api/1/databases/igi-tool-db";
     static String apiKey = "2Q1SmomE3Hihh_MqC4nshAwWRowZSeiT";
 
     String pois = "/collections/pois";
     String stories = "/collections/stories";
+    String storyElements = "/collections/story-elements";
     String tags = "/collections/tags";
+
+    public DatabaseHandler(MapsActivity _map){
+        this.map = _map;
+    }
 
     public void getAllStories(){
         new HttpAsyncTask().execute(stories);
+    }
+
+    public void getAllStoryElements(){
+        new HttpAsyncTask().execute(storyElements);
     }
 
     public void getAllTags(){
@@ -66,7 +84,25 @@ public class DatabaseHandler {
                 // now you have the string representation of the HTML request
                 instream.close();
 
-                result = "{\"" + getRequestType(url) + "\":" + result + "}";
+                String requestType = getRequestType(url);
+                result = "{\"" + requestType + "\":" + result + "}";
+
+                if(requestType.equals("stories")){
+                    Story[] stories = createStoriesFromJSON(result);
+                    map.setStories(stories);
+
+                } else if(requestType.equals("storie-elements")){
+                    StoryElement[] storyElements = createStoryElementsFromJSON(result);
+                    map.setStoryElements(storyElements);
+
+                } else if(requestType.equals("pois")){
+                    Poi[] pois = createPoisFromJSON(result);
+                    map.setPois(pois);
+
+                } else if(requestType.equals("tags")){
+                    Tag[] tags = createTagsFromJSON(requestType);
+                    map.setTags(tags);
+                }
 
                 return result;
             }
@@ -109,8 +145,10 @@ public class DatabaseHandler {
             return "stories";
         }else if(request.equals(pois)){
             return "pois";
-        }else if(request.equals(tags)){
+        }else if(request.equals(tags)) {
             return "tags";
+        } else if(request.equals(storyElements)){
+            return "story-elements";
         }else{
             return "unknown";
         }
@@ -127,5 +165,108 @@ public class DatabaseHandler {
         protected void onPostExecute(String result) {
             Log.i("Response", result);
         }
+    }
+
+    /*
+    Return array of story-objects from json-array in string representation
+     */
+    public Story[] createStoriesFromJSON(String jsonString){
+        Story[] stories = null;
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray storyArray = jsonObject.getJSONArray("stories");
+            stories = new Story[storyArray.length()];
+            for(int i = 0; i < storyArray.length(); i++){
+                JSONObject story = storyArray.getJSONObject(i);
+                String id = story.getString("id");
+                String name = story.getString("name");
+                String description = story.getString("description");
+                JSONArray jsonStoryElements = story.getJSONArray("story-id");
+                String storyElements[] = new String[jsonStoryElements.length()];
+                for(int j = 0; j < jsonStoryElements.length(); j++){
+                    storyElements[j] = jsonStoryElements.getString(j);
+                }
+                stories[i] = new Story(id, name, description, storyElements);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return stories;
+    }
+
+    public StoryElement[] createStoryElementsFromJSON(String jsonString){
+        StoryElement[] storyElements = null;
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray storyElementsArray = jsonObject.getJSONArray("story-elements");
+            storyElements = new StoryElement[storyElementsArray.length()];
+            for(int i = 0; i < storyElementsArray.length(); i++){
+                JSONObject storyElement = storyElementsArray.getJSONObject(i);
+
+                String id = storyElement.getString("id");
+                String name = storyElement.getString("name");
+                String text = storyElement.getString("text");
+                String poiId = storyElement.getString("poi-id");
+
+                JSONArray jsonTagIds = storyElement.getJSONArray("tag-id");
+                String tags[] = new String[jsonTagIds.length()];
+                for(int j = 0; j < jsonTagIds.length(); j++){
+                    tags[j] = jsonTagIds.getString(j);
+                }
+                storyElements[i] = new StoryElement(id, poiId, tags, name, text);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return storyElements;
+    }
+
+    public Poi[] createPoisFromJSON(String jsonString){
+        Poi[] pois = null;
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray poiArray = jsonObject.getJSONArray("pois");
+            pois = new Poi[poiArray.length()];
+            for(int i = 0; i < poiArray.length(); i++){
+                JSONObject poi = poiArray.getJSONObject(i);
+
+                String id = poi.getString("id");
+                String name = poi.getString("name");
+                String description = poi.getString("description");
+
+                JSONObject jsonLocation = poi.getJSONObject("location");
+                JSONArray jsonCoordinates = jsonLocation.getJSONArray("coordinates");
+                LatLng location = new LatLng(jsonCoordinates.getDouble(0), jsonCoordinates.getDouble(1));
+
+                pois[i] = new Poi(id, name, description, location);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return pois;
+    }
+
+    public Tag[] createTagsFromJSON(String jsonString){
+        Tag[] tags = null;
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray tagArray = jsonObject.getJSONArray("tags");
+            tags = new Tag[tagArray.length()];
+            for(int i = 0; i < tagArray.length(); i++){
+                JSONObject tag = tagArray.getJSONObject(i);
+
+                String id = tag.getString("id");
+                String name = tag.getString("name");
+
+                tags[i] = new Tag(id, name);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return tags;
     }
 }
