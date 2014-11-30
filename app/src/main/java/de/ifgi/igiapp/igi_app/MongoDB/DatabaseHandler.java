@@ -178,10 +178,10 @@ public class DatabaseHandler {
             stories = new Story[storyArray.length()];
             for(int i = 0; i < storyArray.length(); i++){
                 JSONObject story = storyArray.getJSONObject(i);
-                String id = story.getString("id");
+                String id = story.getString("_id");
                 String name = story.getString("name");
                 String description = story.getString("description");
-                JSONArray jsonStoryElements = story.getJSONArray("story-id");
+                JSONArray jsonStoryElements = story.getJSONArray("story_id");
                 String storyElements[] = new String[jsonStoryElements.length()];
                 for(int j = 0; j < jsonStoryElements.length(); j++){
                     storyElements[j] = jsonStoryElements.getString(j);
@@ -232,7 +232,7 @@ public class DatabaseHandler {
             for(int i = 0; i < poiArray.length(); i++){
                 JSONObject poi = poiArray.getJSONObject(i);
 
-                String id = poi.getString("id");
+                String id = poi.getString("_id");
                 String name = poi.getString("name");
                 String description = poi.getString("description");
 
