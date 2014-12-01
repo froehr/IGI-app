@@ -1,21 +1,23 @@
 package de.ifgi.igiapp.igi_app;
 
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -29,9 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
-import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
@@ -62,6 +62,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
+        mMap.setOnInfoWindowClickListener(new MyInfoWindowClickListener(this));
         mTitle = mDrawerTitle = getTitle();
 
         DatabaseHandler databaseHandler = new DatabaseHandler(this);
@@ -349,10 +350,18 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
     public void setPois(Poi[] pois){
         // do something with incoming pois
+        drawMarkers(pois);
     }
 
     public void setTags(Tag[] tags){
         // do something with incoming tags
+    }
+
+    public void drawMarkers(Poi[] pois){
+        for (int i = 0; i <= pois.length; i++){
+            MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
+            mMap.addMarker(markerOptions);
+        }    
     }
 }
 

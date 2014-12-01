@@ -41,7 +41,6 @@ android:layout_height="match_parent">
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp" />
-
         <ToggleButton
         	android:id="@+id/btnMtn"
         	android:layout_width="@dimen/mic_button_size"
@@ -55,7 +54,6 @@ android:layout_height="match_parent">
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="30dp"
             android:onClick="onGestureButtonClick" />
-
     </FrameLayout>
 <!-- The navigation drawer -->
 <ListView android:id="@+id/left_drawer"

@@ -29,6 +29,15 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".DisplayNarrativeActivity"
+            android:label="@string/title_activity_display_narrative"
+            android:parentActivityName=".MapsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.ifgi.igiapp.igi_app.MapsActivity" />
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
