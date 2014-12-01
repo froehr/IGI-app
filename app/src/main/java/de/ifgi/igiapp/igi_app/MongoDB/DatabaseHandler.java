@@ -181,7 +181,7 @@ public class DatabaseHandler {
                 String id = story.getString("_id");
                 String name = story.getString("name");
                 String description = story.getString("description");
-                JSONArray jsonStoryElements = story.getJSONArray("story_id");
+                JSONArray jsonStoryElements = story.getJSONArray("story_element_id");
                 String storyElements[] = new String[jsonStoryElements.length()];
                 for(int j = 0; j < jsonStoryElements.length(); j++){
                     storyElements[j] = jsonStoryElements.getString(j);
