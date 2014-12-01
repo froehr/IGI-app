@@ -91,7 +91,7 @@ public class DatabaseHandler {
                     Story[] stories = createStoriesFromJSON(result);
                     map.setStories(stories);
 
-                } else if(requestType.equals("storie-elements")){
+                } else if(requestType.equals("story-elements")){
                     StoryElement[] storyElements = createStoryElementsFromJSON(result);
                     map.setStoryElements(storyElements);
 
@@ -100,7 +100,7 @@ public class DatabaseHandler {
                     map.setPois(pois);
 
                 } else if(requestType.equals("tags")){
-                    Tag[] tags = createTagsFromJSON(requestType);
+                    Tag[] tags = createTagsFromJSON(result);
                     map.setTags(tags);
                 }
 
@@ -163,7 +163,9 @@ public class DatabaseHandler {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Log.i("Response", result);
+            if(result != null) {
+                Log.i("Response", result);
+            }
         }
     }
 
@@ -204,12 +206,12 @@ public class DatabaseHandler {
             for(int i = 0; i < storyElementsArray.length(); i++){
                 JSONObject storyElement = storyElementsArray.getJSONObject(i);
 
-                String id = storyElement.getString("id");
+                String id = storyElement.getString("_id");
                 String name = storyElement.getString("name");
                 String text = storyElement.getString("text");
-                String poiId = storyElement.getString("poi-id");
+                String poiId = storyElement.getString("poi_id");
 
-                JSONArray jsonTagIds = storyElement.getJSONArray("tag-id");
+                JSONArray jsonTagIds = storyElement.getJSONArray("tag_id");
                 String tags[] = new String[jsonTagIds.length()];
                 for(int j = 0; j < jsonTagIds.length(); j++){
                     tags[j] = jsonTagIds.getString(j);
@@ -258,7 +260,7 @@ public class DatabaseHandler {
             for(int i = 0; i < tagArray.length(); i++){
                 JSONObject tag = tagArray.getJSONObject(i);
 
-                String id = tag.getString("id");
+                String id = tag.getString("_id");
                 String name = tag.getString("name");
 
                 tags[i] = new Tag(id, name);
