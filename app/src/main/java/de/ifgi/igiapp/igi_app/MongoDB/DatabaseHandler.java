@@ -86,6 +86,7 @@ public class DatabaseHandler {
 
                 String requestType = getRequestType(url);
                 result = "{\"" + requestType + "\":" + result + "}";
+                Log.i("HttpRequest", result);
 
                 if(requestType.equals("stories")){
                     Story[] stories = createStoriesFromJSON(result);
@@ -211,10 +212,16 @@ public class DatabaseHandler {
                 String text = storyElement.getString("text");
                 String poiId = storyElement.getString("poi_id");
 
-                JSONArray jsonTagIds = storyElement.getJSONArray("tag_id");
-                String tags[] = new String[jsonTagIds.length()];
-                for(int j = 0; j < jsonTagIds.length(); j++){
-                    tags[j] = jsonTagIds.getString(j);
+                String tags[];
+                try {
+                    JSONArray jsonTagIds = storyElement.getJSONArray("tag_id");
+                    tags = new String[jsonTagIds.length()];
+                    for (int j = 0; j < jsonTagIds.length(); j++) {
+                        tags[j] = jsonTagIds.getString(j);
+                    }
+                } catch (JSONException e){
+                    tags = new String[1];
+                    tags[1] = storyElement.getString("tag_id");
                 }
                 storyElements[i] = new StoryElement(id, poiId, tags, name, text);
             }
