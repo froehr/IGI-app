@@ -1,12 +1,15 @@
 package de.ifgi.igiapp.igi_app;
 
 
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -49,6 +52,9 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     private final int maxResults = 5;
     SpeechInputHandler speechInputHandler;
     Geocoder geocoder;
+
+    GestureService mService;
+    boolean mBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,13 +276,36 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
         if (button.isChecked()) {
             startService(intent);
+            //bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         } else {
             stopService(intent);
+            /*if (mBound) {
+                unbindService(mConnection);
+                mBound = false;
+            }*/
+
+        }
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            GestureService.LocalBinder binder = (GestureService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
         }
 
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 
-    }
 
     public void zoomIn(){
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
