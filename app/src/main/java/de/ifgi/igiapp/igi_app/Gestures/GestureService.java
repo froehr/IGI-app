@@ -7,9 +7,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.squareup.otto.Bus;
+
+import de.ifgi.igiapp.igi_app.Bus.AnswerAvailableEvent;
+import de.ifgi.igiapp.igi_app.Bus.BusProvider;
+import de.ifgi.igiapp.igi_app.MapsActivity;
 
 public class GestureService extends Service implements SensorEventListener {
 
@@ -18,8 +25,23 @@ public class GestureService extends Service implements SensorEventListener {
 
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
-    private static final int SHAKE_THRESHOLD = 1000;
-    private static final int SHAKE_THRESHOLD_NEG = -1000;
+    private static final int SHAKE_THRESHOLD = 1500;
+    private static final int SHAKE_THRESHOLD_NEG = -1500;
+
+    // Binder given to clients
+    private final IBinder mBinder = new LocalBinder();
+
+    /**
+     * Class used for the client Binder.  Because we know this service always
+     * runs in the same process as its clients, we don't need to deal with IPC.
+     */
+    public class LocalBinder extends Binder {
+        public GestureService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return GestureService.this;
+        }
+    }
+
 
     public GestureService() {
     }
@@ -29,7 +51,14 @@ public class GestureService extends Service implements SensorEventListener {
         // TODO: Return the communication channel to the service.
         Log.d("GestureService bound", "");
 
-        throw new UnsupportedOperationException("Not yet implemented");
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this, mAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+
+        Toast.makeText(getApplicationContext(), "GestureService started!", Toast.LENGTH_SHORT).show();
+
+        //throw new UnsupportedOperationException("Not yet implemented");
+        return mBinder;
     }
 
     @Override
@@ -88,14 +117,20 @@ public class GestureService extends Service implements SensorEventListener {
 
                 if (speedX > SHAKE_THRESHOLD || speedX < SHAKE_THRESHOLD_NEG) {
                     Log.i("Speed of x = " + speedX, "");
+
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
                 }
 
                 if (speedY > SHAKE_THRESHOLD || speedY < SHAKE_THRESHOLD_NEG) {
                     Log.i("Speed of y = " + speedY, "");
+
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
                 }
 
                 if (speedZ > SHAKE_THRESHOLD || speedZ < SHAKE_THRESHOLD_NEG) {
                     Log.i("Speed of z = " + speedZ, "");
+
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.ZOOM_OUT));
                 }
 
                 last_x = x;
