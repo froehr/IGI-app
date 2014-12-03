@@ -29,11 +29,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import de.ifgi.igiapp.igi_app.Bus.AnswerAvailableEvent;
+import de.ifgi.igiapp.igi_app.Bus.BusProvider;
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
 
 //public class MapsActivity extends FragmentActivity implements MapInterface{
@@ -213,6 +217,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     protected void onResume(){
         super.onResume();
         setUpMapIfNeeded();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
     }
 
     /**
@@ -358,6 +368,21 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         }
     }
 
-
+    @Subscribe
+    public void answerAvailable(AnswerAvailableEvent event) {
+        if (event.getEvent() == BusProvider.PAN_LEFT) {
+            this.panLeft();
+        } else if (event.getEvent() == BusProvider.PAN_RIGHT) {
+            this.panRight();
+        } else if (event.getEvent() == BusProvider.PAN_DOWN) {
+            this.panDown();
+        }else if (event.getEvent() == BusProvider.PAN_UP) {
+            this.panUp();
+        }else if (event.getEvent() == BusProvider.ZOOM_IN) {
+            this.zoomIn();
+        }else if (event.getEvent() == BusProvider.ZOOM_OUT) {
+            this.zoomOut();
+        }
+    }
 }
 

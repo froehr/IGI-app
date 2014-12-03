@@ -12,6 +12,10 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
+
+import de.ifgi.igiapp.igi_app.Bus.AnswerAvailableEvent;
+import de.ifgi.igiapp.igi_app.Bus.BusProvider;
 import de.ifgi.igiapp.igi_app.MapsActivity;
 
 public class GestureService extends Service implements SensorEventListener {
@@ -21,8 +25,8 @@ public class GestureService extends Service implements SensorEventListener {
 
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
-    private static final int SHAKE_THRESHOLD = 1000;
-    private static final int SHAKE_THRESHOLD_NEG = -1000;
+    private static final int SHAKE_THRESHOLD = 1500;
+    private static final int SHAKE_THRESHOLD_NEG = -1500;
 
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
@@ -114,14 +118,19 @@ public class GestureService extends Service implements SensorEventListener {
                 if (speedX > SHAKE_THRESHOLD || speedX < SHAKE_THRESHOLD_NEG) {
                     Log.i("Speed of x = " + speedX, "");
 
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
                 }
 
                 if (speedY > SHAKE_THRESHOLD || speedY < SHAKE_THRESHOLD_NEG) {
                     Log.i("Speed of y = " + speedY, "");
+
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
                 }
 
                 if (speedZ > SHAKE_THRESHOLD || speedZ < SHAKE_THRESHOLD_NEG) {
                     Log.i("Speed of z = " + speedZ, "");
+
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.ZOOM_OUT));
                 }
 
                 last_x = x;
