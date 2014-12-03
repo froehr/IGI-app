@@ -29,7 +29,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +38,11 @@ import java.util.Locale;
 import de.ifgi.igiapp.igi_app.Bus.AnswerAvailableEvent;
 import de.ifgi.igiapp.igi_app.Bus.BusProvider;
 import de.ifgi.igiapp.igi_app.Gestures.GestureService;
+import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
+import de.ifgi.igiapp.igi_app.MongoDB.Poi;
+import de.ifgi.igiapp.igi_app.MongoDB.Story;
+import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
+import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 
 //public class MapsActivity extends FragmentActivity implements MapInterface{
 
@@ -68,7 +72,14 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
+        mMap.setOnInfoWindowClickListener(new MyInfoWindowClickListener(this));
         mTitle = mDrawerTitle = getTitle();
+
+        DatabaseHandler databaseHandler = new DatabaseHandler(this);
+        databaseHandler.getAllPois();
+        databaseHandler.getAllStories();
+        databaseHandler.getAllTags();
+        databaseHandler.getAllStoryElements();
 
         //Navigation Drawer
         mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
@@ -217,7 +228,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     protected void onResume(){
         super.onResume();
         setUpMapIfNeeded();
-        BusProvider.getInstance().register(this);
     }
 
     @Override public void onPause() {
@@ -368,6 +378,29 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         }
     }
 
+    public void setStories(Story[] stories){
+        // do something with incoming stories
+    }
+
+    public void setStoryElements(StoryElement[] storyElements){
+        // do somesting with incoming storyElements
+    }
+
+    public void setPois(Poi[] pois){
+        // do something with incoming pois
+        drawMarkers(pois);
+    }
+
+    public void setTags(Tag[] tags){
+        // do something with incoming tags
+    }
+
+    public void drawMarkers(Poi[] pois){
+        for (int i = 0; i < pois.length; i++){
+            MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
+            mMap.addMarker(markerOptions);
+        }    
+    }
     @Subscribe
     public void answerAvailable(AnswerAvailableEvent event) {
         if (event.getEvent() == BusProvider.PAN_LEFT) {
