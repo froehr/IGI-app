@@ -357,7 +357,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     }
 
     public void drawMarkers(Poi[] pois){
-        for (int i = 0; i <= pois.length; i++){
+        for (int i = 0; i < pois.length; i++){
             MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
             mMap.addMarker(markerOptions);
         }    

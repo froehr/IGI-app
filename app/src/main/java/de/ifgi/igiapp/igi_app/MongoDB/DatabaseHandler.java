@@ -86,24 +86,6 @@ public class DatabaseHandler {
 
                 String requestType = getRequestType(url);
                 result = "{\"" + requestType + "\":" + result + "}";
-                Log.i("HttpRequest", result);
-
-                if(requestType.equals("stories")){
-                    Story[] stories = createStoriesFromJSON(result);
-                    map.setStories(stories);
-
-                } else if(requestType.equals("story-elements")){
-                    StoryElement[] storyElements = createStoryElementsFromJSON(result);
-                    map.setStoryElements(storyElements);
-
-                } else if(requestType.equals("pois")){
-                    Poi[] pois = createPoisFromJSON(result);
-                    map.setPois(pois);
-
-                } else if(requestType.equals("tags")){
-                    Tag[] tags = createTagsFromJSON(result);
-                    map.setTags(tags);
-                }
 
                 return result;
             }
@@ -142,6 +124,7 @@ public class DatabaseHandler {
     }
 
     public String getRequestType(String request){
+        Log.i("RequestType:", request);
         if(request.equals(stories)){
             return "stories";
         }else if(request.equals(pois)){
@@ -166,6 +149,26 @@ public class DatabaseHandler {
         protected void onPostExecute(String result) {
             if(result != null) {
                 Log.i("Response", result);
+                String type = result.substring(result.indexOf("{") + 2, result.indexOf(":") - 1);
+
+                Log.i("Type of result: ", type);
+
+                if(type.equals("stories")){
+                    Story[] stories = createStoriesFromJSON(result);
+                    map.setStories(stories);
+
+                } else if(type.equals("story-elements")){
+                    StoryElement[] storyElements = createStoryElementsFromJSON(result);
+                    map.setStoryElements(storyElements);
+
+                } else if(type.equals("pois")){
+                    Poi[] pois = createPoisFromJSON(result);
+                    map.setPois(pois);
+
+                } else if(type.equals("tags")){
+                    Tag[] tags = createTagsFromJSON(result);
+                    map.setTags(tags);
+                }
             }
         }
     }
@@ -221,7 +224,7 @@ public class DatabaseHandler {
                     }
                 } catch (JSONException e){
                     tags = new String[1];
-                    tags[1] = storyElement.getString("tag_id");
+                    tags[0] = storyElement.getString("tag_id");
                 }
                 storyElements[i] = new StoryElement(id, poiId, tags, name, text);
             }
