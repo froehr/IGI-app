@@ -27,6 +27,18 @@ public class SpeechInputHandler {
             return;
         }
 
+        // open menu/sidebar
+        if(command.contains("open") && (command.contains("menu") || command.contains("sidebar"))){
+            map.openDrawer();
+            return;
+        }
+
+        // close menu/sidebar
+        if(command.contains("close") && (command.contains("menu") || command.contains("sidebar"))){
+            map.closeDrawer();
+            return;
+        }
+
         Toast toast = Toast.makeText((FragmentActivity) map, results.get(0), Toast.LENGTH_LONG);
         toast.show();
 

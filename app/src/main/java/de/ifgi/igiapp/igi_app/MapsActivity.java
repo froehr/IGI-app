@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -350,6 +351,10 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     public void panLeft(){
         mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
     }
+
+    public void openDrawer(){ (mDrawerLayout).openDrawer(Gravity.LEFT);}
+
+    public void closeDrawer(){ (mDrawerLayout).closeDrawer(Gravity.LEFT);}
 
 
     public void searchLocation(String location) {
