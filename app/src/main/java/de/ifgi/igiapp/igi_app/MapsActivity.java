@@ -226,6 +226,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
     @Override
     protected void onResume(){
         super.onResume();
+        BusProvider.getInstance().register(this);
         setUpMapIfNeeded();
     }
 
