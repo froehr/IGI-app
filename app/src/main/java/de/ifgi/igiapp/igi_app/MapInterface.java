@@ -19,7 +19,7 @@ public interface MapInterface {
 
     public void openDrawer();
 
-    public void closeDrawer();
-
     public void searchLocation(String location);
+
+    public void centerAtCurrentLocation();
 }

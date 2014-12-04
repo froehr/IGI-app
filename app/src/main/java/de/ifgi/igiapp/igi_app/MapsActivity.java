@@ -8,12 +8,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -46,9 +51,12 @@ import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 
 //public class MapsActivity extends FragmentActivity implements MapInterface{
 
-public class MapsActivity extends ActionBarActivity implements MapInterface {
+public class MapsActivity extends ActionBarActivity implements MapInterface,
+        GooglePlayServicesClient.ConnectionCallbacks,
+        GooglePlayServicesClient.OnConnectionFailedListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private LocationClient mLocationClient;
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -73,6 +81,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
         mMap.setOnInfoWindowClickListener(new MyInfoWindowClickListener(this));
+        mLocationClient = new LocationClient(this, this, this);
         mTitle = mDrawerTitle = getTitle();
 
         DatabaseHandler databaseHandler = new DatabaseHandler(this);
@@ -209,8 +218,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -354,8 +361,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
 
     public void openDrawer(){ (mDrawerLayout).openDrawer(Gravity.LEFT);}
 
-    public void closeDrawer(){ (mDrawerLayout).closeDrawer(Gravity.LEFT);}
-
+    public void centerAtCurrentLocation() {
+        Location mCurrentLocation = mLocationClient.getLastLocation();
+        LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
+        Log.d("", mCurrentLocation.toString());
+    }
 
     public void searchLocation(String location) {
         try {
@@ -421,6 +432,35 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         }else if (event.getEvent() == BusProvider.ZOOM_OUT) {
             this.zoomOut();
         }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onDisconnected() {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        mLocationClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        mLocationClient.disconnect();
+        super.onStop();
     }
 }
 
