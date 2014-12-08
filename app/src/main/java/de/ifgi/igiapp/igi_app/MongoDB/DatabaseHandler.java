@@ -20,6 +20,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.ifgi.igiapp.igi_app.MapsActivity;
 
@@ -79,10 +81,10 @@ public class DatabaseHandler {
     Get Story by Id
     Return null if no story could be found
      */
-    public Story getStoryByStoryId(String Id){
+    public Story getStoryByStoryId(String id){
         if(allStories != null) {
             for (Story story: allStories) {
-                if (story.getId().equals(Id)) {
+                if (story.getId().equals(id)) {
                     return story;
                 }
             }
@@ -92,12 +94,12 @@ public class DatabaseHandler {
 
     /*
     Get StoryElement by Id
-    Return null if no story could be found
+    Return null if no story-element could be found
      */
-    public StoryElement getStoryElementByStoryElementId(String Id){
+    public StoryElement getStoryElementByStoryElementId(String id){
         if(allStoryElements != null) {
             for (StoryElement storyElement: allStoryElements) {
-                if (storyElement.getId().equals(Id)) {
+                if (storyElement.getId().equals(id)) {
                     return storyElement;
                 }
             }
@@ -107,12 +109,12 @@ public class DatabaseHandler {
 
     /*
     Get Tag by Id
-    Return null if no story could be found
+    Return null if no tag could be found
      */
-    public Tag getTagById(String Id){
+    public Tag getTagById(String id){
         if(allTags != null) {
             for (Tag tag: allTags) {
-                if (tag.getId().equals(Id)) {
+                if (tag.getId().equals(id)) {
                     return tag;
                 }
             }
@@ -122,18 +124,58 @@ public class DatabaseHandler {
 
     /*
     Get POIs by Id
-    Return null if no story could be found
+    Return null if no poi could be found
      */
-    public Poi getPoiByPoiId(String Id){
+    public Poi getPoiByPoiId(String id){
         if(allPois != null) {
             for (Poi poi: allPois) {
-                if (poi.getId().equals(Id)) {
+                if (poi.getId().equals(id)) {
                     return poi;
                 }
             }
         }
         return null;
     }
+
+    /*
+    Get StoryElements by POI-Id
+    Return null if no story-element can be found
+     */
+    public List<StoryElement> getStoryElementByPoiId(String id){
+        List<StoryElement> matchingStoryElements = new ArrayList<StoryElement>();
+        if(allStoryElements != null){
+            for(StoryElement storyElement: allStoryElements){
+                if(storyElement.getPoiId().equals(id)){
+                    matchingStoryElements.add(storyElement);
+                }
+            }
+            return matchingStoryElements;
+        }
+        return null;
+    }
+
+    /*
+    Get StoryElements by POI-Id
+    Return null if no story-element can be found
+     */
+    public List<StoryElement> getStoryElementByTagId(String id){
+        List<StoryElement> matchingStoryElements = new ArrayList<StoryElement>();
+        if(allStoryElements != null){
+            for(StoryElement storyElement: allStoryElements){
+                // we assume that each story-element has at least one tag
+                for(String tagId: storyElement.getTagId()){
+                    if(tagId.equals(id)){
+                        matchingStoryElements.add(storyElement);
+                        break;
+                    }
+                }
+            }
+            return matchingStoryElements;
+        }
+        return null;
+    }
+
+
 
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public void requestAllStories(){
@@ -190,7 +232,7 @@ public class DatabaseHandler {
             }
 
 
-        } catch (Exception e) {}
+        } catch (Exception e) { e.printStackTrace();}
 
         return null;
     }
@@ -205,10 +247,11 @@ public class DatabaseHandler {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
 
-        String line = null;
+        String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line);
+                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
