@@ -1,6 +1,8 @@
 package de.ifgi.igiapp.igi_app.MongoDB;
 
+import android.annotation.TargetApi;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -23,6 +25,18 @@ import de.ifgi.igiapp.igi_app.MapsActivity;
 
 /**
  * Created by René on 28.11.2014.
+ *
+ * The DatabaseHandler is used to get access and features from the database.
+ * Every time the a request to the latest features is called, the database will store them locally as variables
+ * and send them additionally to the "MapsActivity" (setStories, setStoryElements, setTags, setPois)
+ * This is performed asynchronous and may fail, if no internet connection is available.
+ * (requestAllStories, requestAllStoryElements, requestAllTags, requestAllPois)
+ *
+ * Additionally it is possible to get all features from the latest request without accessing the database again.
+ * Therefore no internet connection is needed (getAllStories, getAllStoryElements, getAllPois, getAllTags)
+ *
+ * It is recommended to call the request method once at the startup at the application. Afterwards during this
+ * session the local variables can be used except changes in the DB need to be updated.
  */
 public class DatabaseHandler {
 
@@ -36,23 +50,108 @@ public class DatabaseHandler {
     String storyElements = "/collections/story-elements";
     String tags = "/collections/tags";
 
+    Story[] allStories;
+    StoryElement[] allStoryElements;
+    Tag[] allTags;
+    Poi[] allPois;
+
     public DatabaseHandler(MapsActivity _map){
         this.map = _map;
     }
 
-    public void getAllStories(){
+    public Story[] getAllStories(){
+        return allStories;
+    }
+
+    public StoryElement[] getAllStoryElements(){
+        return allStoryElements;
+    }
+
+    public Tag[] getAllTags(){
+        return allTags;
+    }
+
+    public Poi[] getAllPois(){
+        return allPois;
+    }
+
+    /*
+    Get Story by Id
+    Return null if no story could be found
+     */
+    public Story getStoryByStoryId(String Id){
+        if(allStories != null) {
+            for (Story story: allStories) {
+                if (story.getId().equals(Id)) {
+                    return story;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get StoryElement by Id
+    Return null if no story could be found
+     */
+    public StoryElement getStoryElementByStoryElementId(String Id){
+        if(allStoryElements != null) {
+            for (StoryElement storyElement: allStoryElements) {
+                if (storyElement.getId().equals(Id)) {
+                    return storyElement;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get Tag by Id
+    Return null if no story could be found
+     */
+    public Tag getTagById(String Id){
+        if(allTags != null) {
+            for (Tag tag: allTags) {
+                if (tag.getId().equals(Id)) {
+                    return tag;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get POIs by Id
+    Return null if no story could be found
+     */
+    public Poi getPoiByPoiId(String Id){
+        if(allPois != null) {
+            for (Poi poi: allPois) {
+                if (poi.getId().equals(Id)) {
+                    return poi;
+                }
+            }
+        }
+        return null;
+    }
+
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllStories(){
         new HttpAsyncTask().execute(stories);
     }
 
-    public void getAllStoryElements(){
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllStoryElements(){
         new HttpAsyncTask().execute(storyElements);
     }
 
-    public void getAllTags(){
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllTags(){
         new HttpAsyncTask().execute(tags);
     }
 
-    public void getAllPois(){
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllPois(){
         new HttpAsyncTask().execute(pois);
     }
 
@@ -138,6 +237,7 @@ public class DatabaseHandler {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -154,20 +254,20 @@ public class DatabaseHandler {
                 Log.i("Type of result: ", type);
 
                 if(type.equals("stories")){
-                    Story[] stories = createStoriesFromJSON(result);
-                    map.setStories(stories);
+                    allStories = createStoriesFromJSON(result);
+                    map.setStories(allStories);
 
                 } else if(type.equals("story-elements")){
-                    StoryElement[] storyElements = createStoryElementsFromJSON(result);
-                    map.setStoryElements(storyElements);
+                    allStoryElements = createStoryElementsFromJSON(result);
+                    map.setStoryElements(allStoryElements);
 
                 } else if(type.equals("pois")){
-                    Poi[] pois = createPoisFromJSON(result);
-                    map.setPois(pois);
+                    allPois = createPoisFromJSON(result);
+                    map.setPois(allPois);
 
                 } else if(type.equals("tags")){
-                    Tag[] tags = createTagsFromJSON(result);
-                    map.setTags(tags);
+                    allTags = createTagsFromJSON(result);
+                    map.setTags(allTags);
                 }
             }
         }

@@ -75,10 +75,10 @@ public class MapsActivity extends ActionBarActivity implements MapInterface {
         mTitle = mDrawerTitle = getTitle();
 
         DatabaseHandler databaseHandler = new DatabaseHandler(this);
-        databaseHandler.getAllPois();
-        databaseHandler.getAllStories();
-        databaseHandler.getAllTags();
-        databaseHandler.getAllStoryElements();
+        databaseHandler.requestAllPois();
+        databaseHandler.requestAllStories();
+        databaseHandler.requestAllTags();
+        databaseHandler.requestAllStoryElements();
 
         //Navigation Drawer
         mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
