@@ -6,6 +6,8 @@ import android.os.Build;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -175,7 +177,27 @@ public class DatabaseHandler {
         return null;
     }
 
+    /*
+    Get PolylineOptions by Story Id
+    Return empty PolylineOption-Object if id could not be resolved or story has no pois
+     */
+    public PolylineOptions getPolylineOptionsByStoryId(String id){
+        PolylineOptions storyLine = new PolylineOptions();
 
+        // get Sotry from Id
+        Story story = getStoryByStoryId(id);
+        // get all elements of this story
+        for(String storyElementId: story.getStoryElementId()){
+            StoryElement storyElement = getStoryElementByStoryElementId(storyElementId);
+            String poiId = storyElement.getPoiId();
+            // get poi of this story-element
+            Poi poi = getPoiByPoiId(poiId);
+            // add location to polyline
+            storyLine.add(poi.getLocation());
+        }
+
+        return storyLine;
+    }
 
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public void requestAllStories(){
