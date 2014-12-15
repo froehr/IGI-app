@@ -10,13 +10,13 @@
     tools:context="de.ifgi.igiapp.igi_app.PoiActivity">
 
     <ImageView
-        android:id="@+id/display_narrative_image"
+        android:id="@+id/story_element_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter" />
     <TextView
-        android:id="@+id/display_narrative_title"
+        android:id="@+id/story_element_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -26,7 +26,7 @@
         android:textColor="#222"
         android:layout_centerHorizontal="true" />
     <TextView
-        android:id="@+id/display_narrative_description"
+        android:id="@+id/story_element_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -34,10 +34,5 @@
         android:textSize="18dp"
         android:textColor="#222"
         android:layout_centerHorizontal="true" />
-
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/story_element_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

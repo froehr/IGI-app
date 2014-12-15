@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
@@ -49,6 +50,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 
+public class MapsActivity extends ActionBarActivity implements MapInterface {
 //public class MapsActivity extends FragmentActivity implements MapInterface{
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
@@ -56,6 +58,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         GooglePlayServicesClient.OnConnectionFailedListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private MyInfoWindowClickListener infoWindowClickListener;
     private LocationClient mLocationClient;
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
@@ -84,11 +87,17 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mLocationClient = new LocationClient(this, this, this);
         mTitle = mDrawerTitle = getTitle();
 
+        // request all data from db and make it global available
         DatabaseHandler databaseHandler = new DatabaseHandler(this);
-        databaseHandler.getAllPois();
-        databaseHandler.getAllStories();
-        databaseHandler.getAllTags();
-        databaseHandler.getAllStoryElements();
+        databaseHandler.requestAllPois();
+        databaseHandler.requestAllStories();
+        databaseHandler.requestAllTags();
+        databaseHandler.requestAllStoryElements();
+        GlobalApplication globalApplication = (GlobalApplication) getApplicationContext();
+        globalApplication.setGlobalDatabaseHandler(databaseHandler);
+
+        infoWindowClickListener = new MyInfoWindowClickListener(this);
+        mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 
         //Navigation Drawer
         mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
@@ -414,7 +423,8 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     public void drawMarkers(Poi[] pois){
         for (int i = 0; i < pois.length; i++){
             MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
-            mMap.addMarker(markerOptions);
+            Marker marker = mMap.addMarker(markerOptions);
+            infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
         }    
     }
     @Subscribe

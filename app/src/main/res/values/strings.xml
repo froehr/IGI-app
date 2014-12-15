@@ -21,5 +21,6 @@
     <string name="drawer_close"></string>
     <string name="title_activity_display_narrative">NarrativeDetails</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_story_element">StoryElementActivity</string>
 
 </resources>

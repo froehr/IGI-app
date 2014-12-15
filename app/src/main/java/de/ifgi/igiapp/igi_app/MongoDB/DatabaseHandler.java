@@ -1,9 +1,13 @@
 package de.ifgi.igiapp.igi_app.MongoDB;
 
+import android.annotation.TargetApi;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,11 +22,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.ifgi.igiapp.igi_app.MapsActivity;
 
 /**
  * Created by René on 28.11.2014.
+ *
+ * The DatabaseHandler is used to get access and features from the database.
+ * Every time the a request to the latest features is called, the database will store them locally as variables
+ * and send them additionally to the "MapsActivity" (setStories, setStoryElements, setTags, setPois)
+ * This is performed asynchronous and may fail, if no internet connection is available.
+ * (requestAllStories, requestAllStoryElements, requestAllTags, requestAllPois)
+ *
+ * Additionally it is possible to get all features from the latest request without accessing the database again.
+ * Therefore no internet connection is needed (getAllStories, getAllStoryElements, getAllPois, getAllTags)
+ *
+ * It is recommended to call the request method once at the startup at the application. Afterwards during this
+ * session the local variables can be used except changes in the DB need to be updated.
  */
 public class DatabaseHandler {
 
@@ -36,23 +54,168 @@ public class DatabaseHandler {
     String storyElements = "/collections/story-elements";
     String tags = "/collections/tags";
 
+    Story[] allStories;
+    StoryElement[] allStoryElements;
+    Tag[] allTags;
+    Poi[] allPois;
+
     public DatabaseHandler(MapsActivity _map){
         this.map = _map;
     }
 
-    public void getAllStories(){
+    public Story[] getAllStories(){
+        return allStories;
+    }
+
+    public StoryElement[] getAllStoryElements(){
+        return allStoryElements;
+    }
+
+    public Tag[] getAllTags(){
+        return allTags;
+    }
+
+    public Poi[] getAllPois(){
+        return allPois;
+    }
+
+    /*
+    Get Story by Id
+    Return null if no story could be found
+     */
+    public Story getStoryByStoryId(String id){
+        if(allStories != null) {
+            for (Story story: allStories) {
+                if (story.getId().equals(id)) {
+                    return story;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get StoryElement by Id
+    Return null if no story-element could be found
+     */
+    public StoryElement getStoryElementByStoryElementId(String id){
+        if(allStoryElements != null) {
+            for (StoryElement storyElement: allStoryElements) {
+                if (storyElement.getId().equals(id)) {
+                    return storyElement;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get Tag by Id
+    Return null if no tag could be found
+     */
+    public Tag getTagById(String id){
+        if(allTags != null) {
+            for (Tag tag: allTags) {
+                if (tag.getId().equals(id)) {
+                    return tag;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get POIs by Id
+    Return null if no poi could be found
+     */
+    public Poi getPoiByPoiId(String id){
+        if(allPois != null) {
+            for (Poi poi: allPois) {
+                if (poi.getId().equals(id)) {
+                    return poi;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    Get StoryElements by POI-Id
+    Return null if no story-element can be found
+     */
+    public List<StoryElement> getStoryElementByPoiId(String id){
+        List<StoryElement> matchingStoryElements = new ArrayList<StoryElement>();
+        if(allStoryElements != null){
+            for(StoryElement storyElement: allStoryElements){
+                if(storyElement.getPoiId().equals(id)){
+                    matchingStoryElements.add(storyElement);
+                }
+            }
+            return matchingStoryElements;
+        }
+        return null;
+    }
+
+    /*
+    Get StoryElements by POI-Id
+    Return null if no story-element can be found
+     */
+    public List<StoryElement> getStoryElementByTagId(String id){
+        List<StoryElement> matchingStoryElements = new ArrayList<StoryElement>();
+        if(allStoryElements != null){
+            for(StoryElement storyElement: allStoryElements){
+                // we assume that each story-element has at least one tag
+                for(String tagId: storyElement.getTagId()){
+                    if(tagId.equals(id)){
+                        matchingStoryElements.add(storyElement);
+                        break;
+                    }
+                }
+            }
+            return matchingStoryElements;
+        }
+        return null;
+    }
+
+    /*
+    Get PolylineOptions by Story Id
+    Return empty PolylineOption-Object if id could not be resolved or story has no pois
+     */
+    public PolylineOptions getPolylineOptionsByStoryId(String id){
+        PolylineOptions storyLine = new PolylineOptions();
+
+        // get Sotry from Id
+        Story story = getStoryByStoryId(id);
+        // get all elements of this story
+        for(String storyElementId: story.getStoryElementId()){
+            StoryElement storyElement = getStoryElementByStoryElementId(storyElementId);
+            String poiId = storyElement.getPoiId();
+            // get poi of this story-element
+            Poi poi = getPoiByPoiId(poiId);
+            // add location to polyline
+            storyLine.add(poi.getLocation());
+        }
+
+        return storyLine;
+    }
+
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllStories(){
         new HttpAsyncTask().execute(stories);
     }
 
-    public void getAllStoryElements(){
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllStoryElements(){
         new HttpAsyncTask().execute(storyElements);
     }
 
-    public void getAllTags(){
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllTags(){
         new HttpAsyncTask().execute(tags);
     }
 
-    public void getAllPois(){
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    public void requestAllPois(){
         new HttpAsyncTask().execute(pois);
     }
 
@@ -91,7 +254,7 @@ public class DatabaseHandler {
             }
 
 
-        } catch (Exception e) {}
+        } catch (Exception e) { e.printStackTrace();}
 
         return null;
     }
@@ -106,10 +269,11 @@ public class DatabaseHandler {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
 
-        String line = null;
+        String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line);
+                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,6 +302,7 @@ public class DatabaseHandler {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -154,20 +319,20 @@ public class DatabaseHandler {
                 Log.i("Type of result: ", type);
 
                 if(type.equals("stories")){
-                    Story[] stories = createStoriesFromJSON(result);
-                    map.setStories(stories);
+                    allStories = createStoriesFromJSON(result);
+                    map.setStories(allStories);
 
                 } else if(type.equals("story-elements")){
-                    StoryElement[] storyElements = createStoryElementsFromJSON(result);
-                    map.setStoryElements(storyElements);
+                    allStoryElements = createStoryElementsFromJSON(result);
+                    map.setStoryElements(allStoryElements);
 
                 } else if(type.equals("pois")){
-                    Poi[] pois = createPoisFromJSON(result);
-                    map.setPois(pois);
+                    allPois = createPoisFromJSON(result);
+                    map.setPois(allPois);
 
                 } else if(type.equals("tags")){
-                    Tag[] tags = createTagsFromJSON(result);
-                    map.setTags(tags);
+                    allTags = createTagsFromJSON(result);
+                    map.setTags(allTags);
                 }
             }
         }
