@@ -50,9 +50,6 @@ import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 
-public class MapsActivity extends ActionBarActivity implements MapInterface {
-//public class MapsActivity extends FragmentActivity implements MapInterface{
-
 public class MapsActivity extends ActionBarActivity implements MapInterface,
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener {
