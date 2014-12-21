@@ -65,6 +65,12 @@ public class SpeechInputHandler {
             toastString += "centerAtCurrentLocation";
             map.centerAtCurrentLocation();
         }
+        else if ( parseCommand(command, dict.commandSearchStoriesByTag) ) {
+            toastString += "storiesWithTag";
+            String firstContained = firstContained(command, dict.commandSearchStoriesByTag[2]);
+            String tag = command.substring(command.lastIndexOf(firstContained) + firstContained.length());
+            map.searchStoriesWithTag(tag);
+        }
 
         Toast toast = Toast.makeText((FragmentActivity) map, toastString, Toast.LENGTH_LONG);
         toast.show();

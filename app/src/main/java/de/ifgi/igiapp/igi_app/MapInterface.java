@@ -22,4 +22,6 @@ public interface MapInterface {
     public void searchLocation(String location);
 
     public void centerAtCurrentLocation();
+
+    public void searchStoriesWithTag(String tag);
 }

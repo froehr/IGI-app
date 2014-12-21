@@ -54,4 +54,10 @@ public class Dictionary {
             new Word("my", new String[] {}),
             new Word("location", new String[] {})
     };
+
+    public Word[] commandSearchStoriesByTag = new Word[] {
+            new Word("stories", new String[] {}),
+            new Word("with", new String[] {}),
+            new Word("tag", new String[] {})
+    };
 }
