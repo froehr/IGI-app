@@ -24,7 +24,7 @@ public class PoiActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_narrative);
+        setContentView(R.layout.activity_poi);
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");

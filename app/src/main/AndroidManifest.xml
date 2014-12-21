@@ -2,14 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.ifgi.igiapp.igi_app" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- The Accelerometer is required to use the app -->
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+
     <application
-        android:name = "de.ifgi.igiapp.igi_app.GlobalApplication"
+        android:name="de.ifgi.igiapp.igi_app.GlobalApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MapsActivity"
+            android:name="de.ifgi.igiapp.igi_app.MapsActivity"
             android:label="@string/title_activity_maps" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,42 +42,34 @@
             android:value="AIzaSyCFcfT6weeaqDPy3enLZpwC7mbV4Dv3ySo" />
 
         <service
-            android:name=".Gestures.GestureService"
+            android:name="de.ifgi.igiapp.igi_app.Gestures.GestureService"
             android:enabled="true"
             android:exported="true" >
         </service>
 
         <activity
-            android:name=".PoiActivity"
+            android:name="de.ifgi.igiapp.igi_app.PoiActivity"
             android:label="@string/title_activity_display_narrative"
-            android:parentActivityName=".MapsActivity" >
+            android:parentActivityName="de.ifgi.igiapp.igi_app.MapsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.ifgi.igiapp.igi_app.MapsActivity" />
         </activity>
         <activity
-            android:name=".StoryElementActivity"
+            android:name="de.ifgi.igiapp.igi_app.StoryElementActivity"
             android:label="@string/title_activity_story_element" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.ifgi.igiapp.igi_app.MapsActivity" />
         </activity>
+        <activity
+            android:name="de.ifgi.igiapp.igi_app.StoryListActivity"
+            android:label="@string/title_activity_story_list" >
+        </activity>
+        <activity android:name="de.ifgi.igiapp.igi_app.StoryLineMap"
+            android:label="@string/title_activity_story_line_map">
+
+        </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but are recommended.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- The Accelerometer is required to use the app -->
-    <uses-feature
-        android:name="android.hardware.sensor.accelerometer"
-        android:required="true" />
 
 </manifest>

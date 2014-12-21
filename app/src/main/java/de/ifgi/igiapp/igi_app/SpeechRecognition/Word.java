@@ -1,4 +1,4 @@
-package de.ifgi.igiapp.igi_app;
+package de.ifgi.igiapp.igi_app.SpeechRecognition;
 
 public class Word {
     public String word;

@@ -1,9 +1,11 @@
-package de.ifgi.igiapp.igi_app;
+package de.ifgi.igiapp.igi_app.SpeechRecognition;
 
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import de.ifgi.igiapp.igi_app.MapInterface;
 
 public class SpeechInputHandler {
     MapInterface map;
