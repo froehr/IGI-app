@@ -49,6 +49,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
         GooglePlayServicesClient.ConnectionCallbacks,

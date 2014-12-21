@@ -1,4 +1,6 @@
-package de.ifgi.igiapp.igi_app;
+package de.ifgi.igiapp.igi_app.SpeechRecognition;
+
+import de.ifgi.igiapp.igi_app.SpeechRecognition.Word;
 
 public class Dictionary {
     public Word pan = new Word("pan", new String[] {"turn", "that", "then", "time", "pen", "ten", "phan", "been", "gran", "10", "pin", "in", "penn", "hang", "depend", "can", "I'm", "send", "cond"});
