@@ -1,6 +1,7 @@
 package de.ifgi.igiapp.igi_app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Story;
 
 public class StoryListActivity extends Activity {
 
-    DatabaseHandler databaseHandler;
+    private DatabaseHandler databaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class StoryListActivity extends Activity {
         GlobalApplication application = (GlobalApplication) getApplicationContext();
         this.databaseHandler = application.getGlobalDatabaseHandler();
 
-        Story stories[] = databaseHandler.getAllStories();
+        final Story stories[] = databaseHandler.getAllStories();
 
         final ListView listview = (ListView) findViewById(R.id.story_list);
 
@@ -43,7 +44,10 @@ public class StoryListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-
+                String storyId = stories[position].getId();
+                Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
+                intent.putExtra("story-id", storyId);
+                startActivity(intent);
             }
         });
     }

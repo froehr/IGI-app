@@ -66,6 +66,10 @@
             android:name="de.ifgi.igiapp.igi_app.StoryListActivity"
             android:label="@string/title_activity_story_list" >
         </activity>
+        <activity android:name="de.ifgi.igiapp.igi_app.StoryLineMap"
+            android:label="@string/title_activity_story_line_map">
+
+        </activity>
     </application>
 
 </manifest>
