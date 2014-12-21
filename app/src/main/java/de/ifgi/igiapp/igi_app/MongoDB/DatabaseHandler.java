@@ -6,7 +6,6 @@ import android.os.Build;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.apache.http.HttpEntity;
@@ -197,6 +196,15 @@ public class DatabaseHandler {
         }
 
         return storyLine;
+    }
+
+    public Tag getTagByTagName(String name){
+        for(Tag tag: allTags){
+            if(name.equals(tag.getName())){
+                return tag;
+            }
+        }
+        return null;
     }
 
     @TargetApi(Build.VERSION_CODES.CUPCAKE)

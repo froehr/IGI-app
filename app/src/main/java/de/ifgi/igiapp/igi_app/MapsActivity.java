@@ -365,8 +365,8 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         }
     }
 
-    public void searchStoriesWithTag(String tag){
-        Intent intent = new Intent(MapsActivity.this, StoryListActivity.class);
+    public void searchStoryElementsByTag(String tag){
+        Intent intent = new Intent(MapsActivity.this, StoryElementListActivity.class);
         intent.putExtra("tag", tag);
         startActivity(intent);
     }

@@ -1,7 +1,5 @@
 package de.ifgi.igiapp.igi_app.SpeechRecognition;
 
-import de.ifgi.igiapp.igi_app.SpeechRecognition.Word;
-
 public class Dictionary {
     public Word pan = new Word("pan", new String[] {"turn", "that", "then", "time", "pen", "ten", "phan", "been", "gran", "10", "pin", "in", "penn", "hang", "depend", "can", "I'm", "send", "cond"});
     public Word zoom = new Word("zoom", new String[] {"lum", "hum", "sum", "newm", "who", "you", "bloom", "whom", "bowm", "blue", "rem", "xoom", "doom", "June"});
@@ -57,9 +55,10 @@ public class Dictionary {
             new Word("location", new String[] {})
     };
 
-    public Word[] commandSearchStoriesByTag = new Word[] {
-            new Word("stories", new String[] {}),
-            new Word("with", new String[] {}),
-            new Word("tag", new String[] {})
+    public Word[] commandSearchStoryElementsByTag = new Word[] {
+            new Word("story", new String[] {}),
+            new Word("elements", new String[] {}),
+            new Word("with", new String[] {"was"}),
+            new Word("tag", new String[] {"tech", "take", "text"})
     };
 }

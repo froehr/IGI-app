@@ -24,5 +24,6 @@
     <string name="title_activity_story_element">StoryElementActivity</string>
     <string name="title_activity_story_list">StoryListActivity</string>
     <string name="title_activity_story_line_map">Map</string>
+    <string name="title_activity_story_element_list">StoryElementListActivity</string>
 
 </resources>
