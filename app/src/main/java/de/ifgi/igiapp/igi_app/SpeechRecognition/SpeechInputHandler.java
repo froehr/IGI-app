@@ -64,14 +64,24 @@ public class SpeechInputHandler {
             map.openDrawer();
         }
         else if ( parseCommand(command, dict.commandShowLocation) ) {
-            toastString += "centerAtCurrentLocation";
+            toastString += "center at current location";
             map.centerAtCurrentLocation();
         }
         else if ( parseCommand(command, dict.commandSearchStoryElementsByTag) ) {
-            toastString += "storyElementsWithTag";
             String firstContained = firstContained(command, dict.commandSearchStoryElementsByTag[3]);
             String tag = command.substring(command.lastIndexOf(firstContained) + firstContained.length());
+            toastString += "story elements with tag " + tag;
             map.searchStoryElementsByTag(tag);
+        }
+        else if ( parseCommand(command, dict.commandShowStories) ) {
+            toastString += "show stories";
+            map.showStories();
+        }
+        else if ( parseCommand(command, dict.commandStartStory) ) {
+            String firstContained = firstContained(command, dict.commandStartStory[1]);
+            String storyName = command.substring(command.lastIndexOf(firstContained) + firstContained.length());
+            toastString += "start story " + storyName;
+            map.startStory(storyName);
         }
 
         Toast toast = Toast.makeText((FragmentActivity) map, toastString, Toast.LENGTH_LONG);

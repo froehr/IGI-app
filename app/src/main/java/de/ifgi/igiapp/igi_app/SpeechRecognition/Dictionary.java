@@ -59,6 +59,16 @@ public class Dictionary {
             new Word("story", new String[] {}),
             new Word("elements", new String[] {}),
             new Word("with", new String[] {"was"}),
-            new Word("tag", new String[] {"tech", "take", "text"})
+            new Word("tag", new String[] {"tax", "pak", "tech", "take", "text"})
+    };
+
+    public Word[] commandShowStories = new Word[] {
+            new Word("show", new String[] {}),
+            new Word("stories", new String[] {"story"})
+    };
+
+    public Word[] commandStartStory = new Word[] {
+            new Word("start", new String[] {"stalled"}),
+            new Word("story", new String[] {})
     };
 }
