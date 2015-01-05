@@ -28,7 +28,7 @@ class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         //tvSnippet.setText(marker.getSnippet());
         ImageView image = ((ImageView)myContentsView.findViewById(R.id.marker_image));
         image.setMaxWidth(600);
-        image.setImageResource(R.drawable.prinzipalmarkt);
+        image.setImageResource(R.drawable.prinzipalmarkt1);
 
         return myContentsView;
     }

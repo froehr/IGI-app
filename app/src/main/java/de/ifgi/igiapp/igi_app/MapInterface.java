@@ -17,5 +17,11 @@ public interface MapInterface {
 
     public void panLeft();
 
+    public void openDrawer();
+
     public void searchLocation(String location);
+
+    public void centerAtCurrentLocation();
+
+    public void searchStoryElementsByTag(String tag);
 }
