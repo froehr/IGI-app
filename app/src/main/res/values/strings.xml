@@ -5,14 +5,25 @@
     <string name="title_activity_maps">Locallama</string>
     <string name="action_locate">Locate me</string>
     <string name="action_settings">Settings</string>
-    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_prompt">Say something…</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
-    <string name="drawer_text_color">#ffffff</string>
-    <string name="drawer_text_size">20sp</string>
+
     <string-array name="drawer_content">
-        <item>  Map</item>
-        <item>  Local Stories</item>
-        <item>  Tours</item>
+        <item>Map</item>
+        <item>Stories</item>
+        <item>Tours</item>
     </string-array>
+
+    <string name="map">Map</string>
+    <string name="stories">Stories</string>
+    <string name="tour">Tour</string>
+    <string name="drawer_open"></string>
+    <string name="drawer_close"></string>
+    <string name="title_activity_display_narrative">NarrativeDetails</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_story_element">StoryElementActivity</string>
+    <string name="title_activity_story_list">StoryListActivity</string>
+    <string name="title_activity_story_line_map">Map</string>
+    <string name="title_activity_story_element_list">StoryElementListActivity</string>
 
 </resources>
