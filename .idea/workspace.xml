@@ -28,10 +28,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a285738a-4c6f-426e-ab87-de00f6c93943" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Bus/BusProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Bus/BusProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" />
     </list>
     <ignored path="IGI-App.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,8 +54,8 @@
       <file leaf-file-name="GestureService.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38172042" vertical-offset="1512" max-vertical-offset="2250">
-              <caret line="132" column="110" selection-start-line="132" selection-start-column="110" selection-end-line="132" selection-end-column="110" />
+            <state vertical-scroll-proportion="0.32795697" vertical-offset="1527" max-vertical-offset="2490">
+              <caret line="131" column="48" selection-start-line="131" selection-start-column="48" selection-end-line="131" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -1087,8 +1084,8 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Bus/BusProvider.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java" />
       </list>
     </option>
   </component>
@@ -1562,7 +1559,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.3411371" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="-3" y="-3" width="1372" height="740" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.3411371" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="-3" y="-3" width="1372" height="740" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1949,8 +1946,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38172042" vertical-offset="1512" max-vertical-offset="2250">
-          <caret line="132" column="110" selection-start-line="132" selection-start-column="110" selection-end-line="132" selection-end-column="110" />
+        <state vertical-scroll-proportion="0.32795697" vertical-offset="1527" max-vertical-offset="2490">
+          <caret line="131" column="48" selection-start-line="131" selection-start-column="48" selection-end-line="131" selection-end-column="48" />
           <folding />
         </state>
       </provider>

@@ -129,8 +129,24 @@ public class GestureService extends Service implements SensorEventListener {
                 BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
             }
 
-            if (movingAverageZ.getAverage() < -5) {
+            if (movingAverageZ.getAverage() < -7) {
                 BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
+
+                if (movingAverageX.getAverage() > 5) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_RIGHT));
+                }
+
+                if (movingAverageX.getAverage() < -5) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
+                }
+
+                if (movingAverageY.getAverage() > 8) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
+                }
+
+                if (movingAverageY.getAverage() < -1) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_DOWN));
+                }
             }
 
 /*            // Shaking
