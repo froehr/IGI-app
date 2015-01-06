@@ -104,7 +104,7 @@ public class GestureService extends Service implements SensorEventListener {
 
             long curTime = System.currentTimeMillis();
 
-            //Log.i("Accelerometer = ", "" + x + " , " + y + " , " + z);
+            Log.i("Accelerometer = ", "" + x + " , " + y + " , " + z);
 
             movingAverageX.add(x);
             movingAverageY.add(y);
@@ -127,6 +127,10 @@ public class GestureService extends Service implements SensorEventListener {
 
             if (movingAverageY.getAverage() < -1) {
                 BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
+            }
+
+            if (movingAverageZ.getAverage() < -5) {
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
             }
 
 /*            // Shaking
