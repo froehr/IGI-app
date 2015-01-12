@@ -36,6 +36,8 @@ public class GestureService extends Service implements SensorEventListener {
     private final MovingAverage movingAverageY = new MovingAverage(30);
     private final MovingAverage movingAverageZ = new MovingAverage(30);
 
+    private long lastUpdate = 0;
+
     /**
      * Class used for the client Binder.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with IPC.
@@ -133,8 +135,16 @@ public class GestureService extends Service implements SensorEventListener {
 
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             if (movingAverageZ.getAverage() < -7 && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
-
+                try {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
+                } catch (Exception e) {
+                    if ((curTime - lastUpdate) > 3500) {
+                        long diffTime = (curTime - lastUpdate);
+                        lastUpdate = curTime;
+                        Toast.makeText(getApplicationContext(), "Please wait until GPS Signal is found to use this function", Toast.LENGTH_LONG).show();
+                    }
+                    e.printStackTrace();
+                }
                 if (movingAverageX.getAverage() > 5) {
                     BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_RIGHT));
                 }
@@ -149,6 +159,12 @@ public class GestureService extends Service implements SensorEventListener {
 
                 if (movingAverageY.getAverage() < -1) {
                     BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_DOWN));
+                }
+            } else if (movingAverageZ.getAverage() < -7) {
+                if ((curTime - lastUpdate) > 3500) {
+                    long diffTime = (curTime - lastUpdate);
+                    lastUpdate = curTime;
+                    Toast.makeText(getApplicationContext(), "Please enable GPS to use this function", Toast.LENGTH_LONG).show();
                 }
             }
 
