@@ -1,12 +1,14 @@
 package de.ifgi.igiapp.igi_app.Gestures;
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.text.method.MovementMethod;
@@ -30,9 +32,9 @@ public class GestureService extends Service implements SensorEventListener {
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
 
-    private final MovingAverage movingAverageX = new MovingAverage(10);
-    private final MovingAverage movingAverageY = new MovingAverage(10);
-    private final MovingAverage movingAverageZ = new MovingAverage(10);
+    private final MovingAverage movingAverageX = new MovingAverage(30);
+    private final MovingAverage movingAverageY = new MovingAverage(30);
+    private final MovingAverage movingAverageZ = new MovingAverage(30);
 
     /**
      * Class used for the client Binder.  Because we know this service always
@@ -129,7 +131,8 @@ public class GestureService extends Service implements SensorEventListener {
                 BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
             }
 
-            if (movingAverageZ.getAverage() < -7) {
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (movingAverageZ.getAverage() < -7 && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
 
                 if (movingAverageX.getAverage() > 5) {
