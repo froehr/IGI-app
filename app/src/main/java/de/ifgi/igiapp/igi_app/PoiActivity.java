@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -92,8 +93,9 @@ public class PoiActivity extends Activity {
         textTitle.setText(title);
 
         // Create text view for description
-        TextView textDescription = (TextView) findViewById(R.id.display_narrative_description);
-        textDescription.setText(description);
+        WebView textDescription = (WebView) findViewById(R.id.display_narrative_description);
+        String descriptionHTML = "<html><body style=\"background-color: #f1f1f1; margin: 0px;\"><p align=\"justify\">" + description + "</p></body></html>";
+        textDescription.loadData(descriptionHTML, "text/html", "utf-8");
 
         //Create the image view
         ImageView image = ((ImageView) findViewById(R.id.display_narrative_image));
