@@ -3,6 +3,7 @@ package de.ifgi.igiapp.igi_app;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -49,6 +51,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
+import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
 import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
@@ -77,6 +80,24 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        // get shared preferences
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        // first time run?
+        if (pref.getBoolean("firstTimeRun", true)) {
+
+            // start the preferences activity
+            startActivity(new Intent(getBaseContext(), ActivityFirstLaunch.class));
+
+            //get the preferences editor
+            SharedPreferences.Editor editor = pref.edit();
+
+            // avoid for next run
+            editor.putBoolean("firstTimeRun", false);
+            editor.commit();
+        }
+
         setUpMapIfNeeded();
 
         mMap.setMyLocationEnabled(true);
