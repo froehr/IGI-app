@@ -464,5 +464,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mLocationClient.disconnect();
         super.onStop();
     }
+
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(this, GestureService.class);
+        stopService(intent);
+        super.onDestroy();
+    }
 }
 
