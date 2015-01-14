@@ -147,11 +147,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[4];
 
         drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_map_grey, "Map");
         drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_stories_grey, "Stories");
         drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_explore_grey, "Tour");
+        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_list_item, drawerItem);
         mDrawerList.setAdapter(adapter);
