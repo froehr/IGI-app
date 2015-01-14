@@ -1,14 +1,17 @@
 package de.ifgi.igiapp.igi_app.Gestures;
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.text.method.MovementMethod;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,13 +26,17 @@ public class GestureService extends Service implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
-    private long lastUpdate = 0;
-    private float last_x, last_y, last_z;
-    private static final int SHAKE_THRESHOLD = 1500;
-    private static final int SHAKE_THRESHOLD_NEG = -1500;
+    private static final int SHAKE_THRESHOLD = 15;
+    private static final int SHAKE_THRESHOLD_NEG = -15;
 
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
+
+    private final MovingAverage movingAverageX = new MovingAverage(30);
+    private final MovingAverage movingAverageY = new MovingAverage(30);
+    private final MovingAverage movingAverageZ = new MovingAverage(30);
+
+    private long lastUpdate = 0;
 
     /**
      * Class used for the client Binder.  Because we know this service always
@@ -53,7 +60,7 @@ public class GestureService extends Service implements SensorEventListener {
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         Toast.makeText(getApplicationContext(), "GestureService started!", Toast.LENGTH_SHORT).show();
 
@@ -65,7 +72,7 @@ public class GestureService extends Service implements SensorEventListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         Toast.makeText(getApplicationContext(), "GestureService started!", Toast.LENGTH_SHORT).show();
         Log.d("GestureService started", "");
@@ -90,7 +97,6 @@ public class GestureService extends Service implements SensorEventListener {
     }
 
 
-
     @Override
     public void onSensorChanged(SensorEvent event) {
         Sensor mSensor = event.sensor;
@@ -102,42 +108,84 @@ public class GestureService extends Service implements SensorEventListener {
 
             long curTime = System.currentTimeMillis();
 
-            if ((curTime - lastUpdate) > 10) {
-                long diffTime = (curTime - lastUpdate);
-                lastUpdate = curTime;
+            Log.i("Accelerometer = ", "" + x + " , " + y + " , " + z);
 
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 10000;
-                float speedX = (x - last_x)/ diffTime * 10000;
-                float speedY = (y - last_y)/ diffTime * 10000;
-                float speedZ = (z - last_z)/ diffTime * 10000;
+            movingAverageX.add(x);
+            movingAverageY.add(y);
+            movingAverageZ.add(z);
 
-                if (speed > SHAKE_THRESHOLD) {
+            Log.i("MovingAverage = ", "" + movingAverageX.getAverage() + " , " + movingAverageY.getAverage() + " , " + movingAverageZ.getAverage());
 
+            //Pose Gestures
+            if (movingAverageX.getAverage() > 5) {
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
+            }
+
+            if (movingAverageX.getAverage() < -5) {
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_RIGHT));
+            }
+
+            if (movingAverageY.getAverage() > 8) {
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_DOWN));
+            }
+
+            if (movingAverageY.getAverage() < -1) {
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
+            }
+
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (movingAverageZ.getAverage() < -7 && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                try {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
+                } catch (Exception e) {
+                    if ((curTime - lastUpdate) > 3500) {
+                        long diffTime = (curTime - lastUpdate);
+                        lastUpdate = curTime;
+                        Toast.makeText(getApplicationContext(), "Please wait until GPS Signal is found to use this function", Toast.LENGTH_LONG).show();
+                    }
+                    e.printStackTrace();
+                }
+                if (movingAverageX.getAverage() > 5) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_RIGHT));
                 }
 
-                if (speedX > SHAKE_THRESHOLD || speedX < SHAKE_THRESHOLD_NEG) {
-                    Log.i("Speed of x = " + speedX, "");
-
+                if (movingAverageX.getAverage() < -5) {
                     BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
                 }
 
-                if (speedY > SHAKE_THRESHOLD || speedY < SHAKE_THRESHOLD_NEG) {
-                    Log.i("Speed of y = " + speedY, "");
-
+                if (movingAverageY.getAverage() > 8) {
                     BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
                 }
 
-                if (speedZ > SHAKE_THRESHOLD || speedZ < SHAKE_THRESHOLD_NEG) {
-                    Log.i("Speed of z = " + speedZ, "");
-
-                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.ZOOM_OUT));
+                if (movingAverageY.getAverage() < -1) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_DOWN));
                 }
-
-                last_x = x;
-                last_y = y;
-                last_z = z;
-
+            } else if (movingAverageZ.getAverage() < -7) {
+                if ((curTime - lastUpdate) > 3500) {
+                    long diffTime = (curTime - lastUpdate);
+                    lastUpdate = curTime;
+                    Toast.makeText(getApplicationContext(), "Please enable GPS to use this function", Toast.LENGTH_LONG).show();
+                }
             }
+
+/*            // Shaking
+            if (x > SHAKE_THRESHOLD || x < SHAKE_THRESHOLD_NEG) {
+                Log.i("Speed of x = " + x, "");
+
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
+            }
+
+            if (y > SHAKE_THRESHOLD || y < SHAKE_THRESHOLD_NEG) {
+                Log.i("Speed of y = " + y, "");
+
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
+            }
+
+            if (z > SHAKE_THRESHOLD+5 || z < SHAKE_THRESHOLD_NEG+5) {
+                Log.i("Speed of z = " + z, "");
+
+                BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.ZOOM_OUT));
+            }*/
         }
     }
 
