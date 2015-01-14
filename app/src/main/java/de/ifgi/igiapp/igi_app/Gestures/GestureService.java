@@ -1,12 +1,14 @@
 package de.ifgi.igiapp.igi_app.Gestures;
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.text.method.MovementMethod;
@@ -30,9 +32,11 @@ public class GestureService extends Service implements SensorEventListener {
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
 
-    private final MovingAverage movingAverageX = new MovingAverage(10);
-    private final MovingAverage movingAverageY = new MovingAverage(10);
-    private final MovingAverage movingAverageZ = new MovingAverage(10);
+    private final MovingAverage movingAverageX = new MovingAverage(30);
+    private final MovingAverage movingAverageY = new MovingAverage(30);
+    private final MovingAverage movingAverageZ = new MovingAverage(30);
+
+    private long lastUpdate = 0;
 
     /**
      * Class used for the client Binder.  Because we know this service always
@@ -104,7 +108,7 @@ public class GestureService extends Service implements SensorEventListener {
 
             long curTime = System.currentTimeMillis();
 
-            //Log.i("Accelerometer = ", "" + x + " , " + y + " , " + z);
+            Log.i("Accelerometer = ", "" + x + " , " + y + " , " + z);
 
             movingAverageX.add(x);
             movingAverageY.add(y);
@@ -127,6 +131,41 @@ public class GestureService extends Service implements SensorEventListener {
 
             if (movingAverageY.getAverage() < -1) {
                 BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
+            }
+
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (movingAverageZ.getAverage() < -7 && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                try {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.CENTER_CURRENT_LOCATION));
+                } catch (Exception e) {
+                    if ((curTime - lastUpdate) > 3500) {
+                        long diffTime = (curTime - lastUpdate);
+                        lastUpdate = curTime;
+                        Toast.makeText(getApplicationContext(), "Please wait until GPS Signal is found to use this function", Toast.LENGTH_LONG).show();
+                    }
+                    e.printStackTrace();
+                }
+                if (movingAverageX.getAverage() > 5) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_RIGHT));
+                }
+
+                if (movingAverageX.getAverage() < -5) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_LEFT));
+                }
+
+                if (movingAverageY.getAverage() > 8) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_UP));
+                }
+
+                if (movingAverageY.getAverage() < -1) {
+                    BusProvider.getInstance().post(new AnswerAvailableEvent(BusProvider.PAN_DOWN));
+                }
+            } else if (movingAverageZ.getAverage() < -7) {
+                if ((curTime - lastUpdate) > 3500) {
+                    long diffTime = (curTime - lastUpdate);
+                    lastUpdate = curTime;
+                    Toast.makeText(getApplicationContext(), "Please enable GPS to use this function", Toast.LENGTH_LONG).show();
+                }
             }
 
 /*            // Shaking

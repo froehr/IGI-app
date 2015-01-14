@@ -425,12 +425,14 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
             this.panRight();
         } else if (event.getEvent() == BusProvider.PAN_DOWN) {
             this.panDown();
-        }else if (event.getEvent() == BusProvider.PAN_UP) {
+        } else if (event.getEvent() == BusProvider.PAN_UP) {
             this.panUp();
-        }else if (event.getEvent() == BusProvider.ZOOM_IN) {
+        } else if (event.getEvent() == BusProvider.ZOOM_IN) {
             this.zoomIn();
-        }else if (event.getEvent() == BusProvider.ZOOM_OUT) {
+        } else if (event.getEvent() == BusProvider.ZOOM_OUT) {
             this.zoomOut();
+        } else if (event.getEvent() == BusProvider.CENTER_CURRENT_LOCATION) {
+            this.centerAtCurrentLocation();
         }
     }
 

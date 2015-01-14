@@ -30,6 +30,7 @@ public final class BusProvider {
     public static final String PAN_DOWN = "down";
     public static final String ZOOM_IN = "in";
     public static final String ZOOM_OUT = "out";
+    public static final String CENTER_CURRENT_LOCATION = "current";
 
     public static Bus getInstance() {
         return BUS;
