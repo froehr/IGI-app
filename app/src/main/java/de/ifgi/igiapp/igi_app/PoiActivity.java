@@ -94,8 +94,8 @@ public class PoiActivity extends Activity {
 
         // Create text view for description
         WebView textDescription = (WebView) findViewById(R.id.display_narrative_description);
-        String descriptionHTML = "<html><body style=\"background-color: #f1f1f1; margin: 0px;\"><p align=\"justify\">" + description + "</p></body></html>";
-        textDescription.loadData(descriptionHTML, "text/html", "utf-8");
+        String descriptionHTML = "<html><body style=\"background-color: #EEEEEE; margin: 0px;\"><p align=\"justify\">" + description + "</p></body></html>";
+        textDescription.loadData(descriptionHTML, "text/html; charset=utf-8", null);
 
         //Create the image view
         ImageView image = ((ImageView) findViewById(R.id.display_narrative_image));
