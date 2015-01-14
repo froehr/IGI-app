@@ -29,8 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a285738a-4c6f-426e-ab87-de00f6c93943" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tutorial_panning.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page3.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tutorial_homing.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page4.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page4.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="IGI-App.iws" />
@@ -74,12 +74,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_screen_slide_page3.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="fragment_screen_slide_page3.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page3.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6055046" vertical-offset="180" max-vertical-offset="990">
-              <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+            <state vertical-scroll-proportion="-7.1153846" vertical-offset="265" max-vertical-offset="990">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="34" selection-end-column="50" />
               <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_screen_slide_page4.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page4.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7706422" vertical-offset="90" max-vertical-offset="990">
+              <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+              <folding>
+                <element signature="e#491#517#0" expanded="true" />
+                <element signature="e#543#580#0" expanded="true" />
+                <element signature="e#647#682#0" expanded="true" />
+                <element signature="e#937#969#0" expanded="true" />
+                <element signature="e#995#1034#0" expanded="true" />
+                <element signature="e#1121#1156#0" expanded="true" />
+                <element signature="e#1965#1988#0" expanded="true" />
+              </folding>
             </state>
           </provider>
           <provider editor-type-id="android-designer">
@@ -1634,6 +1655,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/DrawerItemClickListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page3.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page4.xml" />
       </list>
     </option>
   </component>
@@ -2144,13 +2166,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1860" max-vertical-offset="2310">
-          <caret line="124" column="22" selection-start-line="124" selection-start-column="22" selection-end-line="124" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2564" max-vertical-offset="5505">
@@ -2513,9 +2528,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page3.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6055046" vertical-offset="180" max-vertical-offset="990">
-          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+        <state vertical-scroll-proportion="-7.1153846" vertical-offset="265" max-vertical-offset="990">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="34" selection-end-column="50" />
           <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page4.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7706422" vertical-offset="90" max-vertical-offset="990">
+          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+          <folding>
+            <element signature="e#491#517#0" expanded="true" />
+            <element signature="e#543#580#0" expanded="true" />
+            <element signature="e#647#682#0" expanded="true" />
+            <element signature="e#937#969#0" expanded="true" />
+            <element signature="e#995#1034#0" expanded="true" />
+            <element signature="e#1121#1156#0" expanded="true" />
+            <element signature="e#1965#1988#0" expanded="true" />
+          </folding>
         </state>
       </provider>
       <provider editor-type-id="android-designer">
