@@ -44,7 +44,11 @@ public class SpeechInputHandler {
             toastString += "pan down";
             map.panDown();
         }
-        else if ( parseCommand(command, dict.commandMoveTo) || parseCommand(command, dict.commandCenterAt)  ) {
+        else if ( parseCommand(command, dict.commandMoveTo) ||
+                parseCommand(command, dict.commandCenterAt) ||
+                parseCommand(command, dict.commandZoomTo) ||
+                parseCommand(command, dict.commandFind)
+                ) {
             String firstContained = " ";
             if ( parseCommand(command, dict.commandMoveTo) ) {
                 toastString += "move to";
@@ -53,6 +57,14 @@ public class SpeechInputHandler {
             else if ( parseCommand(command, dict.commandCenterAt) ) {
                 toastString += "center at";
                 firstContained = firstContained(command, dict.commandCenterAt[1]);
+            }
+            else if ( parseCommand(command, dict.commandZoomTo) ) {
+                toastString += "zoom to";
+                firstContained = firstContained(command, dict.commandZoomTo[1]);
+            }
+            else if ( parseCommand(command, dict.commandFind) ) {
+                toastString += "find";
+                firstContained = firstContained(command, dict.commandFind[0]);
             }
 
             String location = command.substring(command.lastIndexOf(firstContained) + firstContained.length());
