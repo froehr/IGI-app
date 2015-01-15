@@ -75,6 +75,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
     GestureService mService;
     boolean mBound = false;
+    private boolean mGestureServiceRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,10 +298,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
         if (button.isChecked()) {
             startService(intent);
+            mGestureServiceRunning = true;
             //bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         } else {
             stopService(intent);
+            mGestureServiceRunning = false;
             /*if (mBound) {
                 unbindService(mConnection);
                 mBound = false;
@@ -456,12 +459,20 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         super.onStart();
         // Connect the client.
         mLocationClient.connect();
+        if (mGestureServiceRunning) {
+            Intent intent = new Intent(this, GestureService.class);
+            startService(intent);
+        }
     }
 
     @Override
     protected void onStop() {
         // Disconnecting the client invalidates it.
         mLocationClient.disconnect();
+        if (mGestureServiceRunning) {
+            Intent intent = new Intent(this, GestureService.class);
+            stopService(intent);
+        }
         super.onStop();
     }
 
@@ -469,6 +480,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     protected void onDestroy() {
         Intent intent = new Intent(this, GestureService.class);
         stopService(intent);
+        mGestureServiceRunning = false;
         super.onDestroy();
     }
 }
