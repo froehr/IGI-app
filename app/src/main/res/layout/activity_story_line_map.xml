@@ -9,4 +9,23 @@
     android:layout_height="match_parent" android:id="@+id/story_map"
     tools:context="de.ifgi.igiapp.igi_app.StoryLineMap"
     android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <RelativeLayout
+        android:id="@+id/mapOverlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/startStoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="#359c5e"
+            android:text="Start Story"
+            android:textColor="#ffffff"
+            android:padding="10dp"/>
+    </RelativeLayout>
 </FrameLayout>
