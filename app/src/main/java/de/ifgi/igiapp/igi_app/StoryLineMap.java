@@ -42,6 +42,14 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     private boolean connected = false;
     private boolean startIfConnected = false;
 
+    Button startStoryButton;
+    Button NextFakeLocation;
+
+    String[] storyElementIds;
+
+    // request code for visiting story element
+    private int VISIT_STORYELEMENT = 1;
+
     // all markers of this story
     MarkerOptions[] markerCollection;
 
@@ -49,7 +57,7 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     private int approachingMarker;
 
     // minimum distance before story element is opened
-    private final int ACTIVATION_DISTANCE = 50;
+    private final double ACTIVATION_DISTANCE = 0.05;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +78,15 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         mLocationClient = new LocationClient(this, this,this);
         mLocationClient.connect();
 
-        final Button button = (Button) findViewById(R.id.startStoryButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        startStoryButton = (Button) findViewById(R.id.startStoryButton);
+        startStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // start as soon as connection is established
                 startIfConnected = true;
+
+                // make button invisible
+                startStoryButton.setVisibility(View.GONE);
 
                 // if not yet connect inform user
                 if (!connected) {
@@ -112,7 +123,7 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
             @Override
             public void onMapLoaded() {
                 Story story = databaseHandler.getStoryByStoryId(storyId);
-                String[] storyElementIds = story.getStoryElementId();
+                storyElementIds = story.getStoryElementId();
                 StoryElement[] storyElements = new StoryElement[storyElementIds.length];
                 for(int i = 0; i < storyElementIds.length; i++){
                     storyElements[i] = databaseHandler.getStoryElementByStoryElementId(storyElementIds[i]);
@@ -178,7 +189,7 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
 
         // register listener
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,mLocationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
     }
 
     public void centerMapOnLocation(Location location){
@@ -199,13 +210,35 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         float distance = earthRadius * c;
 
         if ( distance < ACTIVATION_DISTANCE){
+            // stop watching location as long as user is in story element
+            mLocationManager.removeUpdates(mLocationListener);
+            // open new activity
             openApproachingStoryElement();
         }
     }
 
     public void openApproachingStoryElement(){
-        // TODO create intent for starting activity(fragment) with story element description
-        // on return: increase approaching marker index
+        Intent intent = new Intent (StoryLineMap.this, StoryElementActivity.class);
+        intent.putExtra("story-element-id", storyElementIds[approachingMarker]);
+        startActivityForResult(intent, VISIT_STORYELEMENT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == VISIT_STORYELEMENT) {
+            if (resultCode == RESULT_OK) {
+                // marker has been visited go to next one if available
+                if(markerCollection.length == approachingMarker){
+                    // TODO finish story
+                    Toast.makeText(getApplicationContext(), "You visited all story elements", Toast.LENGTH_SHORT).show();
+                } else {
+                    approachingMarker++;
+                    // start watching out for next element
+                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,mLocationListener);
+                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                }
+            }
+        }
     }
 
     @Override
