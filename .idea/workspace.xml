@@ -29,10 +29,8 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: de.ifgi.igiapp.igi_app" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d4cfab4-b673-41eb-bb3a-94199b142924" name="Default" comment="">
+    <list default="true" id="2d4cfab4-b673-41eb-bb3a-94199b142924" name="Default" comment="Check if user is close enough to start next story element">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="IGI-App.iws" />
@@ -59,12 +57,12 @@
       <file leaf-file-name="StoryLineMap.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7081545" vertical-offset="2849" max-vertical-offset="3315">
-              <caret line="190" column="5" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
+            <state vertical-scroll-proportion="1.6069652" vertical-offset="0" max-vertical-offset="3961">
+              <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2601#3088#0" expanded="true" />
-                <element signature="e#3077#3078#0" expanded="true" />
+                <element signature="e#2854#3341#0" expanded="true" />
+                <element signature="e#3330#3331#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -977,12 +975,20 @@
       <AnalysisUIOptions />
     </option>
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2d4cfab4-b673-41eb-bb3a-94199b142924" name="Default" comment="" />
       <created>1421488572506</created>
       <updated>1421488572506</updated>
     </task>
+    <task id="LOCAL-00001" summary="Starting location listener">
+      <created>1421494915311</created>
+      <updated>1421494915311</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1002,8 +1008,8 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22884013" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3291536" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22884013" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1035,6 +1041,9 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="Starting location listener" />
+    <MESSAGE value="Check if user is close enough to start next story element" />
+    <option name="LAST_COMMIT_MESSAGE" value="Check if user is close enough to start next story element" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1109,12 +1118,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7081545" vertical-offset="2849" max-vertical-offset="3315">
-          <caret line="190" column="5" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
+        <state vertical-scroll-proportion="1.6069652" vertical-offset="0" max-vertical-offset="3961">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2601#3088#0" expanded="true" />
-            <element signature="e#3077#3078#0" expanded="true" />
+            <element signature="e#2854#3341#0" expanded="true" />
+            <element signature="e#3330#3331#0" expanded="true" />
           </folding>
         </state>
       </provider>

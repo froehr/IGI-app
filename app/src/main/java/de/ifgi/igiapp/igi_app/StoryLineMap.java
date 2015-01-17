@@ -42,6 +42,15 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     private boolean connected = false;
     private boolean startIfConnected = false;
 
+    // all markers of this story
+    MarkerOptions[] markerCollection;
+
+    // array index of approaching marker
+    private int approachingMarker;
+
+    // minimum distance before story element is opened
+    private final int ACTIVATION_DISTANCE = 50;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,10 +128,14 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     }
 
     public void addStoryElementsToMap(StoryElement[] storyElements){
-        for(StoryElement storyElement: storyElements){
-            String storyElementPoiId = storyElement.getPoiId();
+
+        markerCollection = new MarkerOptions[storyElements.length];
+
+        for(int i = 0; i < storyElements.length; i++){
+            String storyElementPoiId = storyElements[i].getPoiId();
             Poi storyElementPoi = databaseHandler.getPoiByPoiId(storyElementPoiId);
             MarkerOptions markerOptions = new MarkerOptions().position(storyElementPoi.getLocation());
+            markerCollection[i] = markerOptions;
             mMap.addMarker(markerOptions);
         }
     }
@@ -141,16 +154,19 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     }
 
     public void startStory(){
+        approachingMarker = 0;
+
         Location mCurrentLocation = mLocationClient.getLastLocation();
         centerMapOnLocation(mCurrentLocation);
         startLocationListener();
     }
 
     private void startLocationListener(){
-        LocationListener locationListener = new LocationListener(){
+        mLocationListener = new LocationListener(){
             public void onLocationChanged (Location location) {
                 Toast.makeText(getApplicationContext(), "Received new position", Toast.LENGTH_SHORT).show();
                 centerMapOnLocation(location);
+                checkDistanceToMarker(location, markerCollection[approachingMarker].getPosition());
             }
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -161,13 +177,35 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         };
 
         // register listener
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,mLocationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
     }
 
     public void centerMapOnLocation(Location location){
         LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
+    }
+
+    public void checkDistanceToMarker(Location currentLocation, LatLng markerPosition){
+
+        // calculate distance
+        final int earthRadius = 6371;
+        float dLat = (float) Math.toRadians(markerPosition.latitude - currentLocation.getLatitude());
+        float dLon = (float) Math.toRadians(markerPosition.longitude - currentLocation.getLongitude());
+        float a =
+            (float) (Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(currentLocation.getLatitude()))
+                * Math.cos(Math.toRadians(markerPosition.latitude)) * Math.sin(dLon / 2) * Math.sin(dLon / 2));
+        float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+        float distance = earthRadius * c;
+
+        if ( distance < ACTIVATION_DISTANCE){
+            openApproachingStoryElement();
+        }
+    }
+
+    public void openApproachingStoryElement(){
+        // TODO create intent for starting activity(fragment) with story element description
+        // on return: increase approaching marker index
     }
 
     @Override
