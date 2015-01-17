@@ -43,7 +43,7 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     private boolean startIfConnected = false;
 
     Button startStoryButton;
-    Button NextFakeLocation;
+    Button nextFakeLocButton;
 
     String[] storyElementIds;
 
@@ -79,14 +79,17 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         mLocationClient.connect();
 
         startStoryButton = (Button) findViewById(R.id.startStoryButton);
+        nextFakeLocButton = (Button) findViewById(R.id.fakeLocationButton);
+
         startStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // start as soon as connection is established
                 startIfConnected = true;
 
-                // make button invisible
+                // make "Start Story" button invisible and display "fake location" button
                 startStoryButton.setVisibility(View.GONE);
+                nextFakeLocButton.setVisibility(View.VISIBLE);
 
                 // if not yet connect inform user
                 if (!connected) {
@@ -94,6 +97,14 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
                 } else {
                     startStory();
                 }
+            }
+        });
+
+        nextFakeLocButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Switch to next fake location", Toast.LENGTH_LONG).show();
+                nextFakeLocation();
             }
         });
     }
@@ -221,6 +232,10 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         Intent intent = new Intent (StoryLineMap.this, StoryElementActivity.class);
         intent.putExtra("story-element-id", storyElementIds[approachingMarker]);
         startActivityForResult(intent, VISIT_STORYELEMENT);
+    }
+
+    public void nextFakeLocation(){
+        // TODO iterate through array and call listeners afterwards
     }
 
     @Override

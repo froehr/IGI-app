@@ -27,5 +27,18 @@
             android:text="Start Story"
             android:textColor="#ffffff"
             android:padding="10dp"/>
+
+        <Button
+            android:id="@+id/fakeLocationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="#359c5e"
+            android:text="Next fake location"
+            android:textColor="#ffffff"
+            android:padding="10dp"
+            android:visibility="gone"/>
     </RelativeLayout>
 </FrameLayout>

@@ -30,6 +30,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2d4cfab4-b673-41eb-bb3a-94199b142924" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="IGI-App.iws" />
@@ -56,15 +57,30 @@
       <file leaf-file-name="StoryLineMap.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48472506" vertical-offset="51" max-vertical-offset="4097">
-              <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.41547862" vertical-offset="3349" max-vertical-offset="4352">
+              <caret line="237" column="67" selection-start-line="237" selection-start-column="67" selection-end-line="237" selection-end-column="67" />
               <folding>
-                <element signature="e#3044#3632#0" expanded="true" />
-                <element signature="e#3621#3622#0" expanded="true" />
-                <element signature="e#4402#5184#0" expanded="true" />
-                <element signature="e#5173#5174#0" expanded="true" />
+                <element signature="e#3122#3822#0" expanded="true" />
+                <element signature="e#3811#3812#0" expanded="true" />
+                <element signature="e#3871#4138#0" expanded="true" />
+                <element signature="e#4127#4128#0" expanded="true" />
+                <element signature="e#4908#5690#0" expanded="true" />
+                <element signature="e#5679#5680#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_story_line_map.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.0" vertical-offset="252" max-vertical-offset="833">
+              <caret line="31" column="47" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -660,8 +676,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryElementListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" />
       </list>
     </option>
@@ -788,24 +804,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="de.ifgi.igiapp.igi_app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="IGI-App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.ifgi.igiapp.igi_app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SpeechRecognition" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1003,7 +1001,11 @@
       <created>1421496130895</created>
       <updated>1421496130895</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Start closest story element and handle callback">
+      <created>1421498298801</created>
+      <updated>1421498298801</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1058,7 +1060,8 @@
     </option>
     <MESSAGE value="Starting location listener" />
     <MESSAGE value="Check if user is close enough to start next story element" />
-    <option name="LAST_COMMIT_MESSAGE" value="Check if user is close enough to start next story element" />
+    <MESSAGE value="Start closest story element and handle callback" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start closest story element and handle callback" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1080,17 +1083,6 @@
           <caret line="49" column="38" selection-start-line="46" selection-start-column="16" selection-end-line="49" selection-end-column="38" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3434782" vertical-offset="167" max-vertical-offset="612">
-          <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
@@ -1139,15 +1131,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.0" vertical-offset="252" max-vertical-offset="833">
+          <caret line="31" column="47" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48472506" vertical-offset="51" max-vertical-offset="4097">
-          <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.41547862" vertical-offset="3349" max-vertical-offset="4352">
+          <caret line="237" column="67" selection-start-line="237" selection-start-column="67" selection-end-line="237" selection-end-column="67" />
           <folding>
-            <element signature="e#3044#3632#0" expanded="true" />
-            <element signature="e#3621#3622#0" expanded="true" />
-            <element signature="e#4402#5184#0" expanded="true" />
-            <element signature="e#5173#5174#0" expanded="true" />
+            <element signature="e#3122#3822#0" expanded="true" />
+            <element signature="e#3811#3812#0" expanded="true" />
+            <element signature="e#3871#4138#0" expanded="true" />
+            <element signature="e#4127#4128#0" expanded="true" />
+            <element signature="e#4908#5690#0" expanded="true" />
+            <element signature="e#5679#5680#0" expanded="true" />
           </folding>
         </state>
       </provider>
