@@ -29,7 +29,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a285738a-4c6f-426e-ab87-de00f6c93943" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/IGI-App" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/proguard-rules.pro" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gradle.properties" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MongoDB/DatabaseHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MongoDB/DatabaseHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/SpeechRecognition/Dictionary.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/SpeechRecognition/Dictionary.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapInterface.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapInterface.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/PoiActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/PoiActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/SpeechRecognition/SpeechInputHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/SpeechRecognition/SpeechInputHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryLineMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryListActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/StoryListActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_poi.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_poi.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_story_line_map.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/custom_info_window.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/custom_info_window.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
     </list>
     <ignored path="IGI-App.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,11 +71,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MapsActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MapsActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65130025" vertical-offset="5449" max-vertical-offset="6330">
-              <caret line="471" column="12" selection-start-line="471" selection-start-column="12" selection-end-line="471" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4744" max-vertical-offset="6720">
+              <caret line="491" column="12" selection-start-line="491" selection-start-column="12" selection-end-line="491" selection-end-column="12" />
+              <folding>
+                <element signature="e#12359#12360#0" expanded="true" />
+                <element signature="e#12397#12398#0" expanded="true" />
+                <element signature="e#12432#12433#0" expanded="true" />
+                <element signature="e#12496#12497#0" expanded="true" />
+                <element signature="e#12524#12525#0" expanded="true" />
+                <element signature="e#12589#12590#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.20097442" vertical-offset="0" max-vertical-offset="821">
+              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -1464,7 +1500,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5684449320557" />
+        <entry key="$PROJECT_DIR$" value="5685315104827" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1612,6 +1648,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_screen_slide_page1.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1863,7 +1900,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1678" height="1015" extended-state="4" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1872,16 +1909,16 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875144" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.3411371" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="1678" y="23" width="1284" height="1031" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.3411371" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="646" y="348" width="74" height="54" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943144" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2009804" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2009804" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1916,14 +1953,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6060">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/Gestures/GestureService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1499" max-vertical-offset="2070">
@@ -2296,13 +2325,13 @@
         <state vertical-scroll-proportion="0.24770643" vertical-offset="375" max-vertical-offset="1005">
           <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
           <folding>
-            <element signature="e#491#517#0" expanded="true" />
-            <element signature="e#543#580#0" expanded="true" />
-            <element signature="e#647#682#0" expanded="true" />
-            <element signature="e#937#969#0" expanded="true" />
-            <element signature="e#995#1034#0" expanded="true" />
-            <element signature="e#1121#1156#0" expanded="true" />
-            <element signature="e#1524#1547#0" expanded="true" />
+            <element signature="e#491#517#0" expanded="false" />
+            <element signature="e#543#580#0" expanded="false" />
+            <element signature="e#647#682#0" expanded="false" />
+            <element signature="e#937#969#0" expanded="false" />
+            <element signature="e#995#1034#0" expanded="false" />
+            <element signature="e#1121#1156#0" expanded="false" />
+            <element signature="e#1524#1547#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2312,8 +2341,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/de/ifgi/igiapp/igi_app/MapsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65130025" vertical-offset="5449" max-vertical-offset="6330">
-          <caret line="471" column="12" selection-start-line="471" selection-start-column="12" selection-end-line="471" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4744" max-vertical-offset="6720">
+          <caret line="491" column="12" selection-start-line="491" selection-start-column="12" selection-end-line="491" selection-end-column="12" />
+          <folding>
+            <element signature="e#12359#12360#0" expanded="true" />
+            <element signature="e#12397#12398#0" expanded="true" />
+            <element signature="e#12432#12433#0" expanded="true" />
+            <element signature="e#12496#12497#0" expanded="true" />
+            <element signature="e#12524#12525#0" expanded="true" />
+            <element signature="e#12589#12590#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20097442" vertical-offset="0" max-vertical-offset="821">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
           <folding />
         </state>
       </provider>

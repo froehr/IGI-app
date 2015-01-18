@@ -72,6 +72,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     private final int maxResults = 5;
     SpeechInputHandler speechInputHandler;
     Geocoder geocoder;
+    DatabaseHandler databaseHandler;
 
     GestureService mService;
     boolean mBound = false;
@@ -108,7 +109,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mTitle = mDrawerTitle = getTitle();
 
         // request all data from db and make it global available
-        DatabaseHandler databaseHandler = new DatabaseHandler(this);
+        databaseHandler = new DatabaseHandler(this);
         databaseHandler.requestAllPois();
         databaseHandler.requestAllStories();
         databaseHandler.requestAllTags();
@@ -390,10 +391,29 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         }
     }
 
-    public void searchStoryElementsByTag(String tag){
+    public void showStories() {
+        Intent intent = new Intent(MapsActivity.this, StoryListActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchStoryElementsByTag(String tag) {
         Intent intent = new Intent(MapsActivity.this, StoryElementListActivity.class);
         intent.putExtra("tag", tag);
         startActivity(intent);
+    }
+
+    public void startStory(String storyName) {
+        Story[] stories = databaseHandler.getAllStories();
+
+        for ( int i = 0; i < stories.length; i++ ) {
+            if ( stories[i].getName().toLowerCase().equals(storyName.toLowerCase()) ) {
+                String storyId = stories[i].getId();
+                Intent intent = new Intent(MapsActivity.this, StoryLineMap.class);
+                intent.putExtra("story-id", storyId);
+                startActivity(intent);
+                return;
+            }
+        }
     }
 
     public void setStories(Story[] stories){

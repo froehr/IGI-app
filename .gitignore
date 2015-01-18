@@ -1,8 +1,14 @@
+.idea
+*.iml
 .gradle
-/local.properties
+local.properties
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
+build
 /app/src/debug/res/values/google_maps_api.xml
 /app/src/release/res/values/google_maps_api.xml
+proguard.cfg
+proguard-project.txt
+tmp
+Thumbs.db

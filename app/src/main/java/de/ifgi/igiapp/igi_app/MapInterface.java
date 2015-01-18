@@ -24,4 +24,8 @@ public interface MapInterface {
     public void centerAtCurrentLocation();
 
     public void searchStoryElementsByTag(String tag);
+
+    public void showStories();
+
+    void startStory(String storyName);
 }

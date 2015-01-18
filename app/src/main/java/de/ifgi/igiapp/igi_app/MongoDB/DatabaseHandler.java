@@ -350,28 +350,33 @@ public class DatabaseHandler {
     Return array of story-objects from json-array in string representation
      */
     public Story[] createStoriesFromJSON(String jsonString){
-        Story[] stories = null;
+        ArrayList<Story> stories = null;
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray storyArray = jsonObject.getJSONArray("stories");
-            stories = new Story[storyArray.length()];
+            stories = new ArrayList<Story>();
             for(int i = 0; i < storyArray.length(); i++){
                 JSONObject story = storyArray.getJSONObject(i);
                 String id = story.getString("_id");
                 String name = story.getString("name");
                 String description = story.getString("description");
                 JSONArray jsonStoryElements = story.getJSONArray("story_element_id");
-                String storyElements[] = new String[jsonStoryElements.length()];
-                for(int j = 0; j < jsonStoryElements.length(); j++){
-                    storyElements[j] = jsonStoryElements.getString(j);
+                if(jsonStoryElements != null){
+                    String storyElements[] = new String[jsonStoryElements.length()];
+                    for(int j = 0; j < jsonStoryElements.length(); j++){
+                        storyElements[j] = jsonStoryElements.getString(j);
+                    }
+                    stories.add(new Story(id, name, description, storyElements));
                 }
-                stories[i] = new Story(id, name, description, storyElements);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return stories;
+        Story[] storiesArray = new Story[stories.size()];
+        for(int i = 0; i < stories.size(); i++){
+            storiesArray[i] = stories.get(i);
+        }
+        return storiesArray;
     }
 
     public StoryElement[] createStoryElementsFromJSON(String jsonString){
