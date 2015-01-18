@@ -75,6 +75,10 @@
             android:name="de.ifgi.igiapp.igi_app.StoryElementListActivity"
             android:label="@string/title_activity_story_element_list" >
         </activity>
+        <activity
+            android:name="de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch"
+            android:label="@string/title_activity_activity_first_launch" >
+        </activity>
     </application>
 
 </manifest>
