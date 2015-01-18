@@ -19,8 +19,10 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -44,6 +46,9 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
 
     Button startStoryButton;
     Button nextFakeLocButton;
+
+    // current position marker
+    Marker markerCurrentPosition;
 
     String[] storyElementIds;
 
@@ -116,6 +121,8 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
             public void onClick(View v) {
                 currentFakeLocation++;
                 if(currentFakeLocation > fakeLocations.length){
+                    Toast.makeText(getApplicationContext(), "Exit story mode...", Toast.LENGTH_SHORT).show();
+                    finish();
                     return;
                 }
                 centerMapOnLocation(fakeLocations[currentFakeLocation]);
@@ -251,6 +258,14 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     public void centerMapOnLocation(LatLng location) {
         LatLng latlng = new LatLng(location.latitude, location.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
+
+        if(markerCurrentPosition != null){
+            markerCurrentPosition.remove();
+        }
+
+        markerCurrentPosition = mMap.addMarker(new MarkerOptions()
+                .position(location)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
 
     public void checkDistanceToMarker(Location currentLocation, LatLng markerPosition) {
@@ -312,7 +327,6 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
                 Toast.makeText(getApplicationContext(), "You visited all story elements", Toast.LENGTH_SHORT).show();
             } else {
                 approachingMarker++;
-                Toast.makeText(getApplicationContext(), "You returned to the map " + approachingMarker, Toast.LENGTH_SHORT).show();
 
                 // TODO REMOVE COMMENTS (FOR REAL LOCATION)
                     /*
