@@ -55,8 +55,11 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     // request code for visiting story element
     private int VISIT_STORYELEMENT = 1;
 
+    // line to next marker/story-element
+    Polyline lineToNextElement;
+
     // all markers of this story
-    MarkerOptions[] markerCollection;
+    Marker[] markerCollection;
 
     // array index of approaching marker
     private int approachingMarker;
@@ -173,14 +176,20 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
 
     public void addStoryElementsToMap(StoryElement[] storyElements) {
 
-        markerCollection = new MarkerOptions[storyElements.length];
+        markerCollection = new Marker[storyElements.length];
 
         for (int i = 0; i < storyElements.length; i++) {
             String storyElementPoiId = storyElements[i].getPoiId();
             Poi storyElementPoi = databaseHandler.getPoiByPoiId(storyElementPoiId);
             MarkerOptions markerOptions = new MarkerOptions().position(storyElementPoi.getLocation());
-            markerCollection[i] = markerOptions;
-            mMap.addMarker(markerOptions);
+            if (i == 0){
+                // first element is colored green
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            } else {
+                // all other are colored orange
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+            }
+            markerCollection[i] =  mMap.addMarker(markerOptions);
         }
     }
 
@@ -279,12 +288,25 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
         float distance = earthRadius * c;
 
+        // remove polyline if existing
+        if (lineToNextElement != null){
+            lineToNextElement.remove();
+        }
+        // draw new polyline to next marker
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.add(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+        polylineOptions.add(markerPosition);
+        polylineOptions.color(Color.GREEN);
+        lineToNextElement = mMap.addPolyline(polylineOptions);
+
         if (distance < ACTIVATION_DISTANCE) {
             // stop watching location as long as user is in story element
             mLocationManager.removeUpdates(mLocationListener);
             // open new activity
             openApproachingStoryElement();
         }
+
+
     }
 
     // TODO: REMOVE AFTERWARDS (ONLY FOR FAKE LOCATIONS)
@@ -299,14 +321,18 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
         float distance = earthRadius * c;
 
+        // remove polyline if existing
+        if (lineToNextElement != null){
+            lineToNextElement.remove();
+        }
+        // draw new polyline to next marker
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.add(currentLocation);
+        polylineOptions.add(markerPosition);
+        polylineOptions.color(Color.GREEN);
+        lineToNextElement = mMap.addPolyline(polylineOptions);
+
         if (distance < ACTIVATION_DISTANCE) {
-
-            //TODO REMOVE COMMENTS (FOR REAL LOCATION)
-            /*
-            // stop watching location as long as user is in story element
-            mLocationManager.removeUpdates(mLocationListener);
-            */
-
             // open new activity
             openApproachingStoryElement();
         }
@@ -321,12 +347,28 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == VISIT_STORYELEMENT) {
+            // for changing the icon of a marker it is necessary to delete it
+            // and create an old one (due to google maps android)
+            markerCollection[approachingMarker].remove();
+            MarkerOptions oldMarker = new MarkerOptions()
+                    .position(markerCollection[approachingMarker].getPosition())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+            markerCollection[approachingMarker] = mMap.addMarker(oldMarker);
+
             // marker has been visited go to next one if available
             if (markerCollection.length == approachingMarker) {
                 // TODO finish story
                 Toast.makeText(getApplicationContext(), "You visited all story elements", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
                 approachingMarker++;
+                // for changing the icon of a marker it is necessary to delete it
+                // and create an old one (due to google maps android)
+                markerCollection[approachingMarker].remove();
+                MarkerOptions newMarker = new MarkerOptions()
+                        .position(markerCollection[approachingMarker].getPosition())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                markerCollection[approachingMarker] = mMap.addMarker(newMarker);
 
                 // TODO REMOVE COMMENTS (FOR REAL LOCATION)
                     /*
