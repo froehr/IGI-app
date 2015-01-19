@@ -355,13 +355,14 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
             markerCollection[approachingMarker] = mMap.addMarker(oldMarker);
 
+            approachingMarker++;
+
             // marker has been visited go to next one if available
             if (markerCollection.length == approachingMarker) {
                 // TODO finish story
                 Toast.makeText(getApplicationContext(), "You visited all story elements", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                approachingMarker++;
                 // for changing the icon of a marker it is necessary to delete it
                 // and create an old one (due to google maps android)
                 markerCollection[approachingMarker].remove();

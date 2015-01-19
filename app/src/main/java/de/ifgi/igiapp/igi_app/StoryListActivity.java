@@ -19,6 +19,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Story;
 public class StoryListActivity extends Activity {
 
     private DatabaseHandler databaseHandler;
+    final int STORY_MODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,17 @@ public class StoryListActivity extends Activity {
                 String storyId = stories[position].getId();
                 Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
                 intent.putExtra("story-id", storyId);
-                startActivity(intent);
+                startActivityForResult(intent, STORY_MODE);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == STORY_MODE){
+            // do nothing
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
