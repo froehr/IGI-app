@@ -77,7 +77,7 @@ public class Dictionary {
     };
 
     public Word[] commandStartStory = new Word[] {
-            new Word("start", new String[] {"stalled"}),
-            new Word("story", new String[] {})
+            new Word("start", new String[] {"stalled", "stop"}),
+            new Word("story", new String[] {"storage"})
     };
 }
