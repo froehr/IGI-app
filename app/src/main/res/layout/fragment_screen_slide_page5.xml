@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Pan left"
+        android:text="Pan right"
         android:textSize="@dimen/abc_text_size_title_material"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
@@ -22,17 +22,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Rotate phone to the left"
+        android:text="Rotate phone to the right"
         android:textSize="@dimen/abc_text_size_subhead_material"
         android:layout_below="@+id/tutorial_title_3"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
     />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:scaleType="center"
-        android:src="@drawable/pan_left"/>
+        android:src="@drawable/pan_right"/>
 
     <ImageButton
         android:layout_width="wrap_content"
