@@ -17,7 +17,7 @@ import de.ifgi.igiapp.igi_app.R;
 
 public class ActivityFirstLaunch extends FragmentActivity {
 
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 8;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private PageIndicator mPageIndicator;
@@ -111,6 +111,34 @@ public class ActivityFirstLaunch extends FragmentActivity {
                     Bundle args4 = new Bundle();
                     args4.putInt(ScreenSlidePageFragment.ARG_SECTION_NUMBER, position + 1);
                     fragment.setArguments(args4);
+                    break;
+
+                case 4:
+                    fragment = new Fragment5();
+                    Bundle args5 = new Bundle();
+                    args5.putInt(ScreenSlidePageFragment.ARG_SECTION_NUMBER, position + 1);
+                    fragment.setArguments(args5);
+                    break;
+
+                case 5:
+                    fragment = new Fragment6();
+                    Bundle args6 = new Bundle();
+                    args6.putInt(ScreenSlidePageFragment.ARG_SECTION_NUMBER, position + 1);
+                    fragment.setArguments(args6);
+                    break;
+
+                case 6:
+                    fragment = new Fragment7();
+                    Bundle args7 = new Bundle();
+                    args7.putInt(ScreenSlidePageFragment.ARG_SECTION_NUMBER, position + 1);
+                    fragment.setArguments(args7);
+                    break;
+
+                case 7:
+                    fragment = new Fragment8();
+                    Bundle args8 = new Bundle();
+                    args8.putInt(ScreenSlidePageFragment.ARG_SECTION_NUMBER, position + 1);
+                    fragment.setArguments(args8);
                     break;
             }
             return fragment;
@@ -210,6 +238,74 @@ public class ActivityFirstLaunch extends FragmentActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_screen_slide_page4, container, false);
+
+            return rootView;
+        }
+    }
+
+    public static class Fragment5 extends Fragment{
+
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_screen_slide_page5, container, false);
+
+            return rootView;
+        }
+    }
+
+    public static class Fragment6 extends Fragment{
+
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_screen_slide_page6, container, false);
+
+            return rootView;
+        }
+    }
+
+    public static class Fragment7 extends Fragment{
+
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_screen_slide_page7, container, false);
+
+            return rootView;
+        }
+    }
+
+    public static class Fragment8 extends Fragment{
+
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_screen_slide_page8, container, false);
 
             return rootView;
         }
