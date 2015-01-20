@@ -20,10 +20,22 @@
     <string name="drawer_open"></string>
     <string name="drawer_close"></string>
     <string name="title_activity_display_narrative">NarrativeDetails</string>
+    <string name="title_activity_activity_first_launch">LocalLama</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_story_element">StoryElementActivity</string>
     <string name="title_activity_story_list">StoryListActivity</string>
     <string name="title_activity_story_line_map">Map</string>
     <string name="title_activity_story_element_list">StoryElementListActivity</string>
+
+    <string name="tutorial_title_1">"Locative Narratives"</string>
+    <string name="tutorial_title_2">"Speech Input"</string>
+    <string name="tutorial_title_3">"Gesture Input"</string>
+    <string name="tutorial_title_4">"Gesture Input"</string>
+    <string name="tutorial_description_1">"Experience your city with multi-media stories"</string>
+    <string name="tutorial_description_2">"Interact with your phone by speeking to it"</string>
+    <string name="tutorial_description_3">"Navigate through the city by using motion gestures"</string>
+    <string name="tutorial_description_4">"Return to your current position by turning the phone"</string>
+    <string name="tutorial_skip">Skip</string>
+    <string name="tutorial_done">Done</string>
 
 </resources>

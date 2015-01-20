@@ -26,7 +26,7 @@ public class StoryListActivity extends Activity {
         setContentView(R.layout.activity_story_list);
 
         GlobalApplication application = (GlobalApplication) getApplicationContext();
-        this.databaseHandler = application.getGlobalDatabaseHandler();
+        databaseHandler = application.getGlobalDatabaseHandler();
 
         final Story stories[] = databaseHandler.getAllStories();
 

@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityFirstLaunch" >
+
+    <TextView
+        android:id="@+id/tutorial_title_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/tutorial_title_3"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+     />
+
+    <TextView
+        android:id="@+id/tutorial_description_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/tutorial_description_3"
+        android:textSize="@dimen/abc_text_size_subhead_material"
+        android:layout_below="@+id/tutorial_title_3"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+    />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="center"
+        android:src="@drawable/tutorial_panning"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLeft3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="5dp"
+        android:src="@drawable/arrow_left"
+        android:background="@null"
+        android:onClick="onBackPressed"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRight3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="5dp"
+        android:src="@drawable/arrow_right"
+        android:background="@null"
+        android:onClick="onForwardPressed"/>
+
+</RelativeLayout>

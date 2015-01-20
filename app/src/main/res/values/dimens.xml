@@ -6,5 +6,6 @@
     <dimen name="topMargin">0dp</dimen>
     <dimen name="mic_button_size">56dp</dimen>
     <dimen name="elevation_floating_button">10dp</dimen>
+    <dimen name="big_margin">120dp</dimen>
 
 </resources>
