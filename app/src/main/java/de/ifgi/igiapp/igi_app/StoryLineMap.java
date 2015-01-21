@@ -188,7 +188,7 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
             Poi storyElementPoi = databaseHandler.getPoiByPoiId(storyElementPoiId);
             MarkerOptions markerOptions = new MarkerOptions().position(storyElementPoi.getLocation());
             markerOptions.title(storyElements[i].getName());
-            markerOptions.snippet(storyElements[i].getText());
+            markerOptions.snippet(storyElements[i].getId());
             if (i == 0){
                 // first element is colored green
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));

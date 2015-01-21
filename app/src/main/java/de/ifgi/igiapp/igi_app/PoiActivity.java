@@ -23,25 +23,19 @@ import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 /***
  * This class provides the content for markers (pois AND story-elements)
  */
-public class MarkerContentActivity extends Activity {
+public class PoiActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_marker_content);
+        setContentView(R.layout.activity_poi);
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
         String poiId = intent.getStringExtra("poi-id");
-        Boolean isStoryElement = intent.getBooleanExtra("isStoryElement", false);
 
         // fill poi-description
         render(title, description);
-
-        // stop here if it is only the element not an poi element
-        if (isStoryElement){
-            return;
-        }
 
         // fill story-element list
         final ListView listview = (ListView) findViewById(R.id.story_element_list);
@@ -69,7 +63,7 @@ public class MarkerContentActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 // open storyElementActivity
-                Intent intent = new Intent(MarkerContentActivity.this, StoryElementActivity.class);
+                Intent intent = new Intent(PoiActivity.this, StoryElementActivity.class);
                 intent.putExtra("story-element-id", storyElements.get(position).getId());
                 startActivity(intent);
             }
