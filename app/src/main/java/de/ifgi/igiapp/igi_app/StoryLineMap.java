@@ -359,7 +359,9 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
             markerCollection[approachingMarker].remove();
             MarkerOptions oldMarker = new MarkerOptions()
                     .position(markerCollection[approachingMarker].getPosition())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                    .title(markerCollection[approachingMarker].getTitle())
+                    .snippet(markerCollection[approachingMarker].getSnippet());
             markerCollection[approachingMarker] = mMap.addMarker(oldMarker);
 
             approachingMarker++;
@@ -375,7 +377,9 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
                 markerCollection[approachingMarker].remove();
                 MarkerOptions newMarker = new MarkerOptions()
                         .position(markerCollection[approachingMarker].getPosition())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        .title(markerCollection[approachingMarker].getTitle())
+                        .snippet(markerCollection[approachingMarker].getSnippet());
                 markerCollection[approachingMarker] = mMap.addMarker(newMarker);
 
                 // TODO REMOVE COMMENTS (FOR REAL LOCATION)
