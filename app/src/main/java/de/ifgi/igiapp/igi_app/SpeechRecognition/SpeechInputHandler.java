@@ -46,7 +46,6 @@ public class SpeechInputHandler {
         }
         else if ( parseCommand(command, dict.commandMoveTo) ||
                 parseCommand(command, dict.commandCenterAt) ||
-                parseCommand(command, dict.commandZoomTo) ||
                 parseCommand(command, dict.commandFind)
                 ) {
             String firstContained = " ";
@@ -57,10 +56,6 @@ public class SpeechInputHandler {
             else if ( parseCommand(command, dict.commandCenterAt) ) {
                 toastString += "center at";
                 firstContained = firstContained(command, dict.commandCenterAt[1]);
-            }
-            else if ( parseCommand(command, dict.commandZoomTo) ) {
-                toastString += "zoom to";
-                firstContained = firstContained(command, dict.commandZoomTo[1]);
             }
             else if ( parseCommand(command, dict.commandFind) ) {
                 toastString += "find";
@@ -81,7 +76,7 @@ public class SpeechInputHandler {
         }
         else if ( parseCommand(command, dict.commandSearchStoryElementsByTag) ) {
             String firstContained = firstContained(command, dict.commandSearchStoryElementsByTag[3]);
-            String tag = command.substring(command.lastIndexOf(firstContained) + firstContained.length());
+            String tag = command.substring(command.lastIndexOf(firstContained) + firstContained.length()).toLowerCase();
             toastString += "story elements with tag " + tag;
             map.searchStoryElementsByTag(tag);
         }
