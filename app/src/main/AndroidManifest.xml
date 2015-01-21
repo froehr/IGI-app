@@ -49,7 +49,7 @@
         </service>
 
         <activity
-            android:name="de.ifgi.igiapp.igi_app.PoiActivity"
+            android:name=".MarkerContentActivity"
             android:label="@string/title_activity_display_narrative"
             android:parentActivityName="de.ifgi.igiapp.igi_app.MapsActivity" >
             <meta-data

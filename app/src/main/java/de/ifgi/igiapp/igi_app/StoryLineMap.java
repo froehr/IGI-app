@@ -102,6 +102,11 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
 
         setUpMapIfNeeded();
 
+        mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
+        MyInfoWindowClickListener infoWindowClickListener = new MyInfoWindowClickListener(this);
+        infoWindowClickListener.isStoryElement = true;
+        mMap.setOnInfoWindowClickListener(infoWindowClickListener);
+
         // location manager for updating position and calculating distances
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -182,6 +187,8 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
             String storyElementPoiId = storyElements[i].getPoiId();
             Poi storyElementPoi = databaseHandler.getPoiByPoiId(storyElementPoiId);
             MarkerOptions markerOptions = new MarkerOptions().position(storyElementPoi.getLocation());
+            markerOptions.title(storyElements[i].getName());
+            markerOptions.snippet(storyElements[i].getText());
             if (i == 0){
                 // first element is colored green
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));

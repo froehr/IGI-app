@@ -15,6 +15,7 @@ import java.util.Map;
 public class MyInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
     Activity activity;
     Map<String, String> markerPoiHandler = new HashMap<String, String>();
+    boolean isStoryElement;
 
     public MyInfoWindowClickListener(Activity activity){
         this.activity = activity;
@@ -22,7 +23,7 @@ public class MyInfoWindowClickListener implements GoogleMap.OnInfoWindowClickLis
 
     public void onInfoWindowClick(Marker marker){
         // Create intent for displaying poi with
-        Intent intent = new Intent(this.activity, PoiActivity.class);
+        Intent intent = new Intent(this.activity, MarkerContentActivity.class);
         String title = marker.getTitle();
         String description = marker.getSnippet();
 
@@ -32,7 +33,13 @@ public class MyInfoWindowClickListener implements GoogleMap.OnInfoWindowClickLis
         // add data for poi-activity
         intent.putExtra("title", title);
         intent.putExtra("description", description);
-        intent.putExtra("poi-id", poiId);
+
+        // check if we have an poi or story-element
+        if(isStoryElement){
+            intent.putExtra("isStoryElement", isStoryElement);
+        } else {
+            intent.putExtra("poi-id", poiId);
+        }
         this.activity.startActivity(intent);
     }
 }
