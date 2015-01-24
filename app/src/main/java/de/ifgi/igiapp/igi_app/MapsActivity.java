@@ -28,8 +28,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -55,12 +55,12 @@ import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
 import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MyInfoWindowClickListener infoWindowClickListener;
-    private LocationClient mLocationClient;
+    private GoogleApiClient mLocationClient;
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -105,7 +105,11 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
         mMap.setOnInfoWindowClickListener(new MyInfoWindowClickListener(this));
-        mLocationClient = new LocationClient(this, this, this);
+        mLocationClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
         mTitle = mDrawerTitle = getTitle();
 
         // request all data from db and make it global available
@@ -359,7 +363,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     public void openDrawer(){ (mDrawerLayout).openDrawer(Gravity.LEFT);}
 
     public void centerAtCurrentLocation() {
-        Location mCurrentLocation = mLocationClient.getLastLocation();
+        Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
         LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
         Log.d("", mCurrentLocation.toString());
@@ -465,7 +469,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     }
 
     @Override
-    public void onDisconnected() {
+    public void onConnectionSuspended(int i) {
 
     }
 
