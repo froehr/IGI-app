@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,13 +32,13 @@ import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 
-public class StoryLineMap extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+public class StoryLineMap extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private String storyId;
     private DatabaseHandler databaseHandler;
-    private LocationClient mLocationClient;
+    private GoogleApiClient mLocationClient;
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
     private boolean connected = false;
@@ -111,7 +111,11 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // for initial position
-        mLocationClient = new LocationClient(this, this, this);
+        mLocationClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
         mLocationClient.connect();
 
         startStoryButton = (Button) findViewById(R.id.startStoryButton);
@@ -403,9 +407,10 @@ public class StoryLineMap extends FragmentActivity implements GooglePlayServices
     }
 
     @Override
-    public void onDisconnected() {
-        Toast.makeText(getApplicationContext(), "GPS is not enabled", Toast.LENGTH_LONG).show();
+    public void onConnectionSuspended(int i) {
+
     }
+
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {

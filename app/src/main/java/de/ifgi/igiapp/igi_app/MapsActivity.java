@@ -362,6 +362,14 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
     public void openDrawer(){ (mDrawerLayout).openDrawer(Gravity.LEFT);}
 
+    public void changeMapLayerToNormal() { mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); }
+
+    public void changeMapLayerToSatellite() { mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); }
+
+    public void changeMapLayerToHybrid() { mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); }
+
+    public void changeMapLayerToTerrain() { mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
+
     public void centerAtCurrentLocation() {
         Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
         LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
@@ -385,12 +393,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
             } else {
                 Toast.makeText(getApplicationContext(),
-                        "could not find any results: " + location,
+                        "Could not find any results: " + location,
                         Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(),
-                    "network unavailable or any other I/O problem occurs: " + location,
+                    "Network unavailable or any other I/O problem occurs: " + location,
                     Toast.LENGTH_SHORT).show();
         }
     }

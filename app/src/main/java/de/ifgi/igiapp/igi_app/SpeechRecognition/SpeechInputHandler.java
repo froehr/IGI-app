@@ -44,6 +44,27 @@ public class SpeechInputHandler {
             toastString += "pan down";
             map.panDown();
         }
+
+        else if ( parseCommand(command, dict.commandBasicMap) ) {
+            toastString += "change to basic map";
+            map.changeMapLayerToNormal();
+        }
+
+        else if ( parseCommand(command, dict.commandSatelliteMap) ) {
+            toastString += "change to satellite map";
+            map.changeMapLayerToSatellite();
+        }
+
+        else if ( parseCommand(command, dict.commandHybridMap) ) {
+            toastString += "change to hybrid map";
+            map.changeMapLayerToHybrid();
+        }
+
+        else if ( parseCommand(command, dict.commandTerrainMap) ) {
+            toastString += "change to terrain map";
+            map.changeMapLayerToTerrain();
+        }
+
         else if ( parseCommand(command, dict.commandMoveTo) ||
                 parseCommand(command, dict.commandCenterAt) ||
                 parseCommand(command, dict.commandZoomTo) ||

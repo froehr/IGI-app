@@ -3,6 +3,8 @@ package de.ifgi.igiapp.igi_app.SpeechRecognition;
 public class Dictionary {
     public Word pan = new Word("pan", new String[] {"turn", "that", "then", "time", "pen", "ten", "phan", "been", "gran", "10", "pin", "in", "penn", "hang", "depend", "can", "I'm", "send", "cond"});
     public Word zoom = new Word("zoom", new String[] {"lum", "hum", "sum", "newm", "who", "you", "bloom", "whom", "bowm", "blue", "rem", "xoom", "doom", "June"});
+    public Word change = new Word("change to", new String[] {"change 2"});
+    public Word map = new Word("map", new String[] {"mep", "met", "my"});
 
     public Word[] commandZoomIn = new Word[] {
             zoom,
@@ -79,5 +81,29 @@ public class Dictionary {
     public Word[] commandStartStory = new Word[] {
             new Word("start", new String[] {"stalled", "stop"}),
             new Word("story", new String[] {"storage"})
+    };
+
+    public Word[] commandBasicMap = new Word[] {
+            change,
+            new Word("basic", new String[] {}),
+            map
+    };
+
+    public Word[] commandSatelliteMap = new Word[] {
+            change,
+            new Word("satellite", new String[] {"setalite", "settle art", "set alight"}),
+            map
+    };
+
+    public Word[] commandHybridMap = new Word[] {
+            change,
+            new Word("satellite", new String[] {"high bread"}),
+            map
+    };
+
+    public Word[] commandTerrainMap = new Word[] {
+            change,
+            new Word("terrain", new String[] {"rain"}),
+            map
     };
 }
