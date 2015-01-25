@@ -26,4 +26,22 @@
     <string name="title_activity_story_line_map">Map</string>
     <string name="title_activity_story_element_list">StoryElementListActivity</string>
 
+    <string name="enable_localization">Please enable the Android localization tools on your device.</string>
+    <string name="speech_command_error">Sorry, I did not understand you.</string>
+    <string name="speech_command_zoom_in">Zooming in.</string>
+    <string name="speech_command_zoom_out">Zooming out.</string>
+    <string name="speech_command_pan_left">Panning to the left.</string>
+    <string name="speech_command_pan_right">Panning to the right.</string>
+    <string name="speech_command_pan_up">Panning up.</string>
+    <string name="speech_command_pan_down">Panning down.</string>
+    <string name="speech_command_move_to">Moving to</string>
+    <string name="speech_command_center_at">Centering the map at</string>
+    <string name="speech_command_find">Searching for</string>
+    <string name="speech_command_open_menu">Opening menu.</string>
+    <string name="speech_command_show_location">Moving to your current location.</string>
+    <string name="speech_command_search_story_elements_by_tag">Searching for story elements tagged with</string>
+    <string name="speech_command_show_stories">Showing stories.</string>
+    <string name="speech_command_start_story">Starting story.</string>
+    <string name="speech_command_whats_this">Please touch a point on the map.</string>
+
 </resources>

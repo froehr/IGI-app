@@ -333,11 +333,17 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
     public void openDrawer(){ (mDrawerLayout).openDrawer(Gravity.LEFT);}
 
-    public void centerAtCurrentLocation() {
+    public boolean centerAtCurrentLocation() {
         Location mCurrentLocation = mLocationClient.getLastLocation();
-        LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
-        Log.d("", mCurrentLocation.toString());
+        if ( mCurrentLocation != null ) {
+            LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
+            Log.d("", mCurrentLocation.toString());
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void searchLocation(String location) {
