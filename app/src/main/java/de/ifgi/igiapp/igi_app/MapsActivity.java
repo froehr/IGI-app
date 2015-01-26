@@ -370,11 +370,17 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
     public void changeMapLayerToTerrain() { mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
 
-    public void centerAtCurrentLocation() {
+    public boolean centerAtCurrentLocation() {
         Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
+        if ( mCurrentLocation != null ) {
         LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
         Log.d("", mCurrentLocation.toString());
+        return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void searchLocation(String location) {

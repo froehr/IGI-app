@@ -3,6 +3,7 @@ package de.ifgi.igiapp.igi_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 /***
  * This class provides the content for markers (pois AND story-elements)
  */
-public class PoiActivity extends Activity {
+public class PoiActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

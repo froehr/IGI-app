@@ -23,7 +23,7 @@ public class Dictionary {
 
     public Word[] commandPanRight = new Word[] {
             pan,
-            new Word("right", new String[] {"what", "droid", "ride", "fried", "drunk", "rod", "run", "front", "wide"})
+            new Word("right", new String[] {"what", "droid", "ride", "rite", "fried", "drunk", "rod", "run", "front", "wide", "write"})
     };
 
     public Word[] commandPanUp = new Word[] {
@@ -67,20 +67,20 @@ public class Dictionary {
     };
 
     public Word[] commandSearchStoryElementsByTag = new Word[] {
-            new Word("story", new String[] {}),
-            new Word("elements", new String[] {}),
+            new Word("story", new String[] {"stories"}),
+            new Word("elements", new String[] {"element"}),
             new Word("with", new String[] {"was"}),
-            new Word("tag", new String[] {"tax", "pak", "tech", "take", "text"})
+            new Word("tag", new String[] {"tax", "pak", "packed", "peg", "pic", "tech", "take", "text", "tech"})
     };
 
     public Word[] commandShowStories = new Word[] {
-            new Word("show", new String[] {}),
+            new Word("show", new String[] {"short", "true", "view", "open", "new", "zoo", "do you", "you"}),
             new Word("stories", new String[] {"story"})
     };
 
     public Word[] commandStartStory = new Word[] {
-            new Word("start", new String[] {"stalled", "stop"}),
-            new Word("story", new String[] {"storage"})
+            new Word("start", new String[] {"stalled", "stop", "third", "started", "stock", "about", "sob", "dog", "top"}),
+            new Word("story", new String[] {"stories"})
     };
 
     public Word[] commandBasicMap = new Word[] {
@@ -105,5 +105,6 @@ public class Dictionary {
             change,
             new Word("terrain", new String[] {"rain"}),
             map
+            
     };
 }

@@ -58,14 +58,16 @@
         </activity>
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryElementActivity"
-            android:label="@string/title_activity_story_element" >
+            android:label="@string/title_activity_story_element"
+            android:parentActivityName="de.ifgi.igiapp.igi_app.PoiActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.ifgi.igiapp.igi_app.MapsActivity" />
+                android:value="de.ifgi.igiapp.igi_app.PoiActivity" />
         </activity>
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryListActivity"
-            android:label="@string/title_activity_story_list" >
+            android:label="@string/title_activity_story_list"
+            android:parentActivityName="de.ifgi.igiapp.igi_app.MapsActivity">
         </activity>
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryLineMap"
