@@ -3,6 +3,7 @@ package de.ifgi.igiapp.igi_app;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -49,6 +51,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
+import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
 import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
@@ -73,11 +76,30 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
     GestureService mService;
     boolean mBound = false;
+    private boolean mGestureServiceRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        // get shared preferences
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        // first time run?
+        if (pref.getBoolean("firstTimeRun", true)) {
+
+            // start the preferences activity
+            startActivity(new Intent(getBaseContext(), ActivityFirstLaunch.class));
+
+            //get the preferences editor
+            SharedPreferences.Editor editor = pref.edit();
+
+            // avoid for next run
+            editor.putBoolean("firstTimeRun", false);
+            editor.commit();
+        }
+
         setUpMapIfNeeded();
 
         mMap.setMyLocationEnabled(true);
@@ -127,11 +149,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[4];
 
         drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_map_grey, "Map");
         drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_stories_grey, "Stories");
         drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_explore_grey, "Tour");
+        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_list_item, drawerItem);
         mDrawerList.setAdapter(adapter);
@@ -276,10 +299,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
         if (button.isChecked()) {
             startService(intent);
+            mGestureServiceRunning = true;
             //bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         } else {
             stopService(intent);
+            mGestureServiceRunning = false;
             /*if (mBound) {
                 unbindService(mConnection);
                 mBound = false;
@@ -460,13 +485,29 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         super.onStart();
         // Connect the client.
         mLocationClient.connect();
+        if (mGestureServiceRunning) {
+            Intent intent = new Intent(this, GestureService.class);
+            startService(intent);
+        }
     }
 
     @Override
     protected void onStop() {
         // Disconnecting the client invalidates it.
         mLocationClient.disconnect();
+        if (mGestureServiceRunning) {
+            Intent intent = new Intent(this, GestureService.class);
+            stopService(intent);
+        }
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(this, GestureService.class);
+        stopService(intent);
+        mGestureServiceRunning = false;
+        super.onDestroy();
     }
 }
 

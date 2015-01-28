@@ -20,6 +20,9 @@ import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 
+/***
+ * This class provides the content for markers (pois AND story-elements)
+ */
 public class PoiActivity extends Activity {
 
     @Override
