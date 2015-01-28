@@ -430,18 +430,45 @@ public class DatabaseHandler {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray poiArray = jsonObject.getJSONArray("pois");
             pois = new Poi[poiArray.length()];
-            for(int i = 0; i < poiArray.length(); i++){
+            for(int i = 0; i < poiArray.length(); i++) {
                 JSONObject poi = poiArray.getJSONObject(i);
 
                 String id = poi.getString("_id");
                 String name = poi.getString("name");
                 String description = poi.getString("description");
+                String pictureIds[] = null;
+                // because we do not know if there is one, multiple or no image
+                //-> we have to try out and catch error if we were wrong :-|
+
+                // try to parser picture as array -> catch if there is no such array
+                try {
+                    JSONArray jsonPictureArr = poi.getJSONArray("picture");
+                    pictureIds = new String[jsonPictureArr.length()];
+                    for (int j = 0; j < jsonPictureArr.length(); j++) {
+                        JSONObject dataObj = jsonPictureArr.getJSONObject(j).getJSONObject("data");
+                        pictureIds[j] = dataObj.getString("$oid");
+                    }
+                } catch (JSONException e1){
+                    e1.printStackTrace();
+                    // try to parser picture as object -> catch if there is no such object at all
+                    try{
+                        pictureIds = new String[1];
+                        JSONObject jsonPictureObj = poi.getJSONObject("picture");
+                        pictureIds[0] = jsonPictureObj.getJSONObject("data").getString("$oid");
+                    } catch (JSONException e2){
+                        e2.printStackTrace();
+                        // continue without image (will be null)
+                    }
+                }
 
                 JSONObject jsonLocation = poi.getJSONObject("location");
                 JSONArray jsonCoordinates = jsonLocation.getJSONArray("coordinates");
                 LatLng location = new LatLng(jsonCoordinates.getDouble(0), jsonCoordinates.getDouble(1));
-
-                pois[i] = new Poi(id, name, description, location);
+                if(pictureIds != null){
+                    pois[i] = new Poi(id, name, description, location, pictureIds);
+                } else {
+                    pois[i] = new Poi(id, name, description, location);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

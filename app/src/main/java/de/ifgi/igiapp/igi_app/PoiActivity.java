@@ -2,8 +2,12 @@ package de.ifgi.igiapp.igi_app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +37,8 @@ public class PoiActivity extends Activity {
     // result code for returning to map
     int BACK_TO_MAP = 55;
 
+    String basePictureUrl = "http://giv-interaction.uni-muenster.de/dbml/getImage.php?oid=";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +47,6 @@ public class PoiActivity extends Activity {
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
         String poiId = intent.getStringExtra("poi-id");
-
-        // fill poi-description
-        render(title, description);
 
         // fill story-element list
         final ListView listview = (ListView) findViewById(R.id.story_element_list);
@@ -51,6 +57,18 @@ public class PoiActivity extends Activity {
 
         // get story object from id
         Poi poi = databaseHandler.getPoiByPoiId(poiId);
+
+        // check if image is available and render content in activity
+        ImageView imageView = ((ImageView) findViewById(R.id.display_narrative_image));
+        if (poi.getPictureIds() != null){
+            // always take first picture (until now!)
+            String url = basePictureUrl + poi.getPictureIds()[0];
+            new DownloadImageTask(imageView).execute(url);
+        } else {
+            imageView.setImageResource(R.drawable.prinzipalmarkt1);
+        }
+        render(title, description);
+
         final List<StoryElement> storyElements = databaseHandler.getStoryElementByPoiId(poi.getId());
 
         // add story-element title to listview
@@ -111,9 +129,30 @@ public class PoiActivity extends Activity {
         WebView textDescription = (WebView) findViewById(R.id.display_narrative_description);
         String descriptionHTML = "<html><body style=\"background-color: #EEEEEE; margin: 0px;\"><p align=\"justify\">" + description + "</p></body></html>";
         textDescription.loadData(descriptionHTML, "text/html; charset=utf-8", null);
+    }
 
-        //Create the image view
-        ImageView image = ((ImageView) findViewById(R.id.display_narrative_image));
-        image.setImageResource(R.drawable.prinzipalmarkt1);
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }
