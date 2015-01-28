@@ -26,6 +26,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="de.ifgi.igiapp.igi_app.MapsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +49,7 @@
         </service>
 
         <activity
-            android:name="de.ifgi.igiapp.igi_app.PoiActivity"
+            android:name=".PoiActivity"
             android:label="@string/title_activity_display_narrative"
             android:parentActivityName="de.ifgi.igiapp.igi_app.MapsActivity" >
             <meta-data
@@ -57,14 +58,16 @@
         </activity>
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryElementActivity"
-            android:label="@string/title_activity_story_element" >
+            android:label="@string/title_activity_story_element"
+            android:parentActivityName="de.ifgi.igiapp.igi_app.PoiActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.ifgi.igiapp.igi_app.MapsActivity" />
+                android:value="de.ifgi.igiapp.igi_app.PoiActivity" />
         </activity>
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryListActivity"
-            android:label="@string/title_activity_story_list" >
+            android:label="@string/title_activity_story_list"
+            android:parentActivityName="de.ifgi.igiapp.igi_app.MapsActivity">
         </activity>
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryLineMap"
@@ -73,6 +76,10 @@
         <activity
             android:name="de.ifgi.igiapp.igi_app.StoryElementListActivity"
             android:label="@string/title_activity_story_element_list" >
+        </activity>
+        <activity
+            android:name="de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch"
+            android:label="@string/title_activity_activity_first_launch" >
         </activity>
     </application>
 

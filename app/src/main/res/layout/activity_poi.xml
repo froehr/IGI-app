@@ -20,20 +20,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="left"
         android:gravity="bottom|center_horizontal"
-        android:textSize="40dp"
+        android:textSize="24dp"
         android:textColor="#222"
-        android:layout_centerHorizontal="true" />
-    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp" />
+    <WebView
         android:id="@+id/display_narrative_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="bottom|left"
-        android:textSize="18dp"
-        android:textColor="#222"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content" />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/story_element_list"

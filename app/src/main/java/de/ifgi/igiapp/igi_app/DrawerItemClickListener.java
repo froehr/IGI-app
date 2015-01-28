@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
+
 /**
  * Created by Tobias on 19.11.2014.
  */
@@ -17,6 +19,10 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
     private void selectItem(int position, View view) {
         if(position == 1){
             Intent intent = new Intent(view.getContext(), StoryListActivity.class);
+            view.getContext().startActivity(intent);
+        }
+        if(position == 3){
+            Intent intent = new Intent(view.getContext(), ActivityFirstLaunch.class);
             view.getContext().startActivity(intent);
         }
     }

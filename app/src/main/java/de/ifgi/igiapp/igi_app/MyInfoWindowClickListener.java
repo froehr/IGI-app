@@ -15,24 +15,35 @@ import java.util.Map;
 public class MyInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
     Activity activity;
     Map<String, String> markerPoiHandler = new HashMap<String, String>();
+    boolean isStoryElement;
 
-    public MyInfoWindowClickListener(Activity activity){
+    public MyInfoWindowClickListener(Activity activity) {
         this.activity = activity;
     }
 
-    public void onInfoWindowClick(Marker marker){
-        // Create intent for displaying poi with
-        Intent intent = new Intent(this.activity, PoiActivity.class);
+    public void onInfoWindowClick(Marker marker) {
         String title = marker.getTitle();
         String description = marker.getSnippet();
 
-        // get db-id of poi
-        String poiId = markerPoiHandler.get(marker.getId());
+        // decide which activity should be started
+        if (isStoryElement) {
+            // Create intent for displaying story element
+            Intent intent = new Intent(this.activity, StoryElementActivity.class);
+            intent.putExtra("title", title);
+            // snippet is id
+            intent.putExtra("story-element-id", description);
+            this.activity.startActivity(intent);
+        } else {
+            // Create intent for displaying poi
+            Intent intent = new Intent(this.activity, PoiActivity.class);
+            // get db-id of poi
+            String poiId = markerPoiHandler.get(marker.getId());
 
-        // add data for poi-activity
-        intent.putExtra("title", title);
-        intent.putExtra("description", description);
-        intent.putExtra("poi-id", poiId);
-        this.activity.startActivity(intent);
+            // add data for poi-activity
+            intent.putExtra("title", title);
+            intent.putExtra("description", description);
+            intent.putExtra("poi-id", poiId);
+            this.activity.startActivity(intent);
+        }
     }
 }

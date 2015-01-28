@@ -3,9 +3,11 @@ package de.ifgi.igiapp.igi_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -19,7 +21,14 @@ import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 
+/***
+ * This class provides the content for markers (pois AND story-elements)
+ */
 public class PoiActivity extends Activity {
+    // request code for story elements
+    int OPEN_STORY_ELEMENT = 77;
+    // result code for returning to map
+    int BACK_TO_MAP = 55;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +70,16 @@ public class PoiActivity extends Activity {
                 // open storyElementActivity
                 Intent intent = new Intent(PoiActivity.this, StoryElementActivity.class);
                 intent.putExtra("story-element-id", storyElements.get(position).getId());
-                startActivity(intent);
+                startActivityForResult(intent, OPEN_STORY_ELEMENT);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == BACK_TO_MAP){
+            finish();
+        }
     }
 
 
@@ -92,8 +108,9 @@ public class PoiActivity extends Activity {
         textTitle.setText(title);
 
         // Create text view for description
-        TextView textDescription = (TextView) findViewById(R.id.display_narrative_description);
-        textDescription.setText(description);
+        WebView textDescription = (WebView) findViewById(R.id.display_narrative_description);
+        String descriptionHTML = "<html><body style=\"background-color: #EEEEEE; margin: 0px;\"><p align=\"justify\">" + description + "</p></body></html>";
+        textDescription.loadData(descriptionHTML, "text/html; charset=utf-8", null);
 
         //Create the image view
         ImageView image = ((ImageView) findViewById(R.id.display_narrative_image));

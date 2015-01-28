@@ -2,7 +2,9 @@ package de.ifgi.igiapp.igi_app.SpeechRecognition;
 
 public class Dictionary {
     public Word pan = new Word("pan", new String[] {"turn", "that", "then", "time", "pen", "ten", "phan", "been", "gran", "10", "pin", "in", "penn", "hang", "depend", "can", "I'm", "send", "cond"});
-    public Word zoom = new Word("zoom", new String[] {"lum", "hum", "sum", "newm", "who", "you", "bloom", "whom", "bowm", "blue", "rem", "xoom", "doom", "June"});
+    public Word zoom = new Word("zoom", new String[] {"lum", "hum", "sum", "newm", "who", "you", "bloom", "whom", "bowm", "blue", "rem", "xoom", "doom", "june", "zuma"});
+    public Word change = new Word("change to", new String[] {"change 2"});
+    public Word map = new Word("map", new String[] {"mep", "met", "my"});
 
     public Word[] commandZoomIn = new Word[] {
             zoom,
@@ -21,7 +23,7 @@ public class Dictionary {
 
     public Word[] commandPanRight = new Word[] {
             pan,
-            new Word("right", new String[] {"what", "droid", "ride", "fried", "drunk", "rod", "run", "front", "wide"})
+            new Word("right", new String[] {"what", "droid", "ride", "rite", "fried", "drunk", "rod", "run", "front", "wide", "write"})
     };
 
     public Word[] commandPanUp = new Word[] {
@@ -44,6 +46,10 @@ public class Dictionary {
             new Word("at", new String[] {"of"})
     };
 
+    public Word[] commandFind = new Word[] {
+            new Word("find", new String[] {})
+    };
+
     public Word[] commandOpenMenu = new Word[] {
             new Word("open", new String[] {}),
             new Word("menu", new String[] {})
@@ -56,9 +62,43 @@ public class Dictionary {
     };
 
     public Word[] commandSearchStoryElementsByTag = new Word[] {
-            new Word("story", new String[] {}),
-            new Word("elements", new String[] {}),
+            new Word("story", new String[] {"stories"}),
+            new Word("elements", new String[] {"element"}),
             new Word("with", new String[] {"was"}),
-            new Word("tag", new String[] {"tech", "take", "text"})
+            new Word("tag", new String[] {"tax", "pak", "packed", "peg", "pic", "tech", "take", "text", "tech"})
+    };
+
+    public Word[] commandShowStories = new Word[] {
+            new Word("show", new String[] {"short", "true", "view", "open", "new", "zoo", "do you", "you"}),
+            new Word("stories", new String[] {"story"})
+    };
+
+    public Word[] commandStartStory = new Word[] {
+            new Word("start", new String[] {"stalled", "stop", "third", "started", "stock", "about", "sob", "dog", "top"}),
+            new Word("story", new String[] {"storage", "stories"})
+    };
+
+    public Word[] commandBasicMap = new Word[] {
+            change,
+            new Word("basic", new String[] {}),
+            map
+    };
+
+    public Word[] commandSatelliteMap = new Word[] {
+            change,
+            new Word("satellite", new String[] {"setalite", "settle art", "set alight"}),
+            map
+    };
+
+    public Word[] commandHybridMap = new Word[] {
+            change,
+            new Word("satellite", new String[] {"high bread"}),
+            map
+    };
+
+    public Word[] commandTerrainMap = new Word[] {
+            change,
+            new Word("terrain", new String[] {"rain"}),
+            map
     };
 }

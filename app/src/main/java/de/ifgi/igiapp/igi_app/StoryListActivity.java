@@ -3,6 +3,7 @@ package de.ifgi.igiapp.igi_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +17,10 @@ import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 
 
-public class StoryListActivity extends Activity {
+public class StoryListActivity extends ActionBarActivity {
 
     private DatabaseHandler databaseHandler;
+    final int STORY_MODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class StoryListActivity extends Activity {
         setContentView(R.layout.activity_story_list);
 
         GlobalApplication application = (GlobalApplication) getApplicationContext();
-        this.databaseHandler = application.getGlobalDatabaseHandler();
+        databaseHandler = application.getGlobalDatabaseHandler();
 
         final Story stories[] = databaseHandler.getAllStories();
 
@@ -47,11 +49,17 @@ public class StoryListActivity extends Activity {
                 String storyId = stories[position].getId();
                 Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
                 intent.putExtra("story-id", storyId);
-                startActivity(intent);
+                startActivityForResult(intent, STORY_MODE);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == STORY_MODE){
+            // do nothing
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

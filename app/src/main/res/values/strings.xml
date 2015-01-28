@@ -19,11 +19,43 @@
     <string name="tour">Tour</string>
     <string name="drawer_open"></string>
     <string name="drawer_close"></string>
-    <string name="title_activity_display_narrative">NarrativeDetails</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_story_element">StoryElementActivity</string>
-    <string name="title_activity_story_list">StoryListActivity</string>
-    <string name="title_activity_story_line_map">Map</string>
-    <string name="title_activity_story_element_list">StoryElementListActivity</string>
+    <string name="title_activity_display_narrative">POI</string>
+    <string name="title_activity_activity_first_launch">LocalLama</string>
+    <string name="title_activity_story_element">Story Element</string>
+    <string name="title_activity_story_list">Stories</string>
+    <string name="title_activity_story_line_map">Story Mode</string>
+    <string name="title_activity_story_element_list">Story Element List</string>
+
+    <string name="tutorial_title_1">"Locative Narratives"</string>
+    <string name="tutorial_title_2">"Speech Input"</string>
+    <string name="tutorial_title_3">"Gesture Input"</string>
+    <string name="tutorial_title_4">"Gesture Input"</string>
+    <string name="tutorial_description_1">"Experience your city with multi-media stories"</string>
+    <string name="tutorial_description_2">"Interact with your phone by speeking to it"</string>
+    <string name="tutorial_description_3">"Navigate through the city by using motion gestures"</string>
+    <string name="tutorial_description_4">"Return to your current position by turning the phone"</string>
+    <string name="tutorial_skip">Skip</string>
+    <string name="tutorial_done">Done</string>
+
+    <string name="enable_localization">Please enable the Android localization tools on your device.</string>
+    <string name="speech_command_error">Sorry, I did not understand you.</string>
+    <string name="speech_command_zoom_in">Zooming in.</string>
+    <string name="speech_command_zoom_out">Zooming out.</string>
+    <string name="speech_command_pan_left">Panning to the left.</string>
+    <string name="speech_command_pan_right">Panning to the right.</string>
+    <string name="speech_command_pan_up">Panning up.</string>
+    <string name="speech_command_pan_down">Panning down.</string>
+    <string name="speech_command_move_to">Moving to</string>
+    <string name="speech_command_center_at">Centering the map at</string>
+    <string name="speech_command_find">Searching for</string>
+    <string name="speech_command_open_menu">Opening menu.</string>
+    <string name="speech_command_show_location">Moving to your current location.</string>
+    <string name="speech_command_search_story_elements_by_tag">Searching for story elements tagged with</string>
+    <string name="speech_command_show_stories">Showing stories.</string>
+    <string name="speech_command_start_story">Starting story.</string>
+    <string name="speech_command_terrain_map">Changing terrain map.</string>
+    <string name="speech_command_satellite_map">Changing satellite map.</string>
+    <string name="speech_command_basic_map">Changing to basic map.</string>
+    <string name="speech_command_hybrid_map">Changing to hybrid map</string>
 
 </resources>
