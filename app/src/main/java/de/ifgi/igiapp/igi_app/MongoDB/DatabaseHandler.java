@@ -207,6 +207,17 @@ public class DatabaseHandler {
         return null;
     }
 
+    public Story getStoryByStoryElementId(String id){
+        for(Story story: getAllStories()){
+            for(String storyElementId: story.getStoryElementId()){
+                if (storyElementId.equals(id)){
+                    return story;
+                }
+            }
+        }
+        return null;
+    }
+
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public void requestAllStories(){
         new HttpAsyncTask().execute(stories);
