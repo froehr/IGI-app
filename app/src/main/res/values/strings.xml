@@ -19,13 +19,12 @@
     <string name="tour">Tour</string>
     <string name="drawer_open"></string>
     <string name="drawer_close"></string>
-    <string name="title_activity_display_narrative">NarrativeDetails</string>
+    <string name="title_activity_display_narrative">POI</string>
     <string name="title_activity_activity_first_launch">LocalLama</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_story_element">StoryElementActivity</string>
-    <string name="title_activity_story_list">StoryListActivity</string>
-    <string name="title_activity_story_line_map">Map</string>
-    <string name="title_activity_story_element_list">StoryElementListActivity</string>
+    <string name="title_activity_story_element">Story Element</string>
+    <string name="title_activity_story_list">Stories</string>
+    <string name="title_activity_story_line_map">Story Mode</string>
+    <string name="title_activity_story_element_list">Story Element List</string>
 
     <string name="tutorial_title_1">"Locative Narratives"</string>
     <string name="tutorial_title_2">"Speech Input"</string>
@@ -54,6 +53,9 @@
     <string name="speech_command_search_story_elements_by_tag">Searching for story elements tagged with</string>
     <string name="speech_command_show_stories">Showing stories.</string>
     <string name="speech_command_start_story">Starting story.</string>
-    <string name="speech_command_whats_this">Please touch a point on the map.</string>
+    <string name="speech_command_terrain_map">Changing terrain map.</string>
+    <string name="speech_command_satellite_map">Changing satellite map.</string>
+    <string name="speech_command_basic_map">Changing to basic map.</string>
+    <string name="speech_command_hybrid_map">Changing to hybrid map</string>
 
 </resources>

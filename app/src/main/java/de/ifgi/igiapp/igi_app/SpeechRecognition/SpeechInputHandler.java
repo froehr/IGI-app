@@ -49,22 +49,22 @@ public class SpeechInputHandler {
         }
 
         else if ( parseCommand(command, dict.commandBasicMap) ) {
-            toastString += "change to basic map";
+            toastString += act.getString(R.string.speech_command_basic_map);
             map.changeMapLayerToNormal();
         }
 
         else if ( parseCommand(command, dict.commandSatelliteMap) ) {
-            toastString += "change to satellite map";
+            toastString += act.getString(R.string.speech_command_satellite_map);
             map.changeMapLayerToSatellite();
         }
 
         else if ( parseCommand(command, dict.commandHybridMap) ) {
-            toastString += "change to hybrid map";
+            toastString += act.getString(R.string.speech_command_hybrid_map);
             map.changeMapLayerToHybrid();
         }
 
         else if ( parseCommand(command, dict.commandTerrainMap) ) {
-            toastString += "change to terrain map";
+            toastString += act.getString(R.string.speech_command_terrain_map);
             map.changeMapLayerToTerrain();
         }
 

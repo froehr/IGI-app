@@ -3,6 +3,7 @@ package de.ifgi.igiapp.igi_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 
 
-public class StoryListActivity extends Activity {
+public class StoryListActivity extends ActionBarActivity {
 
     private DatabaseHandler databaseHandler;
     final int STORY_MODE = 1;
