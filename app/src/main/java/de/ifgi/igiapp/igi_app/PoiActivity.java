@@ -24,6 +24,10 @@ import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
  * This class provides the content for markers (pois AND story-elements)
  */
 public class PoiActivity extends Activity {
+    // request code for story elements
+    int OPEN_STORY_ELEMENT = 77;
+    // result code for returning to map
+    int BACK_TO_MAP = 55;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +69,16 @@ public class PoiActivity extends Activity {
                 // open storyElementActivity
                 Intent intent = new Intent(PoiActivity.this, StoryElementActivity.class);
                 intent.putExtra("story-element-id", storyElements.get(position).getId());
-                startActivity(intent);
+                startActivityForResult(intent, OPEN_STORY_ELEMENT);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == BACK_TO_MAP){
+            finish();
+        }
     }
 
 
