@@ -28,8 +28,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -55,12 +55,12 @@ import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
 import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MyInfoWindowClickListener infoWindowClickListener;
-    private LocationClient mLocationClient;
+    private GoogleApiClient mLocationClient;
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -105,7 +105,11 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mMap.setMyLocationEnabled(true);
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
         mMap.setOnInfoWindowClickListener(new MyInfoWindowClickListener(this));
-        mLocationClient = new LocationClient(this, this, this);
+        mLocationClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
         mTitle = mDrawerTitle = getTitle();
 
         // request all data from db and make it global available
@@ -358,15 +362,22 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
     public void openDrawer(){ (mDrawerLayout).openDrawer(Gravity.LEFT);}
 
+    public void changeMapLayerToNormal() { mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); }
+
+    public void changeMapLayerToSatellite() { mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); }
+
+    public void changeMapLayerToHybrid() { mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); }
+
+    public void changeMapLayerToTerrain() { mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
+
     public boolean centerAtCurrentLocation() {
-        Location mCurrentLocation = mLocationClient.getLastLocation();
+        Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
         if ( mCurrentLocation != null ) {
             LatLng latlng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
             Log.d("", mCurrentLocation.toString());
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -387,12 +398,12 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
             } else {
                 Toast.makeText(getApplicationContext(),
-                        "could not find any results: " + location,
+                        "Could not find any results: " + location,
                         Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(),
-                    "network unavailable or any other I/O problem occurs: " + location,
+                    "Network unavailable or any other I/O problem occurs: " + location,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -444,7 +455,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
             MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
             Marker marker = mMap.addMarker(markerOptions);
             infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
-        }    
+        }
     }
     @Subscribe
     public void answerAvailable(AnswerAvailableEvent event) {
@@ -471,7 +482,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     }
 
     @Override
-    public void onDisconnected() {
+    public void onConnectionSuspended(int i) {
 
     }
 

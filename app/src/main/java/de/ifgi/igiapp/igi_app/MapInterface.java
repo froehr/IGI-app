@@ -28,4 +28,14 @@ public interface MapInterface {
     public void showStories();
 
     void startStory(String storyName);
+
+    public void changeMapLayerToNormal();
+
+    public void changeMapLayerToSatellite();
+
+    public void changeMapLayerToHybrid();
+
+    public void changeMapLayerToTerrain();
+
+
 }
