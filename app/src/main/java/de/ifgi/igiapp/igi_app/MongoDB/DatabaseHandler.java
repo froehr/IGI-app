@@ -198,6 +198,10 @@ public class DatabaseHandler {
         return storyLine;
     }
 
+    /*
+    Get Tag by Tag-Name
+    Return null if there is no such tag in the DB
+     */
     public Tag getTagByTagName(String name){
         for(Tag tag: allTags){
             if(name.equals(tag.getName())){
@@ -207,6 +211,10 @@ public class DatabaseHandler {
         return null;
     }
 
+    /*
+    Get Story by ID of any corresponding story-element
+    Return null if there is no such story
+     */
     public Story getStoryByStoryElementId(String id){
         for(Story story: getAllStories()){
             for(String storyElementId: story.getStoryElementId()){

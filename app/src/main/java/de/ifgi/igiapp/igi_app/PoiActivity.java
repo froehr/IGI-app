@@ -37,7 +37,7 @@ public class PoiActivity extends Activity {
     // result code for returning to map
     int BACK_TO_MAP = 55;
 
-    String basePictureUrl = "http://giv-interaction.uni-muenster.de/dbml/getImage.php?oid=";
+    final String basePictureUrl = "http://giv-interaction.uni-muenster.de/dbml/getImage.php?oid=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,6 @@ public class PoiActivity extends Activity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -131,9 +130,11 @@ public class PoiActivity extends Activity {
         textDescription.loadData(descriptionHTML, "text/html; charset=utf-8", null);
     }
 
+    // Download the image has to be done asynchronus to void freezing the UI
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
+        // save imageView for adding the image later
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
