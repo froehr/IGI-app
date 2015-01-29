@@ -25,7 +25,6 @@
     <string name="title_activity_story_list">Stories</string>
     <string name="title_activity_story_line_map">Story Mode</string>
     <string name="title_activity_story_element_list">Story Element List</string>
-
     <string name="tutorial_title_1">"Locative Narratives"</string>
     <string name="tutorial_title_2">"Speech Input"</string>
     <string name="tutorial_title_3">"Gesture Input"</string>
@@ -36,7 +35,6 @@
     <string name="tutorial_description_4">"Return to your current position by turning the phone"</string>
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_done">Done</string>
-
     <string name="enable_localization">Please enable the Android localization tools on your device.</string>
     <string name="speech_command_error">Sorry, I did not understand you.</string>
     <string name="speech_command_zoom_in">Zooming in.</string>
@@ -57,5 +55,7 @@
     <string name="speech_command_satellite_map">Changing satellite map.</string>
     <string name="speech_command_basic_map">Changing to basic map.</string>
     <string name="speech_command_hybrid_map">Changing to hybrid map</string>
+    <string name="title_activity_speech_commands">Commands</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

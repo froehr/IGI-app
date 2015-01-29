@@ -31,7 +31,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 /***
  * This class provides the content for markers (pois AND story-elements)
  */
-public class PoiActivity extends Activity {
+public class PoiActivity extends ActionBarActivity {
     // request code for story elements
     int OPEN_STORY_ELEMENT = 77;
     // result code for returning to map
@@ -100,24 +100,6 @@ public class PoiActivity extends Activity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.display_narrative, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     protected void render(String title, String description){
         // Create the text view

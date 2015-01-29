@@ -157,8 +157,8 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
         drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_map_grey, "Map");
         drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_stories_grey, "Stories");
-        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_explore_grey, "Tour");
-        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
+        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
+        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_grade_grey, "Commands");
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_list_item, drawerItem);
         mDrawerList.setAdapter(adapter);
@@ -232,13 +232,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.maps, menu);
-        return true;
     }
 
     @Override
@@ -451,10 +444,16 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     }
 
     public void drawMarkers(Poi[] pois){
-        for (int i = 0; i < pois.length; i++){
-            MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
-            Marker marker = mMap.addMarker(markerOptions);
-            infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
+        try {
+            for (int i = 0; i < pois.length; i++){
+                MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
+                Marker marker = mMap.addMarker(markerOptions);
+                infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),
+                    "No POIs available",
+                    Toast.LENGTH_SHORT).show();
         }
     }
     @Subscribe
