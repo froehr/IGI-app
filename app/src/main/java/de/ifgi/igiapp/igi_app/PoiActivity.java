@@ -65,7 +65,7 @@ public class PoiActivity extends ActionBarActivity {
             String url = basePictureUrl + poi.getPictureIds()[0];
             new DownloadImageTask(imageView).execute(url);
         } else {
-            imageView.setImageResource(R.drawable.prinzipalmarkt1);
+            imageView.setImageResource(R.drawable.ic_image);
         }
         render(title, description);
 

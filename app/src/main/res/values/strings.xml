@@ -56,6 +56,6 @@
     <string name="speech_command_basic_map">Changing to basic map.</string>
     <string name="speech_command_hybrid_map">Changing to hybrid map</string>
     <string name="title_activity_speech_commands">Commands</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="list_of_commands">A list of speech commands</string>
 
 </resources>
