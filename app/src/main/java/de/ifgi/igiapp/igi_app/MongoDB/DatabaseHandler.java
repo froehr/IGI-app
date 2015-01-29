@@ -457,15 +457,14 @@ public class DatabaseHandler {
                         pictureIds[j] = dataObj.getString("$oid");
                     }
                 } catch (JSONException e1){
-                    e1.printStackTrace();
                     // try to parser picture as object -> catch if there is no such object at all
                     try{
                         pictureIds = new String[1];
                         JSONObject jsonPictureObj = poi.getJSONObject("picture");
                         pictureIds[0] = jsonPictureObj.getJSONObject("data").getString("$oid");
                     } catch (JSONException e2){
-                        e2.printStackTrace();
                         // continue without image (will be null)
+                        pictureIds = null;
                     }
                 }
 
@@ -479,7 +478,6 @@ public class DatabaseHandler {
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
         }
 
         return pois;
