@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,8 +36,12 @@ public class StoryListActivity extends ActionBarActivity {
         final ListView listview = (ListView) findViewById(R.id.story_list);
 
         final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < stories.length; ++i) {
-            list.add(stories[i].getName());
+        try {
+            for (int i = 0; i < stories.length; ++i) {
+                list.add(stories[i].getName());
+            }
+        } catch (NullPointerException ex) {
+            Toast.makeText(getApplicationContext(), "Wait until point are loaded from Database", Toast.LENGTH_SHORT).show();
         }
         final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
