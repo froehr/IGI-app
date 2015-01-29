@@ -46,7 +46,7 @@ public class DatabaseHandler {
     MapsActivity map;
 
     static String baseUrl = "https://api.mongolab.com/api/1/databases/igi-tool-db";
-    static String apiKey = "2Q1SmomE3Hihh_MqC4nshAwWRowZSeiT";
+    static String apiKey = "jh_B49WyJhI9ZmMiZI1Yy84-wvoU5Rmu";
 
     String pois = "/collections/pois";
     String stories = "/collections/stories";
