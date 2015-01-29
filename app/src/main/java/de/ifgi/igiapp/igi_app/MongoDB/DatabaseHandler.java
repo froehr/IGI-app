@@ -46,8 +46,7 @@ public class DatabaseHandler {
     MapsActivity map;
 
     static String baseUrl = "https://api.mongolab.com/api/1/databases/igi-tool-db";
-    static String apiKey = "" +
-            ""; // add the new api key here!
+    static String apiKey = ""; // add the new api key here!
 
     String pois = "/collections/pois";
     String stories = "/collections/stories";
@@ -392,16 +391,16 @@ public class DatabaseHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Story[] storiesArray;
         try {
-            Story[] storiesArray = new Story[stories.size()];
+            storiesArray = new Story[stories.size()];
             for (int i = 0; i < stories.size(); i++) {
                 storiesArray[i] = stories.get(i);
-                return storiesArray;
             }
         } catch (NullPointerException npe) {
             return null;
         }
-        return null;
+        return storiesArray;
     }
 
     public StoryElement[] createStoryElementsFromJSON(String jsonString){
