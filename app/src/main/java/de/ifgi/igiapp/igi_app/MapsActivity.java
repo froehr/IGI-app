@@ -457,6 +457,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
             infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
         }
     }
+
     @Subscribe
     public void answerAvailable(AnswerAvailableEvent event) {
         if (event.getEvent() == BusProvider.PAN_LEFT) {
