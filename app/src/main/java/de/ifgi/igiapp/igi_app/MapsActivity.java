@@ -61,7 +61,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MyInfoWindowClickListener infoWindowClickListener;
     private GoogleApiClient mLocationClient;
-    private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
@@ -125,7 +124,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 
         //Navigation Drawer
-        mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -153,21 +151,17 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[4];
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
 
         drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_map_grey, "Map");
         drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_stories_grey, "Stories");
-        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_explore_grey, "Tour");
-        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
+        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_list_item, drawerItem);
         mDrawerList.setAdapter(adapter);
 
-        // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-        //       R.layout.drawer_list_item, mPlanetTitles));
         // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(mDrawerLayout));
 
 
         // Speech recognition
@@ -224,21 +218,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
             }
 
         }
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.maps, menu);
-        return true;
     }
 
     @Override

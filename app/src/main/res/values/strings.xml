@@ -8,12 +8,6 @@
     <string name="speech_prompt">Say something…</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
 
-    <string-array name="drawer_content">
-        <item>Map</item>
-        <item>Stories</item>
-        <item>Tours</item>
-    </string-array>
-
     <string name="map">Map</string>
     <string name="stories">Stories</string>
     <string name="tour">Tour</string>
