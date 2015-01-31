@@ -46,7 +46,7 @@ public class DatabaseHandler {
     MapsActivity map;
 
     static String baseUrl = "https://api.mongolab.com/api/1/databases/igi-tool-db";
-    static String apiKey = "2Q1SmomE3Hihh_MqC4nshAwWRowZSeiT";
+    static String apiKey = "jh_B49WyJhI9ZmMiZI1Yy84-wvoU5Rmu";
 
     String pois = "/collections/pois";
     String stories = "/collections/stories";
@@ -337,21 +337,23 @@ public class DatabaseHandler {
 
                 Log.i("Type of result: ", type);
 
-                if(type.equals("stories")){
-                    allStories = createStoriesFromJSON(result);
-                    map.setStories(allStories);
+                if ( ! result.contains("provide a valid API key") ) {
+                    if (type.equals("stories")) {
+                        allStories = createStoriesFromJSON(result);
+                        map.setStories(allStories);
 
-                } else if(type.equals("story-elements")){
-                    allStoryElements = createStoryElementsFromJSON(result);
-                    map.setStoryElements(allStoryElements);
+                    } else if (type.equals("story-elements")) {
+                        allStoryElements = createStoryElementsFromJSON(result);
+                        map.setStoryElements(allStoryElements);
 
-                } else if(type.equals("pois")){
-                    allPois = createPoisFromJSON(result);
-                    map.setPois(allPois);
+                    } else if (type.equals("pois")) {
+                        allPois = createPoisFromJSON(result);
+                        map.setPois(allPois);
 
-                } else if(type.equals("tags")){
-                    allTags = createTagsFromJSON(result);
-                    map.setTags(allTags);
+                    } else if (type.equals("tags")) {
+                        allTags = createTagsFromJSON(result);
+                        map.setTags(allTags);
+                    }
                 }
             }
         }
