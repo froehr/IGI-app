@@ -11,7 +11,8 @@
         <ImageView
             android:id="@+id/marker_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
+            android:alpha="0.3"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
         <TextView
@@ -23,6 +24,6 @@
             android:gravity="bottom|left"
             android:textSize="24sp"
             android:layout_marginLeft="16dp"
-            android:textColor="#fff"/>
+            android:textColor="#a2a2a2"/>
     </FrameLayout>
 </LinearLayout>

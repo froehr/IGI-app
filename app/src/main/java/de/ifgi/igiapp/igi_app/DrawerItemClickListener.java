@@ -24,19 +24,21 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
     }
 
     private void selectItem(int position, View view) {
-        Intent intent;
-        switch (position) {
-            case 0:
-                mDrawerLayout.closeDrawers();
-                break;
-            case 1:
-                intent = new Intent(view.getContext(), StoryListActivity.class);
-                view.getContext().startActivity(intent);
-                break;
-            case 2:
-                intent = new Intent(view.getContext(), ActivityFirstLaunch.class);
-                view.getContext().startActivity(intent);
-                break;
+        if(position == 0){
+            Intent intent = new Intent(view.getContext(), MapsActivity.class);
+            view.getContext().startActivity(intent);
+        }
+        if(position == 1){
+            Intent intent = new Intent(view.getContext(), StoryListActivity.class);
+            view.getContext().startActivity(intent);
+        }
+        if(position == 2){
+            Intent intent = new Intent(view.getContext(), ActivityFirstLaunch.class);
+            view.getContext().startActivity(intent);
+        }
+        if(position == 3){
+            Intent intent = new Intent(view.getContext(), SpeechCommands.class);
+            view.getContext().startActivity(intent);
         }
     }
 }

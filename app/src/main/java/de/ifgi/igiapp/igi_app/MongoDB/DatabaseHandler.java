@@ -46,7 +46,7 @@ public class DatabaseHandler {
     MapsActivity map;
 
     static String baseUrl = "https://api.mongolab.com/api/1/databases/igi-tool-db";
-    static String apiKey = "jh_B49WyJhI9ZmMiZI1Yy84-wvoU5Rmu";
+    static String apiKey = ""; // add the new api key here!
 
     String pois = "/collections/pois";
     String stories = "/collections/stories";
@@ -198,6 +198,10 @@ public class DatabaseHandler {
         return storyLine;
     }
 
+    /*
+    Get Tag by Tag-Name
+    Return null if there is no such tag in the DB
+     */
     public Tag getTagByTagName(String name){
         for(Tag tag: allTags){
             if(name.equals(tag.getName())){
@@ -207,6 +211,10 @@ public class DatabaseHandler {
         return null;
     }
 
+    /*
+    Get Story by ID of any corresponding story-element
+    Return null if there is no such story
+     */
     public Story getStoryByStoryElementId(String id){
         for(Story story: getAllStories()){
             for(String storyElementId: story.getStoryElementId()){
@@ -385,9 +393,14 @@ public class DatabaseHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Story[] storiesArray = new Story[stories.size()];
-        for(int i = 0; i < stories.size(); i++){
-            storiesArray[i] = stories.get(i);
+        Story[] storiesArray;
+        try {
+            storiesArray = new Story[stories.size()];
+            for (int i = 0; i < stories.size(); i++) {
+                storiesArray[i] = stories.get(i);
+            }
+        } catch (NullPointerException npe) {
+            return null;
         }
         return storiesArray;
     }
@@ -432,21 +445,46 @@ public class DatabaseHandler {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray poiArray = jsonObject.getJSONArray("pois");
             pois = new Poi[poiArray.length()];
-            for(int i = 0; i < poiArray.length(); i++){
+            for(int i = 0; i < poiArray.length(); i++) {
                 JSONObject poi = poiArray.getJSONObject(i);
 
                 String id = poi.getString("_id");
                 String name = poi.getString("name");
                 String description = poi.getString("description");
+                String pictureIds[] = null;
+                // because we do not know if there is one, multiple or no image
+                //-> we have to try out and catch error if we were wrong :-|
+
+                // try to parser picture as array -> catch if there is no such array
+                try {
+                    JSONArray jsonPictureArr = poi.getJSONArray("picture");
+                    pictureIds = new String[jsonPictureArr.length()];
+                    for (int j = 0; j < jsonPictureArr.length(); j++) {
+                        JSONObject dataObj = jsonPictureArr.getJSONObject(j).getJSONObject("data");
+                        pictureIds[j] = dataObj.getString("$oid");
+                    }
+                } catch (JSONException e1){
+                    // try to parser picture as object -> catch if there is no such object at all
+                    try{
+                        pictureIds = new String[1];
+                        JSONObject jsonPictureObj = poi.getJSONObject("picture");
+                        pictureIds[0] = jsonPictureObj.getJSONObject("data").getString("$oid");
+                    } catch (JSONException e2){
+                        // continue without image (will be null)
+                        pictureIds = null;
+                    }
+                }
 
                 JSONObject jsonLocation = poi.getJSONObject("location");
                 JSONArray jsonCoordinates = jsonLocation.getJSONArray("coordinates");
                 LatLng location = new LatLng(jsonCoordinates.getDouble(0), jsonCoordinates.getDouble(1));
-
-                pois[i] = new Poi(id, name, description, location);
+                if(pictureIds != null){
+                    pois[i] = new Poi(id, name, description, location, pictureIds);
+                } else {
+                    pois[i] = new Poi(id, name, description, location);
+                }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
         }
 
         return pois;

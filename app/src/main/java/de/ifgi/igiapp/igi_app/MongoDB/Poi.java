@@ -10,12 +10,21 @@ public class Poi {
     private String name;
     private String description;
     private LatLng location;
+    private String[] pictureIds;
 
     public Poi(String _id, String _name, String _description, LatLng _location){
         this.id = _id;
         this.name = _name;
         this.description = _description;
         this.location = _location;
+    }
+
+    public Poi(String _id, String _name, String _description, LatLng _location, String[] _pictureIds){
+        this.id = _id;
+        this.name = _name;
+        this.description = _description;
+        this.location = _location;
+        this.pictureIds = _pictureIds;
     }
 
     public String getId(){
@@ -33,4 +42,6 @@ public class Poi {
     public LatLng getLocation(){
         return this.location;
     }
+
+    public String[] getPictureIds() { return pictureIds; }
 }

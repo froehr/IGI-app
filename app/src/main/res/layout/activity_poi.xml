@@ -13,6 +13,7 @@
         android:id="@+id/display_narrative_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxHeight="700px"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter" />
     <TextView
