@@ -132,9 +132,8 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
             @Override
             public void onClick(View v) {
                 currentFakeLocation++;
-                if(currentFakeLocation > fakeLocations.length){
-                    Toast.makeText(getApplicationContext(), "Exit story mode...", Toast.LENGTH_SHORT).show();
-                    finish();
+                if(currentFakeLocation >= fakeLocations.length){
+                    Toast.makeText(getApplicationContext(), "Visited all fake locations", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 centerMapOnLocation(fakeLocations[currentFakeLocation]);
