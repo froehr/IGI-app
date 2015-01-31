@@ -52,6 +52,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.MapSpeechInputHandler;
 import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
@@ -69,9 +70,9 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int maxResults = 5;
-    SpeechInputHandler speechInputHandler;
-    Geocoder geocoder;
-    DatabaseHandler databaseHandler;
+    private MapSpeechInputHandler speechInputHandler;
+    private Geocoder geocoder;
+    private DatabaseHandler databaseHandler;
 
     GestureService mService;
     boolean mBound = false;
@@ -174,7 +175,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
         geocoder = new Geocoder(this, Locale.ENGLISH);
-        speechInputHandler = new SpeechInputHandler(this);
+        speechInputHandler = new MapSpeechInputHandler(this);
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -184,8 +185,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
             }
         });
     }
-
-
 
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -203,9 +202,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         }
     }
 
-    /**
-     * Receiving speech input
-     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

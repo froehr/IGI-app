@@ -1,80 +1,94 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.ifgi.igiapp.igi_app.PoiActivity">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/story_element_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
-
-    <TextView
-        android:id="@+id/story_element_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:gravity="bottom|center_horizontal"
-        android:textAlignment="center"
-        android:textColor="#222"
-        android:textSize="40dp" />
-
-    <TextView
-        android:id="@+id/story_element_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:gravity="bottom|left"
-        android:textColor="#222"
-        android:textSize="18dp" />
-
-    <RelativeLayout
-        android:id="@+id/buttonOverlay"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="de.ifgi.igiapp.igi_app.PoiActivity">
 
-        <Button
-            android:id="@+id/previousStoryButton"
+        <ImageView
+            android:id="@+id/story_element_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/story_element_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:background="#359c5e"
-            android:padding="10dp"
-            android:text="Previous"
-            android:textColor="#ffffff" />
-
-        <Button
-            android:id="@+id/backToMapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="#359c5e"
-            android:padding="10dp"
-            android:text="Back to Map"
-            android:textColor="#ffffff" />
+            android:layout_gravity="left"
+            android:gravity="bottom|center_horizontal"
+            android:textAlignment="center"
+            android:textColor="#222"
+            android:textSize="24dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
 
-        <Button
-            android:id="@+id/nextStoryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="#359c5e"
-            android:padding="10dp"
-            android:text="Next"
-            android:textColor="#ffffff" />
-    </RelativeLayout>
 
-</LinearLayout>
+        <WebView
+            android:id="@+id/story_element_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/buttonOverlay"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/previousStoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:background="#359c5e"
+                android:padding="10dp"
+                android:text="Previous"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/backToMapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="#359c5e"
+                android:padding="10dp"
+                android:text="Back to Map"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/nextStoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="#359c5e"
+                android:padding="10dp"
+                android:text="Next"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnSpeak"
+        android:layout_width="@dimen/mic_button_size"
+        android:layout_height="@dimen/mic_button_size"
+        android:background="@drawable/btn"
+        android:src="@drawable/ic_mic_none_white"
+        android:elevation="4dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="20dp" />
+</FrameLayout>

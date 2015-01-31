@@ -1,15 +1,18 @@
 package de.ifgi.igiapp.igi_app;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -27,10 +30,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+
 import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Poi;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.StoryElementSpeechInputHandler;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.StoryLineSpeechInputHandler;
 
 public class StoryLineMap extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -66,6 +73,10 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
 
     // minimum distance before story element is opened
     private final double ACTIVATION_DISTANCE = 0.15;
+
+    private ImageButton btnSpeak;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private StoryLineSpeechInputHandler speechInputHandler;
 
     //fake variables
     LatLng[] fakeLocations = {
@@ -140,6 +151,34 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
                 checkDistanceToMarker(fakeLocations[currentFakeLocation], markerCollection[approachingMarker].getPosition());
             }
         });
+
+        speechInputHandler = new StoryLineSpeechInputHandler(this);
+
+        btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
+
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -393,6 +432,14 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
                     */
             }
         }
+        else if ( requestCode == REQ_CODE_SPEECH_INPUT ) {
+            if (resultCode == RESULT_OK && null != data) {
+
+                ArrayList<String> result = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                speechInputHandler.handleSpeech(result);
+            }
+        }
     }
 
     @Override
@@ -415,4 +462,37 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Toast.makeText(getApplicationContext(), "GPS is not enabled", Toast.LENGTH_LONG).show();
     }
+
+
+    public void zoomIn(){
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+    }
+
+    public void zoomOut(){
+        mMap.animateCamera(CameraUpdateFactory.zoomOut());
+    }
+
+    public void panUp(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, -400));
+    }
+
+    public void panDown(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(0, 400));
+    }
+
+    public void panRight(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(400, 0));
+    }
+
+    public void panLeft(){
+        mMap.animateCamera(CameraUpdateFactory.scrollBy(-400, 0));
+    }
+
+    public void changeMapLayerToNormal() { mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); }
+
+    public void changeMapLayerToSatellite() { mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); }
+
+    public void changeMapLayerToHybrid() { mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); }
+
+    public void changeMapLayerToTerrain() { mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
 }

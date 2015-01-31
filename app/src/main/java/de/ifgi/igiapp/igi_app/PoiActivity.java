@@ -71,26 +71,28 @@ public class PoiActivity extends ActionBarActivity {
 
         final List<StoryElement> storyElements = databaseHandler.getStoryElementByPoiId(poi.getId());
 
-        // add story-element title to listview
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < storyElements.size(); ++i) {
-            list.add(storyElements.get(i).getName());
-        }
-        final ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-
-        // on story-element click
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                // open storyElementActivity
-                Intent intent = new Intent(PoiActivity.this, StoryElementActivity.class);
-                intent.putExtra("story-element-id", storyElements.get(position).getId());
-                startActivityForResult(intent, OPEN_STORY_ELEMENT);
+        if ( storyElements != null ) {
+            // add story-element title to listview
+            final ArrayList<String> list = new ArrayList<String>();
+            for (int i = 0; i < storyElements.size(); ++i) {
+                list.add(storyElements.get(i).getName());
             }
-        });
+            final ArrayAdapter adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, list);
+            listview.setAdapter(adapter);
+
+            // on story-element click
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+                    // open storyElementActivity
+                    Intent intent = new Intent(PoiActivity.this, StoryElementActivity.class);
+                    intent.putExtra("story-element-id", storyElements.get(position).getId());
+                    startActivityForResult(intent, OPEN_STORY_ELEMENT);
+                }
+            });
+        }
     }
 
     @Override

@@ -1,20 +1,28 @@
 package de.ifgi.igiapp.igi_app;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.StoryElementSpeechInputHandler;
 
 public class StoryElementActivity extends ActionBarActivity {
 
@@ -31,9 +39,13 @@ public class StoryElementActivity extends ActionBarActivity {
     int originPosition;
 
     // result code for returning to map
-    int BACK_TO_MAP = 55;
+    private final int BACK_TO_MAP = 55;
     // request code for switching story
-    int SWITCH_ELEMENT = 66;
+    private final int SWITCH_ELEMENT = 66;
+
+    private ImageButton btnSpeak;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private StoryElementSpeechInputHandler speechInputHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +111,54 @@ public class StoryElementActivity extends ActionBarActivity {
             }
         });
 
+        speechInputHandler = new StoryElementSpeechInputHandler(this);
+
+        btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
+
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    speechInputHandler.handleSpeech(result);
+                }
+                break;
+            }
+            case BACK_TO_MAP:
+                setResult(BACK_TO_MAP);
+                finish();
+                break;
+        }
     }
 
     /**
@@ -144,23 +204,15 @@ public class StoryElementActivity extends ActionBarActivity {
         finish();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode == BACK_TO_MAP){
-            // handle down
-            setResult(BACK_TO_MAP);
-            finish();
-        }
-    }
-
     // Fill activity with content
     public void render(StoryElement storyElement) {
         TextView textTitle = (TextView) findViewById(R.id.story_element_title);
         textTitle.setText(storyElement.getName());
 
-        //Create text view for description
-        TextView textDescription = (TextView) findViewById(R.id.story_element_description);
-        textDescription.setText(storyElement.getText());
+        // Create text view for description
+        WebView textDescription = (WebView) findViewById(R.id.story_element_description);
+        String descriptionHTML = "<html><body style=\"background-color: #EEEEEE; margin: 0px;\"><p align=\"justify\">" + storyElement.getText() + "</p></body></html>";
+        textDescription.loadData(descriptionHTML, "text/html; charset=utf-8", null);
 
         ImageView image = ((ImageView) findViewById(R.id.story_element_image));
         // set sample image
