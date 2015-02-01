@@ -64,13 +64,17 @@ public class StoryElementActivity extends ActionBarActivity {
 
         // request story from db by story element id and look for index in story
         Story story = databaseHandler.getStoryByStoryElementId(storyElementId);
-        String[] allIds = story.getStoryElementId();
-        for (int i = 0; i < allIds.length; i++) {
-            if (allIds[i].equals(storyElementId)) {
-                positionInStory = i;
-                break;
+        String[] allIds = null;
+        if(story != null){
+            allIds = story.getStoryElementId();
+            for (int i = 0; i < allIds.length; i++) {
+                if (allIds[i].equals(storyElementId)) {
+                    positionInStory = i;
+                    break;
+                }
             }
         }
+
 
         render(storyElement);
 
@@ -92,7 +96,7 @@ public class StoryElementActivity extends ActionBarActivity {
         }
 
         // check if "next" button is necessary and implement functionality
-        if (positionInStory == allIds.length - 1) {
+        if (positionInStory == -1 || positionInStory == allIds.length - 1) {
             nextStoryElementButton.setVisibility(View.GONE);
         } else {
             nextStoryElementId = allIds[positionInStory + 1];
