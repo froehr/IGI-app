@@ -188,11 +188,13 @@ public class DatabaseHandler {
         // get all elements of this story
         for(String storyElementId: story.getStoryElementId()){
             StoryElement storyElement = getStoryElementByStoryElementId(storyElementId);
-            String poiId = storyElement.getPoiId();
-            // get poi of this story-element
-            Poi poi = getPoiByPoiId(poiId);
-            // add location to polyline
-            storyLine.add(poi.getLocation());
+            if(storyElement != null){
+                String poiId = storyElement.getPoiId();
+                // get poi of this story-element
+                Poi poi = getPoiByPoiId(poiId);
+                // add location to polyline
+                storyLine.add(poi.getLocation());
+            }
         }
 
         return storyLine;

@@ -207,9 +207,12 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
             public void onMapLoaded() {
                 Story story = databaseHandler.getStoryByStoryId(storyId);
                 storyElementIds = story.getStoryElementId();
-                StoryElement[] storyElements = new StoryElement[storyElementIds.length];
+                ArrayList<StoryElement> storyElements = new ArrayList<StoryElement>();
                 for (int i = 0; i < storyElementIds.length; i++) {
-                    storyElements[i] = databaseHandler.getStoryElementByStoryElementId(storyElementIds[i]);
+                    StoryElement currentElement = databaseHandler.getStoryElementByStoryElementId(storyElementIds[i]);
+                    if(currentElement != null){
+                        storyElements.add(databaseHandler.getStoryElementByStoryElementId(storyElementIds[i]));
+                    }
                 }
 
                 addStoryElementsToMap(storyElements);
@@ -221,24 +224,30 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
         });
     }
 
-    public void addStoryElementsToMap(StoryElement[] storyElements) {
+    public void addStoryElementsToMap(ArrayList<StoryElement> storyElements) {
 
-        markerCollection = new Marker[storyElements.length];
+        ArrayList<MarkerOptions> markerOptions = new ArrayList<MarkerOptions>();
+        markerCollection = new Marker[storyElements.size()];
 
-        for (int i = 0; i < storyElements.length; i++) {
-            String storyElementPoiId = storyElements[i].getPoiId();
+        boolean firstElement = true;
+        for (StoryElement storyElement: storyElements) {
+            String storyElementPoiId = storyElement.getPoiId();
             Poi storyElementPoi = databaseHandler.getPoiByPoiId(storyElementPoiId);
-            MarkerOptions markerOptions = new MarkerOptions().position(storyElementPoi.getLocation());
-            markerOptions.title(storyElements[i].getName());
-            markerOptions.snippet(storyElements[i].getId());
-            if (i == 0){
+            MarkerOptions currentMarkerOption = new MarkerOptions().position(storyElementPoi.getLocation());
+            currentMarkerOption.title(storyElement.getName());
+            currentMarkerOption.snippet(storyElement.getId());
+            if (firstElement){
                 // first element is colored green
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                currentMarkerOption.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                firstElement = false;
             } else {
                 // all other are colored orange
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                currentMarkerOption.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
             }
-            markerCollection[i] =  mMap.addMarker(markerOptions);
+            markerOptions.add(currentMarkerOption);
+        }
+        for(int i = 0; i < markerOptions.size(); i++){
+            markerCollection[i] =  mMap.addMarker(markerOptions.get(i));
         }
     }
 
