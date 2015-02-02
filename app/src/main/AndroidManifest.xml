@@ -58,11 +58,7 @@
         </activity>
         <activity
             android:name=".StoryElementActivity"
-            android:label="@string/title_activity_story_element"
-            android:parentActivityName=".PoiActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.ifgi.igiapp.igi_app.PoiActivity" />
+            android:label="@string/title_activity_story_element">
         </activity>
         <activity
             android:name=".StoryListActivity"

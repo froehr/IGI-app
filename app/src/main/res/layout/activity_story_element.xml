@@ -3,6 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -39,47 +43,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:id="@+id/buttonOverlay"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/previousStoryButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:background="#359c5e"
-                android:padding="10dp"
-                android:text="Previous"
-                android:textColor="#ffffff" />
-
-            <Button
-                android:id="@+id/backToMapButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:background="#359c5e"
-                android:padding="10dp"
-                android:text="Back to Map"
-                android:textColor="#ffffff" />
-
-            <Button
-                android:id="@+id/nextStoryButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:background="#359c5e"
-                android:padding="10dp"
-                android:text="Next"
-                android:textColor="#ffffff" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp" />
 
     </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/buttonOverlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/previousStoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="#359c5e"
+            android:padding="10dp"
+            android:text="Previous"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/backToMapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#359c5e"
+            android:padding="10dp"
+            android:text="Back to Map"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/nextStoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="#359c5e"
+            android:padding="10dp"
+            android:text="Next"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/btnSpeak"

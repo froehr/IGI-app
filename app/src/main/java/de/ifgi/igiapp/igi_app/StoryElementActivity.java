@@ -220,6 +220,6 @@ public class StoryElementActivity extends ActionBarActivity {
 
         ImageView image = ((ImageView) findViewById(R.id.story_element_image));
         // set sample image
-        image.setImageResource(R.drawable.prinzipalmarkt1);
+        image.setImageResource(R.drawable.ic_image);
     }
 }
