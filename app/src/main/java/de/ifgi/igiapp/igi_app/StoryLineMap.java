@@ -253,6 +253,10 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
 
     public void addPolylineToMap(PolylineOptions polylineOptions) {
         Polyline polyline = mMap.addPolyline(polylineOptions);
+        if (polyline.getPoints().size() == 0){
+            Toast.makeText(getApplicationContext(), "This story has no elements", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (int i = 0; i < polyline.getPoints().size(); i++) {
