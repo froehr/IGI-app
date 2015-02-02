@@ -5,6 +5,8 @@ public class Dictionary {
     public Word zoom = new Word("zoom", new String[] {"lum", "hum", "sum", "newm", "who", "you", "bloom", "whom", "bowm", "blue", "rem", "xoom", "doom", "june", "zuma"});
     public Word change = new Word("change to", new String[] {"change 2"});
     public Word map = new Word("map", new String[] {"mep", "met", "my"});
+    public Word start = new Word("start", new String[] {"stalled", "stop", "third", "started", "stock", "about", "sob", "dog", "top"});
+    public Word story = new Word("story", new String[] {"storage", "stories"});
 
     public Word[] commandZoomIn = new Word[] {
             zoom,
@@ -64,8 +66,8 @@ public class Dictionary {
     public Word[] commandSearchStoryElementsByTag = new Word[] {
             new Word("story", new String[] {"stories"}),
             new Word("elements", new String[] {"element"}),
-            new Word("with", new String[] {"was"}),
-            new Word("tag", new String[] {"tax", "pak", "packed", "peg", "pic", "tech", "take", "text", "tech"})
+            new Word("with", new String[] {"was", "pissed"}),
+            new Word("tag", new String[] {"tax", "pak", "packed", "peg", "pic", "tech", "take", "text", "tech", "eric"})
     };
 
     public Word[] commandShowStories = new Word[] {
@@ -74,8 +76,8 @@ public class Dictionary {
     };
 
     public Word[] commandStartStory = new Word[] {
-            new Word("start", new String[] {"stalled", "stop", "third", "started", "stock", "about", "sob", "dog", "top"}),
-            new Word("story", new String[] {"storage", "stories"})
+            start,
+            story
     };
 
     public Word[] commandBasicMap = new Word[] {
@@ -92,7 +94,7 @@ public class Dictionary {
 
     public Word[] commandHybridMap = new Word[] {
             change,
-            new Word("satellite", new String[] {"high bread"}),
+            new Word("hybrid", new String[] {"high bread"}),
             map
     };
 
@@ -100,5 +102,19 @@ public class Dictionary {
             change,
             new Word("terrain", new String[] {"rain"}),
             map
+    };
+
+    public Word[] commandPrevious = new Word[] {
+            new Word("previous", new String[] {})
+    };
+
+    public Word[] commandBackToMap = new Word[] {
+            new Word("back", new String[] {}),
+            new Word("to", new String[] {}),
+            map
+    };
+
+    public Word[] commandNext = new Word[] {
+            new Word("next", new String[] {})
     };
 }

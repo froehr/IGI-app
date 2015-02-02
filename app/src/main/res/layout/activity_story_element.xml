@@ -1,46 +1,53 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.ifgi.igiapp.igi_app.PoiActivity">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/story_element_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="de.ifgi.igiapp.igi_app.PoiActivity">
 
-    <TextView
-        android:id="@+id/story_element_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:gravity="bottom|center_horizontal"
-        android:textAlignment="center"
-        android:textColor="#222"
-        android:textSize="40dp" />
+        <TextView
+            android:id="@+id/story_element_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="left"
+            android:gravity="bottom|center_horizontal"
+            android:textAlignment="center"
+            android:textColor="#222"
+            android:textSize="24dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
 
-    <TextView
-        android:id="@+id/story_element_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:gravity="bottom|left"
-        android:textColor="#222"
-        android:textSize="18dp" />
 
+        <WebView
+            android:id="@+id/story_element_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp" />
+
+    </LinearLayout>
+    </ScrollView>
     <RelativeLayout
         android:id="@+id/buttonOverlay"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
         <Button
@@ -77,4 +84,14 @@
             android:textColor="#ffffff" />
     </RelativeLayout>
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/btnSpeak"
+        android:layout_width="@dimen/mic_button_size"
+        android:layout_height="@dimen/mic_button_size"
+        android:background="@drawable/btn"
+        android:src="@drawable/ic_mic_none_white"
+        android:elevation="4dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="20dp" />
+</FrameLayout>

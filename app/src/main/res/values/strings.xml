@@ -8,12 +8,6 @@
     <string name="speech_prompt">Say something…</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
 
-    <string-array name="drawer_content">
-        <item>Map</item>
-        <item>Stories</item>
-        <item>Tours</item>
-    </string-array>
-
     <string name="map">Map</string>
     <string name="stories">Stories</string>
     <string name="tour">Tour</string>
@@ -25,7 +19,6 @@
     <string name="title_activity_story_list">Stories</string>
     <string name="title_activity_story_line_map">Story Mode</string>
     <string name="title_activity_story_element_list">Story Element List</string>
-
     <string name="tutorial_title_1">"Locative Narratives"</string>
     <string name="tutorial_title_2">"Speech Input"</string>
     <string name="tutorial_title_3">"Gesture Input"</string>
@@ -36,7 +29,6 @@
     <string name="tutorial_description_4">"Return to your current position by turning the phone"</string>
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_done">Done</string>
-
     <string name="enable_localization">Please enable the Android localization tools on your device.</string>
     <string name="speech_command_error">Sorry, I did not understand you.</string>
     <string name="speech_command_zoom_in">Zooming in.</string>
@@ -56,6 +48,55 @@
     <string name="speech_command_terrain_map">Changing terrain map.</string>
     <string name="speech_command_satellite_map">Changing satellite map.</string>
     <string name="speech_command_basic_map">Changing to basic map.</string>
-    <string name="speech_command_hybrid_map">Changing to hybrid map</string>
+    <string name="speech_command_hybrid_map">Changing to hybrid map.</string>
+    <string name="speech_command_next">Going to the next story element.</string>
+    <string name="speech_command_back_to_map">Going back to the map.</string>
+    <string name="speech_command_previous">Going to the previous story element.</string>
+    <string name="speech_command_start_story_short">Starting story.</string>
+    <string name="title_activity_speech_commands">Commands</string>
+    <string name="commands_zoom_in">\"Zoom in\"</string>
+    <string name="commands_desc_zoom_in">Zooms the map one step closer to the center point.</string>
+    <string name="commands_zoom_out">\"Zoom out\"</string>
+    <string name="commands_desc_zoom_out">Zooms the map one step away from the center point.</string>
+    <string name="commands_pan_left">\"Pan left\"</string>
+    <string name="commands_desc_pan_left">Pans the map to the left.</string>
+    <string name="commands_pan_right">\"Pan right\"</string>
+    <string name="commands_desc_pan_right">Pans the map to the right.</string>
+    <string name="commands_pan_up">\"Pan up\"</string>
+    <string name="commands_desc_pan_up">Pans the map up.</string>
+    <string name="commands_pan_down">\"Pan down\"</string>
+    <string name="commands_desc_pan_down">Pans the map down.</string>
+    <string name="commands_change_basic_map">\"Change to basic map\"</string>
+    <string name="commands_desc_change_basic_map">Changes the background map to Google Basic Map.</string>
+    <string name="commands_change_terrain_map">\"Change to terrain map\"</string>
+    <string name="commands_desc_change_terrain_map">Changes the background map to Google Terrain Map.</string>
+    <string name="commands_change_satellite_map">\"Change to satellite map\"</string>
+    <string name="commands_desc_change_satellite_map">Changes the background map to Google Satellite Map.</string>
+    <string name="commands_change_hybrid_map">\"Change to hybrid map\"</string>
+    <string name="commands_desc_change_hybrid_map">Changes the background map to Google Hybrid Map.</string>
+    <string name="commands_center_at">\"Center at [location]\"</string>
+    <string name="commands_desc_center_at">Centers the map at the given location if the location was found.</string>
+    <string name="commands_show_location">\"Show my location\"</string>
+    <string name="commands_desc_show_location">Centers the map at your current location.</string>
+    <string name="commands_search_by_tag">\"Search story elements with tag [tag]\"</string>
+    <string name="commands_desc_search_by_tag">Searches all story elements tagged with the given tag.</string>
+    <string name="commands_desc_open_menu">Opens the menu on the left hand side.</string>
+    <string name="commands_open_menu">\"Open menu\"</string>
+    <string name="commands_show_stories">\"Show stories\"</string>
+    <string name="commands_desc_show_stories">Shows all available stories.</string>
+    <string name="commands_start_story">\"Start story [story name]\"</string>
+    <string name="commands_desc_start_story">Starts the given story.</string>
+    <string name="story_list">Story list</string>
+    <string name="commands_desc_story_list">Say the name of a story to start it.</string>
+    <string name="story_map">Story map</string>
+    <string name="commands_start_story_short">\"Start story\"</string>
+    <string name="commands_desc_start_story_short">Starts the story mode for this story.</string>
+    <string name="story_element">Story element</string>
+    <string name="commands_next">\"Next\"</string>
+    <string name="commands_desc_next">Go to the next story element in this story.</string>
+    <string name="commands_previous">\"Previous\"</string>
+    <string name="commands_desc_previous">Go to the previous story element in this story.</string>
+    <string name="commands_back_to_map">\"Back to map\"</string>
+    <string name="commands_desc_back_to_map">Go back to the story map.</string>
 
 </resources>

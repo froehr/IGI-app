@@ -1,26 +1,36 @@
 package de.ifgi.igiapp.igi_app;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import de.ifgi.igiapp.igi_app.MongoDB.DatabaseHandler;
 import de.ifgi.igiapp.igi_app.MongoDB.Story;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.StoryLineSpeechInputHandler;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.StoryListSpeechInputHandler;
 
 
 public class StoryListActivity extends ActionBarActivity {
 
     private DatabaseHandler databaseHandler;
     final int STORY_MODE = 1;
+
+    private ImageButton btnSpeak;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private StoryListSpeechInputHandler speechInputHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +40,77 @@ public class StoryListActivity extends ActionBarActivity {
         GlobalApplication application = (GlobalApplication) getApplicationContext();
         databaseHandler = application.getGlobalDatabaseHandler();
 
-        final Story stories[] = databaseHandler.getAllStories();
+        if ( databaseHandler != null ) {
+            final Story stories[] = databaseHandler.getAllStories();
 
-        final ListView listview = (ListView) findViewById(R.id.story_list);
+            final ListView listview = (ListView) findViewById(R.id.story_list);
 
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < stories.length; ++i) {
-            list.add(stories[i].getName());
+            final ArrayList<String> list = new ArrayList<String>();
+            try {
+                for (int i = 0; i < stories.length; ++i) {
+                    list.add(stories[i].getName());
+                }
+            } catch (NullPointerException ex) {
+                Toast.makeText(getApplicationContext(), "Please wait until the points are loaded from our database and try again after.", Toast.LENGTH_SHORT).show();
+            }
+            final ArrayAdapter adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, list);
+            listview.setAdapter(adapter);
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+                    String storyId = stories[position].getId();
+                    Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
+                    intent.putExtra("story-id", storyId);
+                    startActivityForResult(intent, STORY_MODE);
+                }
+            });
         }
-        final ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        speechInputHandler = new StoryListSpeechInputHandler(this);
+
+        btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                String storyId = stories[position].getId();
-                Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
-                intent.putExtra("story-id", storyId);
-                startActivityForResult(intent, STORY_MODE);
+            public void onClick(View v) {
+                promptSpeechInput();
             }
         });
+
+    }
+
+    public void startStory(String storyName) {
+        Story[] stories = databaseHandler.getAllStories();
+
+        for ( int i = 0; i < stories.length; i++ ) {
+            if ( stories[i].getName().toLowerCase().equals(storyName.toLowerCase()) ) {
+                String storyId = stories[i].getId();
+                Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
+                intent.putExtra("story-id", storyId);
+                startActivity(intent);
+                return;
+            }
+        }
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -59,27 +118,13 @@ public class StoryListActivity extends ActionBarActivity {
         if (requestCode == STORY_MODE){
             // do nothing
         }
-    }
+        else if ( requestCode == REQ_CODE_SPEECH_INPUT ) {
+            if (resultCode == RESULT_OK && null != data) {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_story_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                ArrayList<String> result = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                speechInputHandler.handleSpeech(result);
+            }
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -52,6 +52,7 @@ import de.ifgi.igiapp.igi_app.MongoDB.Story;
 import de.ifgi.igiapp.igi_app.MongoDB.StoryElement;
 import de.ifgi.igiapp.igi_app.MongoDB.Tag;
 import de.ifgi.igiapp.igi_app.SharedPreferences.ActivityFirstLaunch;
+import de.ifgi.igiapp.igi_app.SpeechRecognition.MapSpeechInputHandler;
 import de.ifgi.igiapp.igi_app.SpeechRecognition.SpeechInputHandler;
 
 public class MapsActivity extends ActionBarActivity implements MapInterface,
@@ -61,7 +62,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MyInfoWindowClickListener infoWindowClickListener;
     private GoogleApiClient mLocationClient;
-    private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
@@ -70,9 +70,9 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int maxResults = 5;
-    SpeechInputHandler speechInputHandler;
-    Geocoder geocoder;
-    DatabaseHandler databaseHandler;
+    private MapSpeechInputHandler speechInputHandler;
+    private Geocoder geocoder;
+    private DatabaseHandler databaseHandler;
 
     GestureService mService;
     boolean mBound = false;
@@ -125,7 +125,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 
         //Navigation Drawer
-        mPlanetTitles = getResources().getStringArray(R.array.drawer_content);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -157,8 +156,8 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
         drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_map_grey, "Map");
         drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_stories_grey, "Stories");
-        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_explore_grey, "Tour");
-        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
+        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_tutorial_grey, "Tutorial");
+        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_grade_grey, "Commands");
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_list_item, drawerItem);
         mDrawerList.setAdapter(adapter);
@@ -167,7 +166,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this,
         //       R.layout.drawer_list_item, mPlanetTitles));
         // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(mDrawerLayout));
 
 
         // Speech recognition
@@ -176,7 +175,7 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
 
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
         geocoder = new Geocoder(this, Locale.ENGLISH);
-        speechInputHandler = new SpeechInputHandler(this);
+        speechInputHandler = new MapSpeechInputHandler(this);
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -186,8 +185,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
             }
         });
     }
-
-
 
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -205,9 +202,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         }
     }
 
-    /**
-     * Receiving speech input
-     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -232,13 +226,6 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.maps, menu);
-        return true;
     }
 
     @Override
@@ -451,12 +438,19 @@ public class MapsActivity extends ActionBarActivity implements MapInterface,
     }
 
     public void drawMarkers(Poi[] pois){
-        for (int i = 0; i < pois.length; i++){
-            MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
-            Marker marker = mMap.addMarker(markerOptions);
-            infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
+        try {
+            for (int i = 0; i < pois.length; i++){
+                MarkerOptions markerOptions = new MarkerOptions().position(pois[i].getLocation()).title(pois[i].getName()).snippet(pois[i].getDescription());
+                Marker marker = mMap.addMarker(markerOptions);
+                infoWindowClickListener.markerPoiHandler.put(marker.getId(), pois[i].getId());
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),
+                    "No POIs available",
+                    Toast.LENGTH_SHORT).show();
         }
     }
+
     @Subscribe
     public void answerAvailable(AnswerAvailableEvent event) {
         if (event.getEvent() == BusProvider.PAN_LEFT) {

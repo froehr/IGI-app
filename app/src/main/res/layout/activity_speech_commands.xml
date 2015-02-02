@@ -1,0 +1,479 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.ifgi.igiapp.igi_app.SpeechCommands">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="@string/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:text="@string/commands_zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_basic_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_basic_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_terrain_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_terrain_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_satellite_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_satellite_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_hybrid_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_hybrid_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_center_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_center_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_show_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_show_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_search_by_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_search_by_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_open_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_open_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_show_stories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_show_stories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_start_story"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_start_story"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/story_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:text="@string/commands_desc_story_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/story_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:text="@string/commands_start_story_short"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_start_story_short"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_pan_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_pan_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_basic_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_basic_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_terrain_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_terrain_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_satellite_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_satellite_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_change_hybrid_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_change_hybrid_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/story_element"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:text="@string/commands_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+            <TextView
+                android:text="@string/commands_back_to_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:text="@string/commands_desc_back_to_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginBottom="7dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
