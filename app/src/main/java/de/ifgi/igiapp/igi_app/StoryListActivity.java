@@ -40,32 +40,35 @@ public class StoryListActivity extends ActionBarActivity {
         GlobalApplication application = (GlobalApplication) getApplicationContext();
         databaseHandler = application.getGlobalDatabaseHandler();
 
-        final Story stories[] = databaseHandler.getAllStories();
+        if ( databaseHandler != null ) {
+            final Story stories[] = databaseHandler.getAllStories();
 
-        final ListView listview = (ListView) findViewById(R.id.story_list);
+            final ListView listview = (ListView) findViewById(R.id.story_list);
 
-        final ArrayList<String> list = new ArrayList<String>();
-        try {
-            for (int i = 0; i < stories.length; ++i) {
-                list.add(stories[i].getName());
+            final ArrayList<String> list = new ArrayList<String>();
+            try {
+                for (int i = 0; i < stories.length; ++i) {
+                    list.add(stories[i].getName());
+                }
+            } catch (NullPointerException ex) {
+                Toast.makeText(getApplicationContext(), "Please wait until the points are loaded from our database and try again after.", Toast.LENGTH_SHORT).show();
             }
-        } catch (NullPointerException ex) {
-            Toast.makeText(getApplicationContext(), "Please wait until the points are loaded from our database and try again after.", Toast.LENGTH_SHORT).show();
+            final ArrayAdapter adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, list);
+            listview.setAdapter(adapter);
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+                    String storyId = stories[position].getId();
+                    Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
+                    intent.putExtra("story-id", storyId);
+                    startActivityForResult(intent, STORY_MODE);
+                }
+            });
         }
-        final ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                String storyId = stories[position].getId();
-                Intent intent = new Intent(StoryListActivity.this, StoryLineMap.class);
-                intent.putExtra("story-id", storyId);
-                startActivityForResult(intent, STORY_MODE);
-            }
-        });
 
         speechInputHandler = new StoryListSpeechInputHandler(this);
 
