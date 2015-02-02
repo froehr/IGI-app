@@ -159,9 +159,12 @@ public class StoryElementActivity extends ActionBarActivity {
                 break;
             }
             default:
-                setResult(BACK_TO_MAP);
-                finish();
                 break;
+        }
+
+        if (resultCode == BACK_TO_MAP){
+            setResult(BACK_TO_MAP);
+            finish();
         }
     }
 
