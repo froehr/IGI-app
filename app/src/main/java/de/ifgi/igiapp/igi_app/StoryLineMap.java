@@ -52,11 +52,6 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
     private boolean startIfConnected = false;
 
     Button startStoryButton;
-    Button nextFakeLocButton;
-
-    // current position marker
-    Marker markerCurrentPosition;
-
     String[] storyElementIds;
 
     // request code for visiting story element
@@ -77,29 +72,6 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private StoryLineSpeechInputHandler speechInputHandler;
-
-    //fake variables
-    LatLng[] fakeLocations = {
-            new LatLng(51.95071924140229, 7.597646713256836),
-            new LatLng(51.95071924140229, 7.600564956665039),
-            new LatLng(51.95056053871301, 7.603483200073242),
-            new LatLng(51.950296032982756, 7.605113983154297),
-            new LatLng(51.95071924140229, 7.607431411743164),
-            new LatLng(51.95346999877737, 7.611465454101562),
-            new LatLng(51.954739522191694, 7.614984512329102),
-            new LatLng(51.95659084607304, 7.619190216064452),
-            new LatLng(51.959499914870015, 7.618932723999023),
-            new LatLng(51.966586674132465, 7.617559432983399),
-            new LatLng(51.97150443797158, 7.622795104980469),
-            new LatLng(51.97256195108668, 7.628889083862305),
-            new LatLng(51.97309069828516, 7.633008956909179),
-            new LatLng(51.97361943924433, 7.636699676513671),
-            new LatLng(51.97282632546583, 7.6387596130371085),
-            new LatLng(51.9714515616607, 7.640390396118164),
-            new LatLng(51.97028826703529, 7.639617919921874),
-            new LatLng(51.969495094294324, 7.638587951660156)
-    };
-    int currentFakeLocation = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,25 +102,10 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
         mLocationClient.connect();
 
         startStoryButton = (Button) findViewById(R.id.startStoryButton);
-        nextFakeLocButton = (Button) findViewById(R.id.fakeLocationButton);
-
         startStoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startStory();
-            }
-        });
-
-        nextFakeLocButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentFakeLocation++;
-                if(currentFakeLocation >= fakeLocations.length){
-                    Toast.makeText(getApplicationContext(), "Visited all fake locations", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                centerMapOnLocation(fakeLocations[currentFakeLocation]);
-                checkDistanceToMarker(fakeLocations[currentFakeLocation], markerCollection[approachingMarker].getPosition());
             }
         });
 
@@ -269,17 +226,9 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
     }
 
     public void startStory() {
-        // make "Start Story" button invisible and display "fake location" button
         startStoryButton.setVisibility(View.GONE);
-        nextFakeLocButton.setVisibility(View.VISIBLE);
         approachingMarker = 0;
 
-        // TODO: REMOVE AFTERWARDS (ONLY FOR FAKE LOCATION)
-        centerMapOnLocation(fakeLocations[currentFakeLocation]);
-        checkDistanceToMarker(fakeLocations[currentFakeLocation], markerCollection[approachingMarker].getPosition());
-
-        // TODO: REMOVE COMMENTS (FOR REAL LOCATION:)
-        /*
         // start as soon as connection is established
         startIfConnected = true;
 
@@ -287,11 +236,13 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
         if (!connected) {
             Toast.makeText(getApplicationContext(), "Waiting for GPS", Toast.LENGTH_LONG).show();
         } else {
-            Location mCurrentLocation = mLocationClient.getLastLocation();
-            centerMapOnLocation(mCurrentLocation);
             startLocationListener();
+
+            Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
+            if (mCurrentLocation != null){
+                centerMapOnLocation(mCurrentLocation);
+            }
         }
-        */
     }
 
     private void startLocationListener() {
@@ -325,21 +276,10 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
     }
 
-    // TODO: REMOVE AFTERWARDS (ONLY FOR FAKE LOCATIONS)
-    public void centerMapOnLocation(LatLng location) {
-        LatLng latlng = new LatLng(location.latitude, location.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
-
-        if(markerCurrentPosition != null){
-            markerCurrentPosition.remove();
-        }
-
-        markerCurrentPosition = mMap.addMarker(new MarkerOptions()
-                .position(location)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-    }
-
     public void checkDistanceToMarker(Location currentLocation, LatLng markerPosition) {
+        if (currentLocation == null){
+            return;
+        }
         // calculate distance
         final int earthRadius = 6371;
         float dLat = (float) Math.toRadians(markerPosition.latitude - currentLocation.getLatitude());
@@ -364,37 +304,6 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
         if (distance < ACTIVATION_DISTANCE) {
             // stop watching location as long as user is in story element
             mLocationManager.removeUpdates(mLocationListener);
-            // open new activity
-            openApproachingStoryElement();
-        }
-
-
-    }
-
-    // TODO: REMOVE AFTERWARDS (ONLY FOR FAKE LOCATIONS)
-    public void checkDistanceToMarker(LatLng currentLocation, LatLng markerPosition) {
-        // calculate distance
-        final int earthRadius = 6371;
-        float dLat = (float) Math.toRadians(markerPosition.latitude - currentLocation.latitude);
-        float dLon = (float) Math.toRadians(markerPosition.longitude - currentLocation.longitude);
-        float a =
-                (float) (Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(currentLocation.latitude))
-                        * Math.cos(Math.toRadians(markerPosition.latitude)) * Math.sin(dLon / 2) * Math.sin(dLon / 2));
-        float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-        float distance = earthRadius * c;
-
-        // remove polyline if existing
-        if (lineToNextElement != null){
-            lineToNextElement.remove();
-        }
-        // draw new polyline to next marker
-        PolylineOptions polylineOptions = new PolylineOptions();
-        polylineOptions.add(currentLocation);
-        polylineOptions.add(markerPosition);
-        polylineOptions.color(Color.GREEN);
-        lineToNextElement = mMap.addPolyline(polylineOptions);
-
-        if (distance < ACTIVATION_DISTANCE) {
             // open new activity
             openApproachingStoryElement();
         }
@@ -423,7 +332,6 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
 
             // marker has been visited go to next one if available
             if (markerCollection.length == approachingMarker) {
-                // TODO finish story
                 Toast.makeText(getApplicationContext(), "You visited all story elements", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
@@ -437,12 +345,9 @@ public class StoryLineMap extends FragmentActivity implements GoogleApiClient.Co
                         .snippet(markerCollection[approachingMarker].getSnippet());
                 markerCollection[approachingMarker] = mMap.addMarker(newMarker);
 
-                // TODO REMOVE COMMENTS (FOR REAL LOCATION)
-                    /*
                     // start watching out for next element
                     mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
                     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-                    */
             }
         }
         else if ( requestCode == REQ_CODE_SPEECH_INPUT ) {
