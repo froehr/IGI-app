@@ -218,8 +218,8 @@ public class StoryElementActivity extends ActionBarActivity {
         String descriptionHTML = "<html><body style=\"background-color: #EEEEEE; margin: 0px;\"><p align=\"justify\">" + storyElement.getText() + "</p></body></html>";
         textDescription.loadData(descriptionHTML, "text/html; charset=utf-8", null);
 
-        ImageView image = ((ImageView) findViewById(R.id.story_element_image));
+        //ImageView image = ((ImageView) findViewById(R.id.story_element_image));
         // set sample image
-        image.setImageResource(R.drawable.ic_image);
+        //image.setImageResource(R.drawable.ic_image);
     }
 }

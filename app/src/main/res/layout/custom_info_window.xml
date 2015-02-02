@@ -8,22 +8,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <ImageView
-            android:id="@+id/marker_image"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:alpha="0.3"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:layout_gravity="bottom|left"
-            android:gravity="bottom|left"
-            android:textSize="24sp"
-            android:layout_marginLeft="16dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="22sp"
+            android:layout_margin="8dp"
+            android:textStyle="bold"
             android:textColor="#a2a2a2"/>
     </FrameLayout>
 </LinearLayout>
